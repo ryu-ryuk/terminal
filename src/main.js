@@ -1,21 +1,34 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Script loaded");
+document.addEventListener("DOMContentLoaded", function () {
+    const terminalInput = document.getElementById("terminal-input");
+    const terminalDiv = document.querySelector(".terminal");
 
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.querySelector('.terminal');
+    terminalDiv.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent interference from parent elements
+        terminalInput.focus();
+    });
 
-    if (!terminalInput || !terminalOutput) {
-        console.error('Terminal input or output elements not found.');
-        return;
-    }
-
-    terminalInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            processCommand(terminalInput.value.trim());
-            terminalInput.value = '';
+    // Ensure it stays focused unless user clicks elsewhere
+    document.addEventListener("click", function (event) {
+        if (!terminalDiv.contains(event.target) && event.target !== terminalInput) {
+            terminalInput.blur();
         }
     });
+
+    // Ensure Enter key appends input to terminal
+    terminalInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && this.value.trim() !== "") {
+            const newLine = document.createElement("p");
+            newLine.className = "text-green-400";
+            newLine.textContent = `ryu@archy:~$ ${this.value}`;
+            terminalDiv.appendChild(newLine);
+            this.value = "";
+        }
+    });
+});
+document.getElementById("menu-toggle").addEventListener("click", function () {
+    document.getElementById("menu").classList.toggle("hidden");
+});
+
 
     function processCommand(command) {
         console.log('Command entered:', command);

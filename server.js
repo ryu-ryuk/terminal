@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const { exec } = require("child_process");
 const path = require("path");
-require('dotenv').config();
-const fetch = require('node-fetch'); // Ensure this is installed or use built-in Fetch API
+const querystring = require("querystring");
+const fetch = require("node-fetch");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,60 +14,112 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public")); // Serve static files from "public"
 
+// Spotify Credentials
+const client_id = process.env.SPOTIFY_CLIENT_ID; // Your Spotify Client ID
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your Spotify Client Secret
+const redirect_uri = process.env.SPOTIFY_REDIRECT_URI || `http://localhost:${PORT}/callback`; // Your Redirect URI
+
+let access_token = null; // Store access token
+let refresh_token = null; // Store refresh token
+
 // Route to serve frontend
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+// Login Route
+app.get("/login", (req, res) => {
+    const state = generateRandomString(16);
+    const scope = "user-read-currently-playing user-read-playback-state";
 
-// Spotify Placeholder Route
-app.get('/spotify', async (req, res) => {
+    const authUrl =
+        "https://accounts.spotify.com/authorize?" +
+        querystring.stringify({
+            response_type: "code",
+            client_id: client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state,
+        });
+
+    res.redirect(authUrl);
+});
+
+// Callback Route
+app.get("/callback", async (req, res) => {
+    const code = req.query.code || null;
+
     try {
-        const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-            headers: { 'Authorization': `Bearer ${process.env.SPOTIFY_ACCESS_TOKEN}` }
+        const response = await fetch("https://accounts.spotify.com/api/token", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization:
+                    "Basic " +
+                    Buffer.from(client_id + ":" + client_secret).toString("base64"),
+            },
+            body: querystring.stringify({
+                grant_type: "authorization_code",
+                code: code,
+                redirect_uri: redirect_uri,
+            }),
         });
-        if (!response.ok) throw new Error('Failed to fetch Spotify data');
+
         const data = await response.json();
-        res.json({
-            song: data.item.name,
-            artist: data.item.artists.map(artist => artist.name).join(', '),
-            albumArt: data.item.album.images[0].url,
-        });
+        const access_token = data.access_token;
+
+        // Store access token securely (e.g., in memory or database)
+        res.redirect(`/now-playing?access_token=${access_token}`);
     } catch (error) {
-        console.error(error);
-        res.json({
-            song: "Not Playing",
-            artist: "Unknown",
-            albumArt: "placeholder.jpg",
-        });
+        console.error("Error during token exchange:", error);
+        res.status(500).send("Authentication failed.");
     }
 });
 
-// API to execute Python script
-app.get("/api/run-python", (req, res) => {
-    exec("python3 src/main.py", (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error executing Python script: ${stderr}`);
-            return res.status(500).json({ error: stderr });
+// Now Playing Route
+app.get("/now-playing", async (req, res) => {
+    const access_token = req.query.access_token;
+
+    try {
+        const response = await fetch(
+            "https://api.spotify.com/v1/me/player/currently-playing",
+            {
+                headers: { Authorization: `Bearer ${access_token}` },
+            }
+        );
+
+        if (response.status === 204 || response.status > 400) {
+            return res.json({
+                song: "Not Playing",
+                artist: "Unknown",
+                albumArt: "/placeholder.jpg", // Replace with a placeholder image
+            });
         }
-        res.json({ output: stdout });
-    });
+
+        const data = await response.json();
+
+        res.json({
+            song: data.item.name,
+            artist: data.item.artists.map((artist) => artist.name).join(", "),
+            albumArt: data.item.album.images[0].url,
+        });
+    } catch (error) {
+        console.error("Error fetching now playing:", error);
+        res.status(500).json({ error: "Failed to fetch now playing data." });
+    }
 });
 
-let currentProject = "Building my portfolio";
+// Helper Function for Random State String
+function generateRandomString(length) {
+    let text = "";
+    const possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+}
 
-app.get("/api/current-project", (req, res) => {
-    res.json({ project: currentProject });
-});
-
-app.post("/api/update-project", (req, res) => {
-    currentProject = req.body.project;
-    res.json({ message: "Project updated!" });
-});
-
-// Fallback route for SPAs
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-// Start the server
-app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
+// Start Server
+app.listen(PORT, () =>
+    console.log(`Server running at http://localhost:${PORT}`)
+);
