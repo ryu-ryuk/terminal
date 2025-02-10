@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "archya",
     "public": "public",
     "ignore": [
       "firebase.json",
