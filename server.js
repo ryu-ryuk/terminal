@@ -10,25 +10,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 
-import { initializeApp } from "firebase/app";
-
-
-const firebaseConfig = {
-
-    apiKey: "AIzaSyBIlkZSp0d-SL73rycaKAqEyvymHFwK3Sw",
-  
-    authDomain: "archy-5a214.firebaseapp.com",
-  
-    projectId: "archy-5a214",
-  
-    storageBucket: "archy-5a214.firebasestorage.app",
-  
-    messagingSenderId: "365204837314",
-  
-    appId: "1:365204837314:web:44c7076a6a87f13dab7c5b"
-  
-  };
-  
 // Middleware
 app.use(cors());
 app.use(express.json());
