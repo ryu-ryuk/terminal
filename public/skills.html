@@ -3,65 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skills - Alok</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>my skills</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        .typing::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
 <body class="bg-black text-green-400 font-mono p-6 h-screen flex flex-col items-center justify-center">
     <nav class="p-2 fixed top-0 left-0 w-full bg-black z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
-            <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">
-                ☰
-            </button>
+            <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu" class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-gray-900 absolute md:relative w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
                 <li class="px-4 py-2 md:px-0"><a href="projects.html" class="hover:text-green-300">Projects</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="about.html" class="hover:text-green-300">About</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="exp.html" class="hover:text-green-300">Experience</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="skills.html" class="hover:text-green-300">Skills</a></li>
             </ul>
         </div>
     </nav>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuToggle = document.getElementById("menu-toggle");
-            const menu = document.getElementById("menu");
-
-            menuToggle.addEventListener("click", function () {
-                menu.classList.toggle("hidden");
-                menu.classList.toggle("flex");
-            });
-        });
-    </script>
-    
-
-    
+    <pre class="text-green-400 text-lg mt-16">    
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+        ⠀⠀⠀⢠⡾⠲⠶⣤⣀⣠⣤⣤⣤⡿⠛⠿⡴⠾⠛⢻⡆⠀⠀⠀
+        ⠀⠀⠀⣼⠁⠀⠀⠀⠉⠁⠀⢀⣿⠐⡿⣿⠿⣶⣤⣤⣷⡀⠀⠀
+        ⠀⠀⠀⢹⡶⠀⠀⠀⠀⠀⠀⠈⢯⣡⣿⣿⣀⣸⣿⣦⢓⡟⠀⠀
+        ⠀⠀⢀⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠹⣍⣭⣾⠁⠀⠀
+        ⠀⣀⣸⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣸⣷⣤⡀
+        ⠈⠉⠹⣏⡁⠀⢸⣿⠀⠀⠀⢀⡀⠀⠀⠀⣿⠆⠀⢀⣸⣇⣀⠀
+        ⠀⠐⠋⢻⣅⣄⢀⣀⣀⡀⠀⠯⠽⠂⢀⣀⣀⡀⠀⣤⣿⠀⠉⠀
+        ⠀⠀⠴⠛⠙⣳⠋⠉⠉⠙⣆⠀⠀⢰⡟⠉⠈⠙⢷⠟⠉⠙⠂⠀
+        ⠀⠀⠀⠀⠀⢻⣄⣠⣤⣴⠟⠛⠛⠛⢧⣤⣤⣀⡾⠁⠀⠀⠀⠀
+    </pre>
     <h1 class="text-3xl font-bold">~$ cat ~/skills.txt</h1>
+    
+    <div id="skills-container" class="mt-6 text-lg"></div>
 
-    <div class="mt-6">
-        <p class="text-green-400">> Programming Languages:</p>
-        <ul class="list-disc pl-5 text-gray-300">
-            <li>💻 Python, Go, JavaScript/TypeScript, Bash</li>
-            <li>⚙️ C, C++, MATLAB, R</li>
-        </ul>
-    </div>
+    <script>
+        const skills = [
+            '> Programming Languages:',
+            '💻 Python, JavaScript(novice), Bash, HTML/CSS',
+            '',
+            '> Frameworks & Tools:',
+            '🔧 Django, Flask, Express.js, JWT, Hugo',
+            '> DevOps:',
+            '🚀 Docker, Ansible, CI/CD (GitHub Actions)',
+            '',
+            '> Cloud:',
+            '☁️ GCP ',
+            '> Networking',
+            '🌐 TCP/IP, DNS, DHCP, Network Configuration',
+            '> Tools',
+            '🛠️ Postman, Gitlab, Git, Vim, Tmux, Zsh, Neovim',
+        ];
 
-    <div class="mt-6">
-        <p class="text-green-400">> Frameworks & Tools:</p>
-        <ul class="list-disc pl-5 text-gray-300">
-            <li>🔧 Django, Flask, Express.js, React, Vue</li>
-            <li>🚀 Docker, Kubernetes, Terraform, CI/CD (GitHub Actions, Jenkins)</li>
-        </ul>
-    </div>
+        const container = document.getElementById('skills-container');
+        let index = 0;
+        
+        function typeSkill() {
+            if (index < skills.length) {
+                let skillLine = document.createElement('p');
+                skillLine.textContent = skills[index];
+                skillLine.classList.add('typing');
+                container.appendChild(skillLine);
+                
+                setTimeout(() => {
+                    skillLine.classList.remove('typing');
+                }, 500);
+                
+                index++;
+                setTimeout(typeSkill, 400);
+            }
+        }
+        
+        setTimeout(typeSkill, 800);
+    </script>
 
-    <div class="mt-6">
-        <p class="text-green-400">> Cybersecurity & DevOps:</p>
-        <ul class="list-disc pl-5 text-gray-300">
-            <li>🔒 Network Security, Penetration Testing, Wi-Fi Attacks</li>
-            <li>🛠️ Linux Hardening, Firewalls, Zsh/Bash Automation</li>
-        </ul>
-    </div>
-
-    <a href="index.html" class="text-green-300 underline">← Back to Home</a>
+    <a href="index.html" class="text-green-300 underline mt-6">← cd ..</a>
 </body>
 </html>
