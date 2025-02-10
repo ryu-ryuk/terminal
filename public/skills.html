@@ -22,15 +22,26 @@
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu" class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-gray-900 absolute md:relative w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="exp.html" class="hover:text-green-300">Experience</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="skills.html" class="hover:text-green-300">Skills</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="projects.html" class="hover:text-green-300">Projects</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="about.html" class="hover:text-green-300">About</a></li>
-                <li class="px-4 py-2 md:px-0"><a href="exp.html" class="hover:text-green-300">Experience</a></li>
-                <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
-                <li class="px-4 py-2 md:px-0"><a href="skills.html" class="hover:text-green-300">Skills</a></li>
             </ul>
         </div>
     </nav>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menu-toggle");
+            const menu = document.getElementById("menu");
 
+            menuToggle.addEventListener("click", function () {
+                menu.classList.toggle("hidden");
+                menu.classList.toggle("flex");
+            });
+        });
+    </script>
+    
     <pre class="text-green-400 text-lg mt-16">    
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⢠⡾⠲⠶⣤⣀⣠⣤⣤⣤⡿⠛⠿⡴⠾⠛⢻⡆⠀⠀⠀
