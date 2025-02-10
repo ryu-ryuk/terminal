@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-green-400 font-mono h-screen flex flex-col items-center justify-center">
+    <h1 class="text-2xl">Arch Linux 6.13 (tty1)</h1>
+    <form id="login-form" class="mt-4">
+        <p>alok login: <input type="text" id="username" class="bg-black text-green-400 border-none outline-none"></p>
+        <p>Password: <input type="password" id="password" class="bg-black text-green-400 border-none outline-none"></p>
+        <button type="submit" class="hidden"></button>
+    </form>
+    <p id="error" class="text-red-500 hidden">Login failed.</p>
+</body>
+<script>
+document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+    if (user === "alok" && pass === "archlinux") {
+        window.location.href = "index.html";
+    } else {
+        document.getElementById("error").classList.remove("hidden");
+    }
+});
+</script>
+</html>

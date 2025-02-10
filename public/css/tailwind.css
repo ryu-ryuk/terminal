@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.blink::after {
+    content: "_";
+    animation: blink 1s step-end infinite;
+}

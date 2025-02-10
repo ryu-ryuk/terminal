@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Homepage</title>
+</head>
+<body>
+    <h2>Edit Current Project</h2>
+    <input type="text" id="project" placeholder="Current Project">
+    <button onclick="updateProject()">Save</button>
+
+    <script>
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+
+        function updateProject() {
+            const project = document.getElementById("project").value;
+            fetch("http://localhost:3000/api/update-project", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ project })
+            });
+            alert("Project Updated!");
+        }
+    </script>
+</body>
+</html>

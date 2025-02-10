@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white text-center p-10">
+    <h1 class="text-4xl font-bold">Contact Me</h1>
+    <form id="contactForm" class="mt-6">
+        <input type="text" id="name" placeholder="Your Name" class="p-2 rounded text-black" required><br>
+        <input type="email" id="email" placeholder="Your Email" class="p-2 rounded text-black mt-2" required><br>
+        <textarea id="message" placeholder="Your Message" class="p-2 rounded text-black mt-2" required></textarea><br>
+        <button type="submit" class="bg-blue-500 px-4 py-2 mt-2 rounded">Send</button>
+    </form>
+</body>
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+    
+    await fetch("/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message })
+    });
+
+    alert("Message sent!");
+});
+</script>
+</html>
