@@ -1,14 +1,1 @@
-            - name: Setup Node.js Express and MySQL
-  # You may pin to the exact commit or the version.
-  # uses: Sunwoo0110/IREM@68c45e879a46a0864ae9f15fd878f7f2a03fe991
-  uses: Sunwoo0110/IREM@v1.2.1
-  with:
-    # project github repository url which you want to setup
-    github-repo-url: # default is 
-    # user id
-    github-user-id: # default is 
-    # user email
-    github-user-email: # default is 
-    # user PAT
-    github-token: # default is 
-          
+
