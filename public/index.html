@@ -21,7 +21,7 @@
     </style>
 </head>
 <body class="bg-black text-green-400 font-mono p-6 h-screen flex flex-col items-center justify-center">
-    <nav class="p-2 fixed top-0 left-0 w-full">
+    <nav class="p-2 fixed top-0 left-0 w-full bg-black z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">
@@ -34,25 +34,19 @@
                 <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
             </ul>
         </div>
-    </nav><body class="bg-black text-green-400 font-mono p-6 h-screen flex flex-col items-center justify-center">
-        <nav class="p-2 fixed top-0 left-0 w-full">
-            <div class="max-w-6xl mx-auto flex justify-between items-center">
-                <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
-                <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">
-                    ☰
-                </button>
-                <ul id="menu" class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-gray-900 absolute md:relative w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
-                    <li class="px-4 py-2 md:px-0"><a href="projects.html" class="hover:text-green-300">Projects</a></li>
-                    <li class="px-4 py-2 md:px-0"><a href="about.html" class="hover:text-green-300">About</a></li>
-                    <li class="px-4 py-2 md:px-0"><a href="exp.html" class="hover:text-green-300">Experience</a></li>
-                    <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
-                </ul>
-            </div>
-        </nav>
-    <!-- Main Content -->
-    <!-- <div class="w-full max-w-xl mt-16 text-center">
-        <h1 class="text-3xl md:text-5xl font-bold text-green-400">ryu@archy:~$ echo "Welcome!"</h1>
-    </div> -->
+    </nav>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menu-toggle");
+            const menu = document.getElementById("menu");
+
+            menuToggle.addEventListener("click", function () {
+                menu.classList.toggle("hidden");
+                menu.classList.toggle("flex");
+            });
+        });
+    </script>
 
     <!-- Spotify Now Playing Script -->
     <script>
@@ -97,16 +91,14 @@
         
         
         <div class="mt-6">
-            <p class="text-green-400">> Whoami</p>
+            <p class="text-green-400">> whoami</p>
             <p class="text-gray-300">A DevOps & Cybersecurity Enthusiast.</p>
         </div>
-<!-- 
-        <div class="mt-6">
-            <p class="text-green-400">> ls -lah ~/projects</p>
+
+        <!-- <div class="mt-6">
+            <p class="text-green-400">> $ grep ryu /etc/passwd</p>
             <ul class="text-gray-300 list-disc pl-5">
-                <li>💻 <a href="https://github.com/ryu-ryuk/Enable-Cloudflare-DNS-System-Wide" class="text-green-300 underline">Cloudflare-DNS-Magisk</a></li>
-                <li>🔒 <a href="https://github.com/ryu-ryuk/dotfiles" class="text-green-300 underline">Dotfiles</a></li>
-                <li>🌐 <a href="https://ryuloge.netlify.app/" class="text-green-300 underline">Personal Logger</a></li>"
+                <li>💻 <a href="" class="text-grey-300">ryu:x:1001:1001::/home:/bin/zsh</a></li>
             </ul>
         </div> -->
 
@@ -114,7 +106,7 @@
         <div class="mt-6">
             <p class="text-green-400">> Currently Working On: </p>
             <ul class="text-gray-300 list-disc pl-5">
-                <li>¯\_(ツ)_/¯ <a href="https://archy-5a214.web.app/" class="text-green-300 underline">pwd</a></li>
+                <li>¯\_(ツ)_/¯ <a href="/" class="text-green-300 underline">pwd</a></li>
                 <li>🍃 <a href="https://www.geeksforgeeks.org/software-engineering-reverse-engineering/" class="text-green-300 underline">Reverse Engineering</a></li>
                 <li>🤖 <a href="https://en.wikipedia.org/wiki/Mr._Robot" class="text-green-300 underline">Watching Mr. Robot</a></li>
 
@@ -132,7 +124,7 @@
             <img src="https://github-readme-stats.vercel.app/api?username=ryu-ryuk&show_icons=true&theme=dark" alt="Stats \ Pubic only" class="mt-2">
         </div> -->
         <div class="w-full max-w-xl mt-14 text-center">
-            <h1 class="text-1xl md:text-2xl font-bold text-green-400">~$ echo "quote of the day~"</h1>
+            <h1 class="text-1xl md:text-2xl font-bold text-green-400">~$ echo "quote~"</h1>
     
             <div id="quote-container" class="mt-8">
                 <!-- Quote will be inserted here -->
@@ -144,7 +136,7 @@
             // Array of Linux quotes
             const quotes = [
                 "Talk is cheap. Show me the code. — Linus Torvalds",
-                "Software is like sex: it's better when it's free. — Linus Torvalds",
+                "Software is like s3x: it's better when it's free. — Linus Torvalds",
                 "Linux is not user-friendly. It _is_ user-friendly. It is not ignorant-friendly and idiot-friendly.",
                 "The Linux philosophy is 'laugh in the face of danger'. Oops. Wrong one. 'Do it yourself'. That's it. — Linus Torvalds",
                 "We all know Linux is great... it does infinite loops in 5 seconds.",
@@ -166,9 +158,10 @@
         </script>
     
         <div class="mt-6">
-            <p class="text-green-400">> cat ~/contact-me.txt</p>
-            <p class="text-gray-300">📧 Email: <a href="mailto:alokraj3850@gmail.com" class="text-green-300 underline">Shoot an email~</a></p>
+            <p class="text-green-400">> cat ~/contact-me.txt</p>  
             <p class="text-gray-300">🐙 GitHub: <a href="https://github.com/ryu-ryuk/" class="text-green-300 underline">@ryu-ryuk</a></p>
+            <p class="text-gray-300">📧 Email: <a href="mailto:alokraj3850@gmail.com" class="text-green-300 underline">Shoot an email~</a></p>
+            
         </div>
     </div>
     <script src="./src/main.js"></script>

@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-green-400 font-mono p-6 h-screen flex flex-col items-center justify-center">
-    <nav class="p-2 fixed top-0 left-0 w-full">
+    <nav class="p-2 fixed top-0 left-0 w-full bg-black z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">
@@ -18,18 +18,24 @@
                 <li class="px-4 py-2 md:px-0"><a href="about.html" class="hover:text-green-300">About</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="exp.html" class="hover:text-green-300">Experience</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
-            </ul>
+            </ul
         </div>
     </nav>
 
     <script>
-    document.getElementById("menu-toggle").addEventListener("click", function () {
-        document.getElementById("menu").classList.toggle("hidden");
-    });
-    </script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menu-toggle");
+            const menu = document.getElementById("menu");
 
+            menuToggle.addEventListener("click", function () {
+                menu.classList.toggle("hidden");
+                menu.classList.toggle("flex");
+            });
+        });
+    </script>
+    
     <div class="w-full max-w-2xl mt-16">
-        <h1 class="text-3xl md:text-5xl font-bold text-green-400">~$ cat ~/about.txt</h1>
+        <h1 class="text-3xl md:text-5xl font-bold text-green-400">~$ cat ~/.ryu/config</h1>
 
         <ul class="list-none mt-6 space-y-6">
             <li>
