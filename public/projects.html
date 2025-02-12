@@ -3,8 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>i have worked on</title>
+    <title>purrjects</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        .typing::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .fade-out {
+            opacity: 0;
+            transform: translateY(-50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        /* Custom styles for the mobile menu */
+        #menu {
+            background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent black */
+            border: 1px solid #4ade80; /* Green border to match the terminal theme */
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.5); /* Green glow */
+        }
+        #menu li {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #4ade80; /* Green border between items */
+        }
+        #menu li:last-child {
+            border-bottom: none; /* Remove border for the last item */
+        }
+        #menu li a {
+            color: #4ade80; /* Green text */
+            transition: color 0.3s ease;
+        }
+        #menu li a:hover {
+            color: #86efac; /* Lighter green on hover */
+        }
+    </style>
 </head>
 <body class="bg-black text-green-400 font-mono p-6 h-screen flex flex-col items-center justify-center">
     <nav class="p-2 fixed top-0 left-0 w-full bg-black z-50">
@@ -12,6 +48,7 @@
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu" class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-gray-900 absolute md:relative w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                <li class="px-4 py-2 md:px-0"><a href="index.html" class="hover:text-green-300">Home</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="contact.html" class="hover:text-green-300">Contact</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="exp.html" class="hover:text-green-300">Experience</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="skills.html" class="hover:text-green-300">Skills</a></li>
@@ -20,7 +57,6 @@
             </ul>
         </div>
     </nav>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById("menu-toggle");
