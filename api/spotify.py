@@ -12,7 +12,7 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
-SECRET_KEY = os.getenv("COOKIE_SECRET")  # Define this in your .env
+SECRET_KEY = os.getenv("COOKIE_SECRET") 
 serializer = URLSafeSerializer(SECRET_KEY)
 
 def get_token_data_from_cookie(request: Request):

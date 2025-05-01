@@ -16,7 +16,7 @@ app = FastAPI()
 # CORS setup with specific origin and credentials
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for a portfolio widget
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
