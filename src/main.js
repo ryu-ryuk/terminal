@@ -1,5 +1,6 @@
 import "./style.css";
 import { animate, svg, stagger, utils } from 'animejs';
+const API_BASE = import.meta.env.VITE_API_URL;
 // Terminal state
 class Terminal {
   constructor() {
@@ -369,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Update the fetch request to handle credentials properly
-      const res = await fetch("http://127.0.0.1:8001/api/spotify", {
+      const res = await fetch(`${API_BASE}/api/spotify`, {
         method: "GET",
         headers: {
           Accept: "application/json",
