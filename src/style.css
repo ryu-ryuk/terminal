@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Space Mono', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0a0a0a;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --terminal-green: #33FF33;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Space Mono', monospace;
+}
+
+a {
+  font-weight: 500;
+  color: #33FF33;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #00ff99;
+  text-shadow: 0 0 5px #00ff99;
+}
+
+h1,
+p,
+ul,
+li,
+span {
+  font-family: 'Space Mono', monospace;
+}
+
+#glow-headline {
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Space Mono', monospace;
+  display: inline-flex;
+  /* Ensure spans align properly */
+}
+
+#footer-marquee {
+  user-select: none;
+  pointer-events: none;
+}
+
+#glow-headline span {
+  font-family: 'Space Mono', monospace;
+  display: inline-block;
+  /* Allow transforms on spans */
+}
+
+#glow-headline::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #00ff99;
+  opacity: 0;
+  transform: translate(2px, 2px);
+  z-index: -1;
+  font-family: 'Space Mono', monospace;
+}
+
+/* Glow Effect for Navigation */
+.glow-nav {
+  text-shadow: 0 0 5px #33FF33, 0 0 10px #33FF33;
+  font-family: 'Space Mono', monospace;
+}
+
+/* Blinking Cursor */
+.blinking-cursor::after {
+  content: "█";
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.headline-path {
+  filter: drop-shadow(0 0 8px #33FF33) drop-shadow(0 0 1px #33FF33);
+}
+
+/* Glow 3D Effect */
+.glow-3d {
+  color: #33FF33;
+  text-shadow:
+    0 0 10px #33FF33,
+    0 0 20px #33FF33,
+    0 0 30px #33FF33;
+  animation: wobbleGlow 2.5s cubic-bezier(.4, 2, .6, 1) infinite alternate;
+  font-family: 'Space Mono', monospace;
+}
+
+@keyframes wobbleGlow {
+  0% {
+    text-shadow: 0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 30px #33FF33;
+    transform: rotateY(-10deg) skewX(-5deg) scale(1);
+    filter: brightness(1.1);
+  }
+
+  50% {
+    text-shadow: 0 0 20px #33FF33, 0 0 40px #33FF33, 0 0 60px #33FF33;
+    transform: rotateY(10deg) skewX(5deg) scale(1.02);
+    filter: brightness(1.3);
+  }
+
+  100% {
+    text-shadow: 0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 30px #33FF33;
+    transform: rotateY(-10deg) skewX(-5deg) scale(1);
+    filter: brightness(1.1);
+  }
+}
+
+/* Animate Blink for Welcome Text */
+.animate-blink {
+  animation: textBlink 1.5s steps(2, start) infinite;
+}
+
+@keyframes textBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Terminal Styles */
+@layer components {
+  .terminal-window {
+    @apply bg-black/90 backdrop-blur-sm border-2 border-[var(--terminal-green)] rounded-lg shadow-[0_0_15px_#33FF33];
+  }
+
+  .terminal-header {
+    @apply flex items-center gap-2 p-3 border-b border-[var(--terminal-green)];
+  }
+
+  .terminal-button {
+    @apply w-3 h-3 rounded-full transition-colors duration-200;
+  }
+
+  .terminal-output {
+    @apply p-4 h-64 overflow-y-auto text-green-300 text-sm bg-black/90;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .terminal-input {
+    @apply bg-black/90 text-[var(--terminal-green)] flex-1 p-4 focus:outline-none border-none;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .terminal-form {
+    @apply flex items-center border-t border-[var(--terminal-green)] bg-black/90;
+  }
+}

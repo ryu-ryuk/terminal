@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ryu@archy</title>
+</head>
+<body class="bg-black text-green-400 font-mono p-6 min-h-screen flex flex-col items-center justify-center">
+  <nav class="p-2 fixed top-0 left-0 w-full bg-black z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
+      <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
+      <ul id="menu" class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black absolute md:relative w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+        <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
+        <li class="px-4 py-2 md:px-0"><a href="/contact" class="hover:text-green-300">Contact</a></li>
+        <li class="px-4 py-2 md:px-0"><a href="/exp" class="hover:text-green-300">Experience</a></li>
+        <li class="px-4 py-2 md:px-0"><a href="/skills" class="hover:text-green-300">Skills</a></li>
+        <li class="px-4 py-2 md:px-0"><a href="/projects" class="hover:text-green-300">Projects</a></li>
+        <li class="px-4 py-2 md:px-0"><a href="/about" class="hover:text-green-300">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="w-full max-w-2xl mt-20">
+    <h1 class="text-3xl md:text-5xl font-bold text-green-400 drop-shadow-[0_0_20px_#33FF33]">Alok@Ranjan ᓚᘏᗢ</h1>
+    <p class="text-lg text-gray-300 mt-2 animate-blink">Welcome to my adobe! (^^)/</p>
+    <div class="mt-6">
+      <p class="text-green-400">&gt; whoami</p>
+      <p class="text-gray-300">a linux nerd, a rustacean, a DevOps & cybersecurity enthusiast</p>
+    </div>
+    <div class="mt-6">
+      <p class="text-green-400">&gt; Currently Working On: </p>
+      <ul class="text-gray-300 list-disc pl-5">
+        <li>¯\_(ツ)_/¯ <a href="/" class="text-green-300 underline">pwd</a></li>
+        <li>🦀 <a href="https://github.com/ryu-ryuk/lenrs" class="text-green-300 underline">TUI OCR Snippet tool written fully in Rust</a></li>
+        <li>🍃 <a href="https://www.geeksforgeeks.org/software-engineering-reverse-engineering/" class="text-green-300 underline">Reverse Engineering</a></li>
+        <li>🤖 <a href="https://en.wikipedia.org/wiki/Mr._Robot" class="text-green-300 underline">Watching Mr. Robot</a></li>
+      </ul>
+    </div>
+
+    <div class="mt-6">
+      <p class="text-green-400">&gt; cat ~/contact-me.txt</p>
+      <p class="text-gray-300">🐙 GitHub: <a href="https://github.com/ryu-ryuk/" class="text-green-300 underline">@ryu-ryuk</a></p>
+      <p class="text-gray-300">📧 Email: <a href="mailto:alokraj3850@gmail.com" class="text-green-300 underline">Shoot an email~</a></p>
+    </div>
+  </div>
+
+  <!-- Floating Terminal Button -->
+  <button id="open-terminal" class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-400 text-black rounded-full p-4 shadow-lg transition">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+    </svg>
+  </button>
+
+  <!-- Terminal Popup -->
+  <div id="terminal-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center hidden">
+    <div id="terminal-window" class="terminal-window relative w-full max-w-lg">
+      <div class="terminal-header">
+        <button id="close-terminal" class="terminal-button bg-red-500 hover:bg-red-400"></button>
+        <button id="minimize-terminal" class="terminal-button bg-yellow-400 hover:bg-yellow-300"></button>
+        <button id="maximize-terminal" class="terminal-button bg-green-500 hover:bg-green-400"></button>
+        <span class="ml-4 text-terminalGreen font-mono">ryu@archy:~</span>
+      </div>
+      
+      <div id="terminal-output" class="terminal-output">
+        <div>Type <span class="text-terminalGreen font-bold">help</span> for available commands</div>
+      </div>
+      
+      <form id="terminal-form" class="flex items-center border-t border-terminalGreen">
+        <span class="pl-4 text-terminalGreen font-mono">$</span>
+        <input id="terminal-input" type="text" autocomplete="off" 
+          class="terminal-input"
+          placeholder="Type command...">
+      </form>
+    </div>
+  </div>
+  
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
