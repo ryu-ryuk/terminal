@@ -71,7 +71,6 @@ class Terminal {
     this.window?.addEventListener("click", () => this.input.focus());
     this.form?.addEventListener("submit", (e) => this.handleCommand(e));
 
-    // --- ENHANCEMENT: History and Tab Completion ---
     this.input.addEventListener("keydown", (e) => {
       // Command history navigation
       if (e.key === "ArrowUp") {
@@ -187,7 +186,6 @@ class Terminal {
     const inputValue = this.input.value.trim();
     if (!inputValue) return;
 
-    // --- ENHANCEMENT: Save to history ---
     this.history.push(inputValue);
     this.historyIndex = -1; // Reset index after each command
 

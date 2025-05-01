@@ -16,10 +16,12 @@ app = FastAPI()
 # CORS setup with specific origin and credentials
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://archya.web.app"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # templates = Jinja2Templates(directory="templates")
 # def load_posts():
 #     try:
@@ -76,7 +78,7 @@ async def root():
 # Spotify API credentials
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")  # Store your personal refresh token in .env
+REFRESH_TOKEN = os.getenv("REFRESH_TOKEN") 
 
 # Global token cache
 token_cache = {
