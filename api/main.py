@@ -13,10 +13,9 @@ load_dotenv()
 
 app = FastAPI()
 
-# CORS setup with specific origin and credentials
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://archya.web.app", "https://alokranjan.me"],
+    allow_origins=["https://alokranjan.me", "https://archya.web.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
