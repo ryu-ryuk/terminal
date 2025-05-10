@@ -64,6 +64,11 @@ span {
   /* Allow transforms on spans */
 }
 
+#ascii-art {
+  text-shadow: 0 0 8px #33ff33, 0 0 16px #33ff33;
+  filter: brightness(1.1);
+}
+
 #glow-headline::after {
   content: attr(data-text);
   position: absolute;

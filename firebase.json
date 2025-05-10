@@ -2,10 +2,33 @@
     "hosting": {
         "site": "archya",
         "public": "dist",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
+        "cleanUrls": true,
+        "rewrites": [
+            {
+                "source": "/about",
+                "destination": "/about.html"
+            },
+            {
+                "source": "/projects",
+                "destination": "/projects.html"
+            },
+            {
+                "source": "/exp",
+                "destination": "/exp.html"
+            },
+            {
+                "source": "/skills",
+                "destination": "/skills.html"
+            },
+            {
+                "source": "/contact",
+                "destination": "/contact.html"
+            }
         ]
-    }
+    },
+    "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+    ]
 }
