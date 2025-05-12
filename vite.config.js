@@ -16,6 +16,7 @@ export default defineConfig({
         contact: 'pages/contact.html',
         blogs: 'pages/blogs.html',
         about: 'pages/about.html',
+        404: 'pages/404.html',
       },
     },
   },
@@ -27,7 +28,10 @@ export default defineConfig({
           '/about': '/pages/about.html',
           '/projects': '/pages/projects.html',
           '/contact': '/pages/contact.html',
-          '/blogs': '/pages/blogs.html'
+          '/blogs': '/pages/blogs.html',
+          '/404': '/pages/404.html',
+          '/': '/index.html',
+          '/index.html': '/index.html',
         };
         const rewrite = urls[req.url];
         if (rewrite) {

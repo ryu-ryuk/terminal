@@ -95,14 +95,9 @@
       <p class="text-green-400">&gt; Currently Working On: </p>
       <ul class="text-gray-300 list-disc pl-5">
         <li>(*＞ｖ＜)ゞ*゜+<a href="/pages/blogs.html" class="text-green-300 underline">making blogs page</a></li>
-        <li>🦀 <a href="https://github.com/ryu-ryuk/lenrs" class="text-green-300 underline">TUI OCR Snippet tool
-            written
-            fully in Rust</a></li>
         <li>🍃 <a href="https://www.geeksforgeeks.org/software-engineering-reverse-engineering/"
             class="text-green-300 underline">Reverse Engineering</a></li>
-        <li>🤖 <a href="https://en.wikipedia.org/wiki/Mr._Robot" class="text-green-300 underline">Watching Mr.
-            Robot</a>
-        </li>
+
       </ul>
     </div>
     <div class="w-full max-w-xl mt-14 text-center">
@@ -237,19 +232,17 @@
   </footer>
 
   <!-- SPOTIFY WIDGET -->
-  <div id="spotify-widget" class="fixed bottom-16 left-4 spotify-container"
-    style="opacity: 1 !important; z-index: 9999;">
+  <div id="spotify-widget" class="fixed bottom-16 left-4 spotify-container z-60" style="opacity: 1 !important;">
     <div class="spotify-inner">
       <div class="scanline-spotify"></div>
-      <div class="flex items-center gap-3 relative z-10">
+      <div class="flex items-center gap-3 p-3 relative z-10">
         <div class="album-art-container">
-          <img id="album-art" class="w-14 h-14 rounded-md hidden" alt="Album Art" />
-          <div class="album-overlay"></div>
+          <img id="album-art" class="w-12 h-12 rounded hidden" alt="Album Art" />
           <div class="album-glow"></div>
         </div>
         <div class="spotify-info">
           <div id="spotify-status" class="text-xs glitch-text">
-            <span class="glitch-span" data-text="NOW PLAYING">NOW PLAYING</span>
+            <span class="glitch-span" data-text="PLAYING :D">PLAYING :D</span>
           </div>
           <div id="spotify-song" class="font-medium text-green-300 truncate max-w-[180px]"></div>
           <div id="spotify-artist" class="text-sm text-gray-400 truncate max-w-[180px]"></div>

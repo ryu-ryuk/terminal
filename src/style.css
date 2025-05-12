@@ -736,222 +736,161 @@ nav a.text-green-400 {
         object-fit: cover;
     }
 }
-#spotify-widget.spotify-container {
+/* Ensure widget is visible */
+#spotify-widget {
   opacity: 1 !important;
   display: block !important;
-}
-.z-70 {
-    z-index: 70;
-}
-/* Spotify Widget Styling */
-.spotify-container {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform: translateY(0);
-    filter: drop-shadow(0 0 8px rgba(51, 255, 51, 0.3));
+  visibility: visible !important;
+  min-width: 250px;
+  min-height: 100px;
 }
 
-.spotify-container:hover {
-    transform: translateY(-5px) scale(1.02);
-    filter: drop-shadow(0 0 15px rgba(51, 255, 51, 0.5));
+.spotify-container {
+  background: rgba(0, 10, 2, 0.75); /* Green-tinted background */
+  border: 1px solid rgba(51, 255, 51, 0.5);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 0 8px rgba(51, 255, 51, 0.3);
 }
 
 .spotify-inner {
-    position: relative;
-    background: rgba(0, 10, 2, 0.75);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(51, 255, 51, 0.5);
-    border-radius: 12px;
-    padding: 0.75rem;
-    overflow: hidden;
-}
-
-.spotify-inner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(51, 255, 51, 0.1) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.spotify-container:hover .spotify-inner::before {
-    opacity: 1;
-}
-
-.album-art-container {
-    position: relative;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.album-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(51, 255, 51, 0.2), transparent);
-    z-index: 1;
-}
-
-.album-glow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(51, 255, 51, 0.5);
-    filter: blur(15px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 0;
-}
-
-.spotify-container:hover .album-glow {
-    opacity: 0.3;
+  position: relative;
+  overflow: visible; /* Prevent clipping */
 }
 
 .scanline-spotify {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: rgba(51, 255, 51, 0.3);
-    opacity: 0.7;
-    z-index: 2;
-    animation: scanline-spotify 3s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(51, 255, 51, 0.3);
+  opacity: 0.7;
+  z-index: 2;
+  animation: scanline-spotify 3s linear infinite;
 }
 
 @keyframes scanline-spotify {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(60px);
-    }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(60px); }
+}
+
+.album-art-container {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+}
+
+.album-glow {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  background: rgba(51, 255, 51, 0.3);
+  filter: blur(8px);
+  opacity: 0.3;
+  z-index: -1;
 }
 
 .spotify-info {
-    position: relative;
-    z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #33ff33;
 }
 
 .glitch-text {
-    position: relative;
-    color: #33ff33;
-    letter-spacing: 1px;
-    margin-bottom: 2px;
+  color: #33ff33;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
 }
 
 .glitch-span {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
+  color: #33ff33;
 }
 
 .glitch-span::before,
 .glitch-span::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 
 .glitch-span::before {
-    color: #ff00ff;
-    z-index: -1;
+  color: #ff00ff;
+  transform: translateX(-2px);
+  z-index: -1;
 }
 
 .glitch-span::after {
-    color: #00ffff;
-    z-index: -2;
+  color: #00ffff;
+  transform: translateX(2px);
+  z-index: -2;
 }
 
 .spotify-container:hover .glitch-span::before {
-    animation: glitch-before 1s infinite;
+  animation: glitch-before 1s infinite;
 }
 
 .spotify-container:hover .glitch-span::after {
-    animation: glitch-after 1.5s infinite;
+  animation: glitch-after 1.5s infinite;
 }
 
 @keyframes glitch-before {
-    0% {
-        transform: translateX(0);
-        opacity: 0;
-    }
-    20% {
-        transform: translateX(-2px);
-        opacity: 0.7;
-    }
-    40% {
-        transform: translateX(2px);
-        opacity: 0;
-    }
-    60% {
-        transform: translateX(-1px);
-        opacity: 0.7;
-    }
-    80% {
-        transform: translateX(1px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 0;
-    }
+  0% { transform: translateX(-2px); opacity: 0; }
+  20% { transform: translateX(-4px); opacity: 0.7; }
+  40% { transform: translateX(-2px); opacity: 0; }
+  60% { transform: translateX(-3px); opacity: 0.7; }
+  80% { transform: translateX(-1px); opacity: 0; }
+  100% { transform: translateX(-2px); opacity: 0; }
 }
 
 @keyframes glitch-after {
-    0% {
-        transform: translateX(0);
-        opacity: 0;
-    }
-    20% {
-        transform: translateX(2px);
-        opacity: 0.7;
-    }
-    40% {
-        transform: translateX(-2px);
-        opacity: 0;
-    }
-    60% {
-        transform: translateX(1px);
-        opacity: 0.7;
-    }
-    80% {
-        transform: translateX(-1px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 0;
-    }
+  0% { transform: translateX(2px); opacity: 0; }
+  20% { transform: translateX(4px); opacity: 0.7; }
+  40% { transform: translateX(2px); opacity: 0; }
+  60% { transform: translateX(3px); opacity: 0.7; }
+  80% { transform: translateX(1px); opacity: 0; }
+  100% { transform: translateX(2px); opacity: 0; }
+}
+
+.text-green-300 {
+  color: #33ff33 !important;
+}
+
+.text-gray-400 {
+  color: #9ca3af !important;
 }
 
 .progress-container {
-    width: 100%;
-    height: 2px;
-    background: rgba(51, 255, 51, 0.2);
-    border-radius: 2px;
-    margin-top: 4px;
-    overflow: hidden;
+  width: 100%;
+  height: 2px;
+  background: rgba(51, 255, 51, 0.2);
+  border-radius: 2px;
+  margin-top: 4px;
 }
 
 .progress-bar {
-    height: 100%;
-    background: #33ff33;
-    box-shadow: 0 0 8px rgba(51, 255, 51, 0.8);
-    width: 0%;
-    transition: width 1s linear;
+  height: 100%;
+  background: #33ff33;
+  width: 0%;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.max-w-\[180px\] {
+  max-width: 180px;
 }
   
 
