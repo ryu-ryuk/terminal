@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -20,48 +20,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# templates = Jinja2Templates(directory="templates")
-# def load_posts():
-#     try:
-#         with open(POSTS_FILE, "r") as f:
-#             return json.load(f)
-#     except:
-#         return []
-# def save_posts(posts):
-#     with open(POSTS_FILE, "w") as f:
-#         json.dump(posts, f, indent=2)
-
-# @app.get("/api/posts")
-# def get_posts():
-#     return load_posts()
-
-# @app.get("/api/posts/latest")
-# def get_latest_post():
-#     posts = load_posts()
-#     return posts[-1] if posts else {}
-# @app.post("/api/posts")
-# async def add_post(request: Request):
-#     data = await request.json()
-#     posts = load_posts()
-#     post = {
-#         "title": data.get("title", ""),
-#         "content": data.get("content", ""),
-#         "type": data.get("type", "announcement"),
-#         "date": datetime.now().isoformat()
-#     }
-#     posts.append(post)
-#     save_posts(posts)
-#     return {"status": "ok"}
-
-# @app.get("/api/footer")
-# def get_footer():
-#     posts = load_posts()
-#     # Example: show latest quote or announcement
-#     for post in reversed(posts):
-#         if post["type"] in ["quote", "announcement"]:
-#             return {"content": post["content"]}
-#     return {"content": "Welcome to my portfolio!"}
 
 
 @app.get("/updates", response_class=HTMLResponse)
@@ -187,3 +145,30 @@ async def set_footer_message(request: Request):
 @app.get("/api/footer-message")
 async def get_footer_message():
     return {"text": footer_message["text"]}
+
+
+@app.post("/api/submit-contact")
+async def submit_contact(
+    name: str = Form("Anonymous"),
+    email: str = Form(...),
+    subject: str = Form("No Subject"),
+    message: str = Form(...)
+):
+    """Submit a contact form"""
+    if not email:
+        raise HTTPException(status_code=400, detail="Email is required")
+    
+    # Here you would typically send the email or save it to a database
+    # For this example, we'll just return the data
+    return {
+        "status": "ok",
+        "name": name,
+        "email": email,
+        "subject": subject,
+        "message": message
+    }
+# @app.get("/api/posts")
+# async def get_posts():
+#     """Get the list of posts"""
+#     posts = load_posts()
+#     return JSONResponse(posts)  

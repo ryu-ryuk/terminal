@@ -1,34 +1,40 @@
 {
     "hosting": {
-        "site": "archya",
         "public": "dist",
-        "cleanUrls": true,
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
         "rewrites": [
             {
-                "source": "/about",
-                "destination": "/about.html"
-            },
-            {
                 "source": "/projects",
-                "destination": "/projects.html"
-            },
-            {
-                "source": "/exp",
-                "destination": "/exp.html"
-            },
-            {
-                "source": "/skills",
-                "destination": "/skills.html"
+                "destination": "/pages/projects.html"
             },
             {
                 "source": "/contact",
-                "destination": "/contact.html"
+                "destination": "/pages/contact.html"
+            },
+            {
+                "source": "/blogs",
+                "destination": "/pages/blogs.html"
+            },
+            {
+                "source": "/about",
+                "destination": "/pages/about.html"
+            },
+            {
+                "source": "/404",
+                "destination": "/pages/404.html"
+            },
+            {
+                "source": "/",
+                "destination": "/index.html"
+            },
+            {
+                "source": "/api/**",
+                "destination": "https://portfolio-590285552111.us-central1.run.app"
             }
         ]
-    },
-    "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-    ]
+    }
 }

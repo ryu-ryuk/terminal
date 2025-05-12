@@ -902,7 +902,9 @@ nav a.text-green-400 {
     overflow: hidden;
     z-index: 1;
 }
-
+.blog-link.glow {
+  text-shadow: 0 0 12px rgba(51, 255, 51, 1), 0 0 24px rgba(51, 255, 51, 0.6);
+}
 .matrix-column {
     position: absolute;
     top: -100%;

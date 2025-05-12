@@ -274,25 +274,25 @@
                 <!-- Contact Form -->
                 <div class="contact-container p-6 md:p-8">
                     <h2 class="text-2xl font-bold text-green-300 mb-6">// SEND_MESSAGE</h2>
-                    <form id="contactForm" class="space-y-6">
+                    <form id="contactForm" class="space-y-6" action="/api/submit-contact" method="POST">
                         <div>
                             <label for="name" class="block text-green-400 mb-2 text-sm">NAME:</label>
-                            <input type="text" id="name" placeholder="meow meow"
+                            <input type="text" id="name" name="name" placeholder="meow meow"
                                 class="w-full p-3 rounded-lg input-field" required>
                         </div>
                         <div>
                             <label for="email" class="block text-green-400 mb-2 text-sm">EMAIL:</label>
-                            <input type="email" id="email" placeholder="nyan@kitty.neow"
+                            <input type="email" id="email" name="email" placeholder="nyan@kitty.neow"
                                 class="w-full p-3 rounded-lg input-field" required>
                         </div>
                         <div>
                             <label for="subject" class="block text-green-400 mb-2 text-sm">SUBJECT:</label>
-                            <input type="text" id="subject" placeholder="inquiry"
+                            <input type="text" id="subject" name="subject" placeholder="inquiry"
                                 class="w-full p-3 rounded-lg input-field" required>
                         </div>
                         <div>
                             <label for="message" class="block text-green-400 mb-2 text-sm">MESSAGE:</label>
-                            <textarea id="message" placeholder="leave your message here ;)" rows="6"
+                            <textarea id="message" name="message" placeholder="leave your message here ;)" rows="6"
                                 class="w-full p-3 rounded-lg input-field" required></textarea>
                         </div>
                         <button type="submit" class="w-full py-3 rounded-lg submit-btn text-lg font-bold">
@@ -300,7 +300,6 @@
                         </button>
                     </form>
                 </div>
-
                 <!-- Contact Info -->
                 <div class="space-y-6">
                     <div class="contact-container p-6 md:p-8">
@@ -530,12 +529,9 @@
             document.querySelectorAll(".console-text").forEach((textEl) => {
                 const text = textEl.getAttribute("data-text");
                 textEl.innerHTML = text; // Set initial text
-
-                // Ensure elements are visible even if animation fails
                 setTimeout(() => {
                     textEl.style.opacity = "1";
                 }, 100);
-
                 gsap.to(textEl, {
                     opacity: 1,
                     duration: 0.5,
@@ -558,47 +554,66 @@
                 });
             });
 
-            // Form submission animation
+            // Form submission
             const contactForm = document.getElementById("contactForm");
             const successMessage = document.getElementById("successMessage");
             const closeSuccessMessage = document.getElementById("closeSuccessMessage");
 
-            contactForm.addEventListener("submit", function (e) {
+            contactForm.addEventListener("submit", async function (e) {
                 e.preventDefault();
 
                 // Animate form submission
                 const formElements = contactForm.elements;
+                const submitButton = contactForm.querySelector("button[type='submit']");
+                submitButton.disabled = true; // Prevent multiple submissions
                 for (let i = 0; i < formElements.length; i++) {
                     gsap.to(formElements[i], {
                         backgroundColor: "rgba(51, 255, 51, 0.1)",
                         borderColor: "#33ff33",
                         duration: 0.3,
                         stagger: 0.1,
-                        ease: "power2.inOut"
+                        ease: "power2.inOut",
                     });
                 }
 
-                // Show success message after a delay
-                setTimeout(() => {
-                    // Show success message
-                    successMessage.style.display = "block";
-                    gsap.fromTo(successMessage,
-                        { scale: 0.8, opacity: 0 },
-                        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
-                    );
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch("/api/submit-contact", {
+                        method: "POST",
+                        body: formData,
+                    });
 
-                    // Reset form
-                    contactForm.reset();
+                    if (response.ok) {
+                        // Show success message
+                        successMessage.style.display = "block";
+                        gsap.fromTo(
+                            successMessage,
+                            { scale: 0.8, opacity: 0 },
+                            { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
+                        );
 
-                    // Reset form styles
-                    for (let i = 0; i < formElements.length; i++) {
-                        gsap.to(formElements[i], {
-                            backgroundColor: "rgba(0, 0, 0, 0.5)",
-                            borderColor: "rgba(51, 255, 51, 0.3)",
-                            duration: 0.3
-                        });
+                        // Reset form
+                        contactForm.reset();
+
+                        // Reset form styles
+                        for (let i = 0; i < formElements.length; i++) {
+                            gsap.to(formElements[i], {
+                                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                                borderColor: "rgba(51, 255, 51, 0.3)",
+                                duration: 0.3,
+                            });
+                        }
+                    } else {
+                        // Shake button on error
+                        gsap.to(submitButton, { x: "+=10", duration: 0.1, yoyo: true, repeat: 3 });
+                        alert("Error sending message. Please try again.");
                     }
-                }, 1000);
+                } catch (error) {
+                    gsap.to(submitButton, { x: "+=10", duration: 0.1, yoyo: true, repeat: 3 });
+                    alert("Network error. Please check your connection and try again.");
+                } finally {
+                    submitButton.disabled = false;
+                }
             });
 
             closeSuccessMessage.addEventListener("click", function () {
@@ -608,7 +623,7 @@
                     duration: 0.3,
                     onComplete: () => {
                         successMessage.style.display = "none";
-                    }
+                    },
                 });
             });
 
@@ -619,11 +634,9 @@
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: ".availability-bar",
-                    start: "top 90%"
-                }
+                    start: "top 90%",
+                },
             });
-
-
         });
     </script>
 </body>
