@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ryu@archy</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet">
+
   <link rel="stylesheet" href="/src/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 </head>
@@ -125,76 +130,11 @@
         </script>
       </div>
     </div>
-    <div id="spotify-widget"
-      class="fixed bottom-16 left-4 bg-neutral-900 text-green-400 px-4 py-2 rounded-xl shadow-lg opacity-0 z-60">
-      <div class="flex items-center gap-3">
-        <img id="album-art" class="w-12 h-12 rounded hidden" alt="Album Art" />
-        <div>
-          <div id="spotify-status" class="text-xs"></div>
-          <div id="spotify-song" class="font-medium"></div>
-          <div id="spotify-artist" class="text-sm text-gray-400"></div>
-        </div>
-      </div>
-    </div>
+
 
 
     <script>
       // Anime.js Animation for #glow-headline
-      anime({
-        targets: '#glow-headline span',
-        translateY: [
-          { value: '-2rem', duration: 600, easing: 'easeOutExpo' },
-          { value: 0, duration: 800, easing: 'easeOutBounce' }
-        ],
-        rotate: {
-          value: '1turn',
-          duration: 1200,
-          easing: 'easeInOutSine'
-        },
-        textShadow: [
-          { value: '0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99', duration: 600 },
-          { value: '0 0 5px #33FF33, 0 0 10px #33FF33, 0 0 20px #00ff99', duration: 600 }
-        ],
-        opacity: [0, 1],
-        delay: anime.stagger(50), // Stagger each letter by 50ms
-        loop: true,
-        loopDelay: 1000
-      });
-
-      // GSAP Animations
-      // Heading Animation with Glow, Glitch, and Scanline
-      gsap.to("#glow-headline", {
-        textShadow: [
-          "0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99",
-          "0 0 20px #33FF33, 0 0 40px #33FF33, 0 0 80px #00ff99",
-          "0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99"
-        ],
-        color: ["#33FF33", "#00ff99", "#33FF33"],
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true
-      });
-
-      // Glitch Effect
-      gsap.to("#glow-headline", {
-        x: gsap.utils.random([-2, 2]),
-        y: gsap.utils.random([-2, 2]),
-        opacity: [1, 0.8, 1],
-        duration: 0.1,
-        repeat: -1,
-        repeatDelay: gsap.utils.random(1, 3),
-        ease: "none"
-      });
-
-      // Navigation Link Animation
-      document.querySelectorAll('.nav-link').forEach(link => {
-        gsap.fromTo(link,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.1 }
-        );
-      });
-
 
     </script>
 
@@ -295,6 +235,31 @@
       </div>
     </div>
   </footer>
+
+  <!-- SPOTIFY WIDGET -->
+  <div id="spotify-widget" class="fixed bottom-16 left-4 spotify-container"
+    style="opacity: 1 !important; z-index: 9999;">
+    <div class="spotify-inner">
+      <div class="scanline-spotify"></div>
+      <div class="flex items-center gap-3 relative z-10">
+        <div class="album-art-container">
+          <img id="album-art" class="w-14 h-14 rounded-md hidden" alt="Album Art" />
+          <div class="album-overlay"></div>
+          <div class="album-glow"></div>
+        </div>
+        <div class="spotify-info">
+          <div id="spotify-status" class="text-xs glitch-text">
+            <span class="glitch-span" data-text="NOW PLAYING">NOW PLAYING</span>
+          </div>
+          <div id="spotify-song" class="font-medium text-green-300 truncate max-w-[180px]"></div>
+          <div id="spotify-artist" class="text-sm text-gray-400 truncate max-w-[180px]"></div>
+          <div class="progress-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

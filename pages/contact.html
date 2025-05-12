@@ -8,11 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -406,7 +407,8 @@
         </div>
     </div>
 
-    <!-- SPOTIFY WIDGET
+
+    <!-- SPOTIFY WIDGET -->
     <div id="spotify-widget" class="fixed bottom-16 left-4 opacity-0 z-60 spotify-container">
         <div class="spotify-inner">
             <div class="scanline-spotify"></div>
@@ -428,19 +430,8 @@
                 </div>
             </div>
         </div>
-    </div> -->
-
-    <div id="spotify-widget"
-        class="fixed bottom-16 left-4 bg-neutral-900 text-green-400 px-4 py-2 rounded-xl shadow-lg opacity-0 z-60">
-        <div class="flex items-center gap-3">
-            <img id="album-art" class="w-12 h-12 rounded hidden" alt="Album Art" />
-            <div>
-                <div id="spotify-status" class="text-xs"></div>
-                <div id="spotify-song" class="font-medium"></div>
-                <div id="spotify-artist" class="text-sm text-gray-400"></div>
-            </div>
-        </div>
     </div>
+
 
     <!-- TERMINAL TAB & OVERLAY -->
     <div id="terminal-tab"
@@ -631,102 +622,7 @@
                 }
             });
 
-
-            // // Footer ticker animation
-            // const footerTicker = document.getElementById('footer-ticker');
-            // if (!footerTicker) return;
-
-            // // Calculate the width of one set of items
-            // const tickerWidth = footerTicker.scrollWidth / 3;
-
-            // // Clone enough items to ensure the footer is always filled
-            // const originalItems = footerTicker.innerHTML;
-            // footerTicker.innerHTML = originalItems + originalItems + originalItems;
-
-            // // Create the GSAP infinite scroll animation with improved smoothness
-            // const tickerAnimation = gsap.to(footerTicker, {
-            //     x: -tickerWidth,
-            //     ease: "none",
-            //     duration: 20, // Increased duration for smoother movement
-            //     repeat: -1,
-            //     onRepeat: () => {
-            //         // Smoother reset by using an immediate set
-            //         gsap.set(footerTicker, { x: 0 });
-            //     }
-            // });
-
-            // // Pause animation when hovering over links with smooth transition
-            // const tickerLinks = footerTicker.querySelectorAll('a.ticker-item');
-            // tickerLinks.forEach(link => {
-            //     link.addEventListener('mouseenter', () => {
-            //         gsap.to(tickerAnimation, {
-            //             timeScale: 0,
-            //             duration: 0.5,
-            //             ease: "power2.out"
-            //         });
-            //     });
-
-            //     link.addEventListener('mouseleave', () => {
-            //         gsap.to(tickerAnimation, {
-            //             timeScale: 1,
-            //             duration: 0.5,
-            //             ease: "power2.in"
-            //         });
-            //     });
-            // });
-
-            // // Pause animation on footer hover with smooth transition
-            // const footer = document.querySelector('footer');
-            // footer.addEventListener('mouseenter', () => {
-            //     gsap.to(tickerAnimation, {
-            //         timeScale: 0,
-            //         duration: 0.5,
-            //         ease: "power2.out"
-            //     });
-            // });
-
-            // footer.addEventListener('mouseleave', () => {
-            //     gsap.to(tickerAnimation, {
-            //         timeScale: 1,
-            //         duration: 0.5,
-            //         ease: "power2.in"
-            //     });
-            // });
-
-            // // Speed up on scroll with smoother transition
-            // let scrollTimeout;
-            // window.addEventListener('scroll', () => {
-            //     // Only if not currently paused by hover
-            //     if (!footer.matches(':hover') && !isHoveringOnLink()) {
-            //         // More gradual speed up
-            //         gsap.to(tickerAnimation, {
-            //             timeScale: 1.5, // Reduced from 2.5 for smoother acceleration
-            //             duration: 0.3,
-            //             ease: "power2.out"
-            //         });
-
-            //         // Reset speed after scrolling stops
-            //         clearTimeout(scrollTimeout);
-            //         scrollTimeout = setTimeout(() => {
-            //             gsap.to(tickerAnimation, {
-            //                 timeScale: 1,
-            //                 duration: 0.5,
-            //                 ease: "power2.inOut"
-            //             });
-            //         }, 200);
-            //     }
-            // });
-
-            // // Helper function to check if hovering on any ticker link
-            // function isHoveringOnLink() {
-            //     let hovering = false;
-            //     tickerLinks.forEach(link => {
-            //         if (link.matches(':hover')) {
-            //             hovering = true;
-            //         }
-            //     });
-            //     return hovering;
-            // }
+            SpotifyWidget.initializeWidget();
 
         });
     </script>

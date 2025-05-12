@@ -1,6 +1,10 @@
 import "./style.css";
 import { animate, svg, stagger, utils } from "animejs";
 const API_BASE = import.meta.env.VITE_API_URL;
+import { gsap } from "gsap"; 
+import { ScrollTrigger, Draggable, MotionPathPlugin, Physics2DPlugin } from "gsap/all";
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger, Draggable, MotionPathPlugin, Physics2DPlugin);
 
 // =====================
 // Terminal Class
@@ -529,115 +533,69 @@ const SpotifyWidget = {
 
   async fetchTrack() {
     const widget = document.getElementById("spotify-widget");
-    if (!widget) return;
+    if (!widget) {
+      console.error("Spotify widget not found");
+      return;
+    }
+
+    const statusEl = document.getElementById("spotify-status");
+    const songEl = document.getElementById("spotify-song");
+    const artistEl = document.getElementById("spotify-artist");
+    const albumArt = document.getElementById("album-art");
+    const progressBar = document.querySelector(".progress-bar");
 
     try {
       const res = await fetch(`${API_BASE}/api/spotify`, {
         method: "GET",
         headers: { Accept: "application/json" },
       });
-      
-      if (!res.ok) {
-        console.error('Failed to fetch Spotify data:', res.status);
-        this.showError(widget);
-        return;
-      }
-      
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
       const data = await res.json();
-      
+      console.log("Spotify API response:", data); // Debug API response
+
       if (data.song) {
-        const albumArt = document.getElementById("album-art");
-        const statusEl = document.getElementById("spotify-status");
-        const songEl = document.getElementById("spotify-song");
-        const artistEl = document.getElementById("spotify-artist");
-        const progressBar = document.querySelector(".progress-bar");
-        
-        if (!statusEl || !songEl || !artistEl || !progressBar) {
-          console.error('Missing Spotify widget elements');
-          this.showError(widget);
-          return;
-        }
-        
-        // Set text content with glitch effect
+        // Update widget with song data
         const statusText = data.isPlaying ? "NOW PLAYING" : "LAST PLAYED";
         statusEl.innerHTML = `<span class="glitch-span" data-text="${statusText}">${statusText}</span>`;
         songEl.textContent = data.song;
-        artistEl.textContent = data.artist;
-        
-        // Force immediate visibility
-        widget.style.opacity = "1";
-        
-        // Update progress bar if available
-        if (data.progress !== undefined && data.duration !== undefined) {
-          this.songProgress = data.progress;
-          this.songDuration = data.duration;
-          
-          // Clear any existing interval
-          if (this.progressInterval) clearInterval(this.progressInterval);
-          
-          // Update progress bar initially
-          const progressPercent = (this.songProgress / this.songDuration) * 100;
-          gsap.to(progressBar, {
-            width: `${progressPercent}%`,
-            duration: 0.5
-          });
-          
-          // Only set up interval if song is playing
-          if (data.isPlaying) {
-            // Update progress bar in real-time
-            this.progressInterval = setInterval(() => {
-              this.songProgress += 1000; // Add 1 second
-              if (this.songProgress >= this.songDuration) {
-                clearInterval(this.progressInterval);
-                // Refresh data when song should be finished
-                setTimeout(() => this.fetchTrack(), 2000);
-              } else {
-                const newProgressPercent = (this.songProgress / this.songDuration) * 100;
-                gsap.to(progressBar, {
-                  width: `${newProgressPercent}%`,
-                  duration: 1,
-                  ease: "none"
-                });
-              }
-            }, 1000);
-          }
-        }
-        
-        // Handle album art with enhanced effects
+        artistEl.textContent = data.artist || "Unknown Artist";
+
+        // Handle album art
         if (data.albumArt) {
           albumArt.src = data.albumArt;
           albumArt.classList.remove("hidden");
-          
-          // Extract dominant color from album art for glow effect (simplified version)
-          const albumGlow = document.querySelector('.album-glow');
-          if (albumGlow) {
-            gsap.to(albumGlow, {
-              background: 'rgba(51, 255, 51, 0.5)',
-              opacity: 0.3,
-              duration: 0.5
-            });
-          }
+          // Album glow animation
+          gsap.to(".album-glow", {
+            background: "rgba(51, 255, 51, 0.5)",
+            opacity: 0.3,
+            duration: 0.5,
+          });
         } else {
           albumArt.classList.add("hidden");
         }
-        
-        // Animate on new song with enhanced cyberpunk effects
+
+        // Skip progress bar updates since API doesn't provide progress/duration
+        // Keep progress bar at 0% for decoration
+        gsap.to(progressBar, { width: "0%", duration: 0.5 });
+
+        // Animation for new song
         if (this.currentSong !== data.song) {
           this.currentSong = data.song;
-          
-          // Show widget with animation
+          gsap.killTweensOf(widget); // Prevent animation conflicts
           gsap.to(widget, {
             opacity: 1,
+            x: 0,
+            y: 0,
             duration: 0.5,
-            ease: "power2.out"
+            ease: "power2.out",
           });
-          
-          // Add entrance animation
-          gsap.fromTo(widget, 
+          // Entrance animation
+          gsap.fromTo(
+            widget,
             { x: -20, y: 10, opacity: 0 },
             { x: 0, y: 0, opacity: 1, duration: 0.8, ease: "back.out(1.7)" }
           );
-          
+
           // Glitch effect on song change
           gsap.to(songEl, {
             skewX: "20deg",
@@ -651,175 +609,119 @@ const SpotifyWidget = {
                 skewX: "0deg",
                 color: "#33ff33",
                 textShadow: "0 0 8px rgba(51, 255, 51, 0.6)",
-                duration: 0.2
+                duration: 0.2,
               });
-            }
+            },
           });
-          
+
           // Album art animation
           if (data.albumArt) {
-            gsap.fromTo(albumArt,
-              { scale: 0.6, opacity: 0, rotation: -10, filter: 'hue-rotate(90deg) brightness(1.5)' },
-              { 
-                scale: 1, 
-                opacity: 1, 
-                rotation: 0, 
-                filter: 'hue-rotate(0deg) brightness(1)',
-                duration: 0.8, 
+            gsap.fromTo(
+              albumArt,
+              { scale: 0.6, opacity: 0, rotation: -10, filter: "hue-rotate(90deg) brightness(1.5)" },
+              {
+                scale: 1,
+                opacity: 1,
+                rotation: 0,
+                filter: "hue-rotate(0deg) brightness(1)",
+                duration: 0.8,
                 ease: "elastic.out(1, 0.6)",
-                delay: 0.2
+                delay: 0.2,
               }
             );
           }
-          
-          // Scanline animation reset
-          const scanline = document.querySelector('.scanline-spotify');
-          if (scanline) {
-            gsap.fromTo(scanline,
-              { y: 0, opacity: 0.9 },
-              { y: 60, opacity: 0.7, duration: 3, repeat: -1, ease: "none" }
-            );
-          }
+
+          // Scanline animation
+          gsap.fromTo(
+            ".scanline-spotify",
+            { y: 0, opacity: 0.9 },
+            { y: 60, opacity: 0.7, duration: 3, repeat: -1, ease: "none" }
+          );
         }
       } else {
-        // No song playing state with cyberpunk styling
-        widget.innerHTML = `
-          <div class="spotify-inner">
-            <div class="scanline-spotify"></div>
-            <div class="p-4 text-center relative z-10">
-              <div class="text-xs glitch-text mb-2">
-                <span class="glitch-span" data-text="OFFLINE">OFFLINE</span>
-              </div>
-              <div class="text-gray-300">
-                No song currently playing
-                ${data.error ? `<span class="block text-xs text-gray-400 mt-1">${data.error}</span>` : ""}
-              </div>
-            </div>
-          </div>
-        `;
-        
-        // Show with subtle animation
-        gsap.to(widget, {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out"
-        });
+        // No song playing
+        statusEl.innerHTML = `<span class="glitch-span" data-text="OFFLINE">OFFLINE</span>`;
+        songEl.textContent = "No song currently playing";
+        artistEl.textContent = data.error || "";
+        albumArt.classList.add("hidden");
+        gsap.to(progressBar, { width: "0%", duration: 0.5 });
+        gsap.to(widget, { opacity: 1, duration: 0.5 });
       }
     } catch (err) {
-      console.error('Error fetching Spotify data:', err);
-      this.showError(widget);
+      // Error state
+      console.error("Spotify API error:", err);
+      statusEl.innerHTML = `<span class="glitch-span" data-text="ERROR">ERROR</span>`;
+      songEl.textContent = "Connection lost";
+      artistEl.textContent = "Can't fetch the song";
+      albumArt.classList.add("hidden");
+      gsap.to(progressBar, { width: "0%", duration: 0.5 });
+      gsap.to(widget, { opacity: 1, duration: 0.5 });
+      // Retry after 5 seconds
+      setTimeout(() => this.fetchTrack(), 5000);
     }
-  },
-
-  showError(widget) {
-    if (!widget) return;
-    widget.innerHTML = `
-      <div class="spotify-inner">
-        <div class="scanline-spotify"></div>
-        <div class="p-4 text-center relative z-10">
-          <div class="text-xs glitch-text mb-2">
-            <span class="glitch-span" data-text="ERROR">ERROR</span>
-          </div>
-          <div class="text-gray-300">
-            Connection lost
-            <span class="block text-xs text-gray-400 mt-1">Can't fetch the song</span>
-          </div>
-        </div>
-      </div>
-    `;
-    widget.style.opacity = "1";
   },
 
   addRandomGlitches() {
     const widget = document.getElementById("spotify-widget");
     if (!widget || widget.style.opacity !== "1") return;
-    
+
     if (Math.random() > 0.7) {
-      // Random glitch effect
       gsap.to(widget, {
         x: "+=2",
         duration: 0.1,
         yoyo: true,
-        repeat: 1
+        repeat: 1,
       });
-      
-      // Glitch the album art occasionally
+
       const albumArt = document.getElementById("album-art");
       if (albumArt && !albumArt.classList.contains("hidden")) {
         gsap.to(albumArt, {
-          filter: 'hue-rotate(90deg) brightness(1.5)',
+          filter: "hue-rotate(90deg) brightness(1.5)",
           duration: 0.1,
           yoyo: true,
-          repeat: 1
+          repeat: 1,
         });
       }
     }
-    
-    // Schedule next glitch
+
     setTimeout(() => this.addRandomGlitches(), Math.random() * 5000 + 2000);
   },
 
   initializeWidget() {
     const widget = document.getElementById("spotify-widget");
-    if (!widget) return;
+    if (!widget) {
+      console.error("Spotify widget not found");
+      return;
+    }
 
     // Initialize widget
     this.fetchTrack();
-    setInterval(() => this.fetchTrack(), 30000);
-    setTimeout(() => this.addRandomGlitches(), 3000);
+    setInterval(() => this.fetchTrack(), 60000); // Increased to 60 seconds to reduce API calls
 
     // Add hover interactions
-    widget.addEventListener('mouseenter', () => {
-      const albumGlow = widget.querySelector('.album-glow');
-      if (albumGlow) {
-        gsap.to(albumGlow, {
-          opacity: 0.5,
-          duration: 0.3
-        });
-      }
-      
-      // Pause the progress bar animation on hover
-      if (this.progressInterval) {
-        clearInterval(this.progressInterval);
-      }
+    widget.addEventListener("mouseenter", () => {
+      gsap.to(".album-glow", { opacity: 0.5, duration: 0.3 });
+      if (this.progressInterval) clearInterval(this.progressInterval);
     });
-    
-    widget.addEventListener('mouseleave', () => {
-      const albumGlow = widget.querySelector('.album-glow');
-      if (albumGlow) {
-        gsap.to(albumGlow, {
-          opacity: 0.3,
-          duration: 0.3
-        });
-      }
-      
-      // Resume progress bar animation if song is playing
-      if (this.currentSong && this.songDuration > 0 && this.songProgress < this.songDuration) {
-        this.progressInterval = setInterval(() => {
-          this.songProgress += 1000;
-          if (this.songProgress >= this.songDuration) {
-            clearInterval(this.progressInterval);
-            setTimeout(() => this.fetchTrack(), 2000);
-          } else {
-            const newProgressPercent = (this.songProgress / this.songDuration) * 100;
-            gsap.to(document.querySelector(".progress-bar"), {
-              width: `${newProgressPercent}%`,
-              duration: 1,
-              ease: "none"
-            });
-          }
-        }, 1000);
-      }
+
+    widget.addEventListener("mouseleave", () => {
+      gsap.to(".album-glow", { opacity: 0.3, duration: 0.3 });
+      // Skip progress bar resume since no progress data
     });
-  }
+
+    // Start random glitches after 3 seconds
+    setTimeout(() => this.addRandomGlitches(), 3000);
+  },
 };
+
+// Initialize the widget
+SpotifyWidget.initializeWidget();
 
 // =====================
 // Journey Timeline
 // =====================
 const JourneyTimeline = {
   init() {
-// Check if required libraries are loaded
     if (typeof gsap === 'undefined' || typeof Draggable === 'undefined' || typeof MotionPathPlugin === 'undefined') {
       console.error("Required plugins (GSAP, Draggable, MotionPathPlugin) not loaded");
       return;
@@ -1130,21 +1032,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const terminal = new Terminal();
   if (!terminal.init()) console.error("Failed to initialize terminal");
 
-  // Initialize Spotify Widget
-  SpotifyWidget.initializeWidget();
-
-  // Initialize other components
-  setTimeout(() => MatrixRainEffect.createMatrixRain(), 1000);
-  JourneyTimeline.init();
-  ExperienceAnimations.init();
-  MatrixRainEffect.addMatrixStyles();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize Terminal
-  const terminal = new Terminal();
-  if (!terminal.init()) console.error("Failed to initialize terminal");
-
   // Terminal UI setup
   const terminalTab = document.getElementById("terminal-tab");
   terminalTab?.addEventListener("click", (e) => {
@@ -1341,3 +1228,59 @@ const TerminalJourney = {
 document.addEventListener('DOMContentLoaded', function() {
   TerminalJourney.init();
 });
+
+
+      anime({
+        targets: '#glow-headline span',
+        translateY: [
+          { value: '-2rem', duration: 600, easing: 'easeOutExpo' },
+          { value: 0, duration: 800, easing: 'easeOutBounce' }
+        ],
+        rotate: {
+          value: '1turn',
+          duration: 1200,
+          easing: 'easeInOutSine'
+        },
+        textShadow: [
+          { value: '0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99', duration: 600 },
+          { value: '0 0 5px #33FF33, 0 0 10px #33FF33, 0 0 20px #00ff99', duration: 600 }
+        ],
+        opacity: [0, 1],
+        delay: anime.stagger(50), // Stagger each letter by 50ms
+        loop: true,
+        loopDelay: 1000
+      });
+
+      // GSAP Animations
+      // Heading Animation with Glow, Glitch, and Scanline
+      gsap.to("#glow-headline", {
+        textShadow: [
+          "0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99",
+          "0 0 20px #33FF33, 0 0 40px #33FF33, 0 0 80px #00ff99",
+          "0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99"
+        ],
+        color: ["#33FF33", "#00ff99", "#33FF33"],
+        duration: 2,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Glitch Effect
+      gsap.to("#glow-headline", {
+        x: gsap.utils.random([-2, 2]),
+        y: gsap.utils.random([-2, 2]),
+        opacity: [1, 0.8, 1],
+        duration: 0.1,
+        repeat: -1,
+        repeatDelay: gsap.utils.random(1, 3),
+        ease: "none"
+      });
+
+      // Navigation Link Animation
+      document.querySelectorAll('.nav-link').forEach(link => {
+        gsap.fromTo(link,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.1 }
+        );
+      });
