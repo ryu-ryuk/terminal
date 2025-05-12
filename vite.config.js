@@ -5,13 +5,12 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        about: resolve(__dirname, 'about.html'),
-        projects: resolve(__dirname, 'projects.html'),
-        exp: resolve(__dirname, 'exp.html'),
-        skills: resolve(__dirname, 'skills.html'),
-        contact: resolve(__dirname, 'contact.html')
-      }
-    }
+        main: 'index.html',
+        projects: 'pages/projects.html',
+        contact: 'pages/contact.html',
+        blogs: 'pages/blogs.html',
+        about: 'pages/about.html',
+      },
+    },
   }
 });

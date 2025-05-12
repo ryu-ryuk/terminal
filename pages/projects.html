@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | ryu@archy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <style>
+        .project-card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(51, 255, 51, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(51, 255, 51, 0.7);
+        }
+
+        .preview-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-section {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-bottom: 120px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(51, 255, 51, 0.2));
+            z-index: -1;
+        }
+
+        .hero-gif {
+            height: 100%;
+            width: 90%;
+            max-width: 100%;
+            height: auto;
+            border: 2px solid rgba(51, 255, 51, 0.5);
+            border-radius: 8px;
+            object-fit: cover;
+            z-index: 0;
+            margin-bottom: 80px;
+
+
+            max-height: 60vh;
+        }
+
+        .hero-text {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #33ff33;
+            text-shadow: 0 0 15px #33ff33, 0 0 30px #33ff33;
+            z-index: 1;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* 
+        .hero-text-container {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(0, 10, 2, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 255, 51, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            z-index: 2;
+        } */
+
+        .large.grid.centered.square-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 3rem;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .large.grid.centered.square-grid span {
+            display: inline-block;
+            width: 6rem;
+            height: 6rem;
+            line-height: 6rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(51, 255, 51, 0.3);
+            border-radius: 4px;
+            transition: text-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .large.grid.centered.square-grid span:hover {
+            text-shadow: 0 0 20px #33ff33, 0 0 40px #33ff33;
+            transform: scale(1.1);
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%);
+        }
+
+        .glitch::before {
+            color: rgba(255, 0, 0, 0.7);
+            transform: translate(-3px, -3px);
+        }
+
+        .glitch::after {
+            color: rgba(0, 255, 255, 0.7);
+            transform: translate(3px, 3px);
+        }
+
+        .console-text {
+            opacity: 0;
+            padding-top: 2rem;
+            /* white-space: pre; */
+        }
+
+        .terminal-window {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(51, 255, 51, 0.1));
+        }
+
+        /* 
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(51, 255, 51, 0.3);
+            animation: scanline 4s linear infinite;
+        } */
+
+        /* @keyframes scanline {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(1000px);
+            }
+        } */
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .large.grid.centered.square-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 2rem;
+            }
+
+            .large.grid.centered.square-grid span {
+                width: 4rem;
+                height: 4rem;
+                line-height: 4rem;
+                font-size: 2.5rem;
+            }
+
+            .hero-text {
+                bottom: 3%;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-black text-green-400 font-mono p-6 min-h-screen flex flex-col items-center justify-center pb-20">
+    <nav class="p-2 fixed top-0 left-0 w-full bg-black/25 backdrop-blur-lg z-50">
+        <div class="max-w px-4 mx-auto flex justify-between items-center">
+            <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
+            <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
+            <ul id="menu"
+                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/60 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="/pages/contact.html" class="hover:text-green-300">Contact</a>
+                </li>
+                <li class="px-4 py-2 md:px-0"><a href="/pages/projects.html"
+                        class="hover:text-green-300 font-bold underline">Projects</a>
+                </li>
+                <li class="px-4 py-2 md:px-0"><a href="/pages/blogs.html" class="hover:text-green-300">Blogs</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="/pages/about.html" class="hover:text-green-300">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="w-full">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-bg"></div>
+
+            <div class="w-full flex justify-center items-center" style="height: 60vh">
+                <img src="/src/assets/projects/beruRS.gif" loading="lazy" alt="beruRS preview" class="hero-gif"
+                    data-gsap="hero-gif">
+            </div>
+
+            <!-- <h1 class="text-4xl md:text-6xl font-bold text-center mb-4 glitch" data-text="Projects">
+                    Projects
+                </h1> -->
+            <div class="hero-text">
+                <h2 class="large grid centered square-grid text-5xl md:text-9xl font-bold" data-text="beru RS">
+                    <span data-text="b">b</span>
+                    <span data-text="e">e</span>
+                    <span data-text="r">r</span>
+                    <span data-text="u">u</span>
+                    <span data-text="R">R</span>
+                    <span data-text="S">S</span>
+                </h2>
+                <p class="console-text text-lg md:text-xl mt-6 mx-auto max-w-2xl">
+                    network security tool written in rust: <a href="https://github.com/ryu-ryuk/cybeRs"
+                        class="text-green-300 underline hover:text-green-400">GitHub</a>
+                </p>
+                <div class="project-context border-t border-green-400/30 pt-4">
+
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
+                    </div>
+                </div>
+
+
+        </section>
+
+
+
+        <!-- Projects List -->
+        <div class="project-card glass-card opacity-0" data-gsap="project">
+            <div class="parallax-container">
+                <div class="parallax-bg" style="background-image: url('/src/assets/projects/output.gif')">
+                </div>
+                <div class="parallax-content">
+                    <h3 class="text-xl font-semibold text-green-300">
+                        <span>🎛️</span> Hyprland Arch Linux Dotfiles
+                    </h3>
+                </div>
+            </div>
+            <div class="p-5 relative overflow-hidden">
+
+                <p class="text-gray-400 mb-4 relative z-10">
+                    Custom dotfiles for a highly optimized and aesthetic Hyprland setup on Arch Linux.
+                </p>
+
+                <!-- Project Context Section -->
+                <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Arch Linux</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Hyprland</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Bash</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Scripting</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
+                        <p class="text-gray-400 text-sm">Developer</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
+                        <p class="text-gray-400 text-sm">Ongoing | Until I switch from Hyprland</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
+                        <ul class="text-gray-400 text-sm list-disc pl-5">
+                            <li>Custom Waybar configuration</li>
+                            <li>Dynamic workspace management</li>
+                            <li>Optimized for productivity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="https://github.com/ryu-ryuk/arch.git"
+                    class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+        </div>
+        <div class="project-card glass-card opacity-0" data-gsap="project">
+            <div class="parallax-container">
+                <div class="parallax-bg" style="background-image: url('/src/assets/projects/kanna-kanna-kamui.gif')">
+                </div>
+                <div class="parallax-content">
+                    <h3 class="text-xl font-semibold text-green-300">
+                        <span>🍁</span> PDFtoMindmap
+                    </h3>
+                </div>
+                <div class="parallax-content">
+                    <h3 class="text-xl font-semibold text-green-300">
+                        <span>💻👨‍💻</span> VS Code Extension
+                    </h3>
+                </div>
+            </div>
+            <div class="p-5 relative overflow-hidden">
+
+                <p class="text-gray-400 mb-4 relative z-10">
+                    A VS Code extension developed for debugging large-scale university/backend projects using Groq
+                    AI. It
+                    captures real-time context (code, logs, project structure) and delivers smart, actionable
+                    suggestions.
+                </p>
+
+                <!-- Project Context Section -->
+                <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">AI</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">VS Code</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Debugging</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Groq LLM</span>
+                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Ollama</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
+                        <p class="text-gray-400 text-sm">Lead Developer & System Architect</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
+                        <p class="text-gray-400 text-sm">Ongoing | Beta Release Planned (June 2025)</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
+                        <ul class="text-gray-400 text-sm list-disc pl-5">
+                            <li>Context-aware debugging via Groq AI</li>
+                            <li>Auto-captures editor, terminal, and config context</li>
+                            <li>Live suggestion panel inside VS Code</li>
+                            <li>Optional OCR module (Rust + Tesseract + Wayland)</li>
+                            <li>Upcoming: Peer debugging support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="https://github.com/livedebugger"
+                    class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                    View on GitHub
+                </a>
+            </div>
+
+
+            <!-- Project 2: Pdf2mindmap -->
+            <div class="project-card glass-card opacity-0" data-gsap="project">
+                <div class="parallax-container">
+                    <div class="parallax-bg" style="background-image: url('/src/assets/projects/k-world.gif')">
+                    </div>
+                    <div class="parallax-content">
+                        <h3 class="text-xl font-semibold text-green-300">
+                            <span>🍁</span> PDFtoMindmap
+                        </h3>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <p class="text-gray-400 mb-4">
+                        a dynamic service which extracts text,image,tables,latex formulas from PDFs and uses NLP/HUGGING
+                        FACE
+                        models to create cohesive mindmaps.
+                    </p>
+
+                    <!-- Project Context Section -->
+                    <div class="project-context mt-4 border-t border-green-400/30 pt-4">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Python</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">ML/LLM</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Hugging
+                                Face</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Docker</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Gorbid</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
+                            <p class="text-gray-400 text-sm">Developer</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
+                            <p class="text-gray-400 text-sm">Ongoing | Need assistance</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
+                            <ul class="text-gray-400 text-sm list-disc pl-5">
+                                <li>Extracts text/images/latex from PDFs (academic etc.) > parses them</li>
+                                <li>Uses the parsed data to analyze and build context using LLMs</li>
+                                <li>Uses the updated context and data to build a cohesive and smooth mindmap
+                                    which tells a story.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/ryu-ryuk/pdf2mindmap.git"
+                        class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="project-card glass-card opacity-0" data-gsap="project">
+                <div class="parallax-container">
+                    <div class="parallax-bg" style="background-image: url('/src/assets/projects/lenrs.gif')">
+                    </div>
+                    <div class="parallax-content">
+                        <h3 class="text-xl font-semibold text-green-300">
+                            <span>🔎</span> lenrs – A TUI OCR Snippet Tool for Wayland
+
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="p-5 relative overflow-hidden">
+
+                    <p class="text-gray-400 mb-4 relative z-10">
+                        lenrs lets you select any screen area, extract text using Tesseract OCR, and auto-copy it to
+                        your
+                        clipboard. </p>
+
+                    <!-- Project Context Section -->
+                    <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Tesseract</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">grim +
+                                slurp</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Linux</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
+                            <p class="text-gray-400 text-sm">Developer</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
+                            <p class="text-gray-400 text-sm">Finished/p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
+                            <ul class="text-gray-400 text-sm list-disc pl-5">
+                                <li>Dynamic window selection</li>
+                                <li>Lightweight and fast</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/ryu-ryuk/lenrs.git"
+                        class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+            <!-- kaomoji -->
+            <div class="project-card glass-card opacity-0" data-gsap="project">
+                <div class="parallax-container">
+                    <div class="parallax-bg" style="background-image: url('/src/assets/projects/kaomoji-picker.gif')">
+                    </div>
+                    <div class="parallax-content">
+                        <h3 class="text-xl font-semibold text-green-300">
+                            <span>(☝◞‸◟)☞</span> Kaomoji-Picker
+
+                        </h3>
+                    </div>
+                </div>
+                <div class="p-5 relative overflow-hidden">
+
+                    <p class="text-gray-400 mb-4 relative z-10">
+                        A lightining-fast kaomoji selector for Linux using Rofi, with clipboard integration.
+                    </p>
+
+                    <!-- Project Context Section -->
+                    <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rofi</span>
+                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Linux</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
+                            <p class="text-gray-400 text-sm">Developer</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
+                            <p class="text-gray-400 text-sm">Finished</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
+                            <ul class="text-gray-400 text-sm list-disc pl-5">
+                                <li>LOTSSSS OF KAOMOJISS</li>
+                                <li>Modular (easy to add even more)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/ryu-ryuk/kaomoji-picker.git"
+                        class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        </section>
+    </main>
+
+    <!-- SPOTIFY WIDGET -->
+    <div id="spotify-widget" class="fixed bottom-16 left-4 opacity-0 z-60 spotify-container">
+        <div class="spotify-inner">
+            <div class="scanline-spotify"></div>
+            <div class="flex items-center gap-3 relative z-10">
+                <div class="album-art-container">
+                    <img id="album-art" class="w-14 h-14 rounded-md hidden" alt="Album Art" />
+                    <div class="album-overlay"></div>
+                    <div class="album-glow"></div>
+                </div>
+                <div class="spotify-info">
+                    <div id="spotify-status" class="text-xs glitch-text">
+                        <span class="glitch-span" data-text="NOW PLAYING">NOW PLAYING</span>
+                    </div>
+                    <div id="spotify-song" class="font-medium text-green-300 truncate max-w-[180px]"></div>
+                    <div id="spotify-artist" class="text-sm text-gray-400 truncate max-w-[180px]"></div>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- TERMINAL TAB & OVERLAY -->
+    <div id="terminal-tab"
+        class="fixed bottom-16 right-2 z-50  border border-green-700/50 p-4 bg-black/70 text-[var(--terminal-green)] rounded px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-['Space_Mono',_monospace]">
+        <!-- Icon that's always visible -->
+        <span class="text-xl transition-all duration-300">
+            >_<span class="ml-2"></span>
+        </span>
+
+        <!-- "Terminal" text that slides in from right on hover -->
+        <span class="text-[var(--terminal-green)] text-xs ml-1">
+            Terminal<span class="blinking-cursor"></span>
+        </span>
+    </div>
+    <div id="terminal-overlay"
+        class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden transition-all duration-300 ease-in-out">
+        <div id="terminal-window"
+            class="relative w-full max-w-lg terminal-window scale-95 opacity-100 transition-all duration-300 ease-in-out">
+            <div class="terminal-header">
+                <button id="close-terminal" class="terminal-button bg-red-500 hover:bg-red-400"></button>
+                <button id="minimize-terminal" class="terminal-button bg-yellow-400 hover:bg-yellow-300"></button>
+                <button id="maximize-terminal" class="terminal-button bg-green-400 hover:bg-green-300"></button>
+                <span class="ml-4 text-[var(--terminal-green)]">ryu@archy:~</span>
+            </div>
+            <div id="terminal-output" class="terminal-output">
+                <div>Type <span class="text-[var(--terminal-green)] font-bold">help</span> for available commands</div>
+            </div>
+            <form id="terminal-form" class="terminal-form">
+                <span class="pl-4 text-[var(--terminal-green)] ">$</span>
+                <input id="terminal-input" type="text" autocomplete="off" class="terminal-input"
+                    placeholder="type your command...">
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer
+        class="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm border-t border-green-400/50 overflow-hidden z-50">
+        <div class="footer-ticker-container">
+            <div id="footer-ticker" class="whitespace-nowrap flex items-center py-3">
+                <!-- Multiple text elements with different styles and languages -->
+                <a href="/blog" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
+                <span class="ticker-divider">•</span>
+                <a href="/projects" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">thanks for visiting (^^;)</span>
+                <span class="ticker-divider">•</span>
+                <a href="/contact" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">サイバーパンク <span class="ticker-translation">Cyberpunk</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="/skills" class="ticker-item">スキル <span class="ticker-translation">Skills</span></a>
+                <span class="ticker-divider">•</span>
+
+                <!-- Clone of the above for continuous scrolling -->
+                <a href="/blog" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
+                <span class="ticker-divider">•</span>
+                <a href="/projects" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">thanks for visiting (^^;)</span>
+                <span class="ticker-divider">•</span>
+                <a href="/contact" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">サイバーパンク <span class="ticker-translation">Cyberpunk</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="/skills" class="ticker-item">スキル <span class="ticker-translation">Skills</span></a>
+                <span class="ticker-divider">•</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- MAIN JS -->
+    <script type="module" src="/src/main.js"></script>
+
+    <!-- PROJECT-SPECIFIC JS -->
+    <script>
+        // Wait for DOM to be ready
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize GSAP
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById("menu-toggle");
+            const menu = document.getElementById("menu");
+            if (menuToggle) {
+                menuToggle.addEventListener("click", function () {
+                    menu.classList.toggle("hidden");
+                    menu.classList.toggle("flex");
+                });
+            }
+
+            // Initialize hero animations
+            function initHeroAnimations() {
+                // Create timeline for hero section
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".hero-section",
+                        start: "top center",
+                        toggleActions: "play none none reset"
+                    }
+                });
+
+                // Add animations to timeline
+                tl.fromTo(".hero-gif",
+                    { opacity: 0, scale: 0.8 },
+                    { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }
+                );
+
+                // Animate grid letters
+                const letters = document.querySelectorAll('.large.grid.centered.square-grid span');
+                letters.forEach((letter, index) => {
+                    tl.fromTo(letter,
+                        { opacity: 0, y: -50 },
+                        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" },
+                        "-=0.3"
+                    );
+                });
+
+                // Animate console text
+                tl.fromTo(".console-text",
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+                    "-=0.2"
+                );
+
+                // Setup parallax scroll effect
+                gsap.to(".hero-bg", {
+                    yPercent: -20,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".hero-section",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+            }
+
+            // Call init function
+            initHeroAnimations();
+
+            // Create main hero timeline
+            const heroTimeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".hero-section",
+                    start: "top center",
+                    toggleActions: "play none none reset"
+                }
+            });
+
+            // Initial setup - hide elements
+            gsap.set([".hero-gif", ".large.grid.centered.square-grid span", ".console-text"], { opacity: 0 });
+            gsap.set(".hero-gif", { scale: 0.8 });
+            gsap.set(".large.grid.centered.square-grid span", { y: -50 });
+            gsap.set(".console-text", { y: 20 });
+
+            // Add animations to timeline in sequence
+            heroTimeline
+                // Hero GIF fade in with scale
+                .to(".hero-gif", {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1.2,
+                    ease: "power3.out"
+                })
+                // Staggered grid letters animation
+                .to(".large.grid.centered.square-grid span", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    stagger: {
+                        each: 0.1,
+                        ease: "power2.out"
+                    },
+                    ease: "back.out(1.7)"
+                }, "-=0.8") // Overlap with previous animation
+                // Console text fade in
+                .to(".console-text", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                }, "-=0.4");
+
+            // Separate parallax effect for background
+            gsap.to(".hero-bg", {
+                yPercent: -20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero-section",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1
+                }
+            });
+
+            // Custom cursor effect
+            const cursor = document.createElement('div');
+            cursor.classList.add('custom-cursor');
+            document.body.appendChild(cursor);
+
+            const cursorDot = document.createElement('div');
+            cursorDot.classList.add('cursor-dot');
+            document.body.appendChild(cursorDot);
+
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+
+                gsap.to(cursorDot, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.1
+                });
+            });
+
+            // Expand cursor on hoverable elements
+            document.querySelectorAll('a, button, .project-card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('cursor-expanded');
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('cursor-expanded');
+                });
+
+            });
+            // Text reveal animation
+            const textElements = document.querySelectorAll('.animate-text');
+            textElements.forEach(text => {
+                // Split text into characters
+                const characters = [...text.textContent];
+                text.textContent = '';
+
+                // Create spans for each character
+                characters.forEach(char => {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.style.opacity = '0';
+                    span.style.display = 'inline-block';
+                    text.appendChild(span);
+                });
+
+                // Animate each character
+                gsap.to(text.querySelectorAll('span'), {
+                    opacity: 1,
+                    stagger: 0.05,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    y: 0,
+                    scrollTrigger: {
+                        trigger: text,
+                        start: 'top 80%'
+                    }
+                });
+            });
+
+            // Page transition effect
+            const pageTransition = () => {
+                const overlay = document.createElement('div');
+                overlay.classList.add('page-transition-overlay');
+                document.body.appendChild(overlay);
+
+                return gsap.timeline()
+                    .to(overlay, {
+                        duration: 0.5,
+                        scaleY: 1,
+                        transformOrigin: 'bottom',
+                        ease: 'power4.inOut'
+                    })
+                    .to(overlay, {
+                        duration: 0.5,
+                        scaleY: 0,
+                        transformOrigin: 'top',
+                        ease: 'power4.inOut',
+                        delay: 0.1
+                    });
+            };
+
+            // Apply to navigation links
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href !== '#' && !href.startsWith('http')) {
+                        e.preventDefault();
+
+                        const tl = pageTransition();
+                        tl.eventCallback('onComplete', () => {
+                            window.location.href = href;
+                        });
+                    }
+                });
+            });
+
+            document.querySelectorAll('.parallax-container').forEach(container => {
+                container.addEventListener('mousemove', (e) => {
+                    const rect = container.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                    const bg = container.querySelector('.parallax-bg');
+                    gsap.to(bg, {
+                        x: x * 30,
+                        y: y * 30,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    const bg = container.querySelector('.parallax-bg');
+                    gsap.to(bg, {
+                        x: 0,
+                        y: 0,
+                        duration: 1,
+                        ease: 'elastic.out(1, 0.5)'
+                    });
+                });
+            });
+            // Add hover effects for grid letters
+            const gridLetters = document.querySelectorAll('.large.grid.centered.square-grid span');
+            gridLetters.forEach(letter => {
+                letter.addEventListener('mouseenter', () => {
+                    gsap.to(letter, {
+                        scale: 1.2,
+                        duration: 0.3,
+                        ease: "elastic.out(1, 0.5)",
+                        textShadow: "0 0 20px #33ff33, 0 0 40px #33ff33"
+                    });
+                });
+
+                letter.addEventListener('mouseleave', () => {
+                    gsap.to(letter, {
+                        scale: 1,
+                        duration: 0.2,
+                        ease: "power2.out",
+                        textShadow: "none"
+                    });
+                });
+            });
+
+            // Project Cards Animations
+            gsap.utils.toArray(".project-card[data-gsap='project']").forEach((card, index) => {
+                gsap.fromTo(
+                    card,
+                    { opacity: 0, y: 100, scale: 0.95 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%",
+                            toggleActions: "play none none reset",
+                        },
+                        delay: index * 0.2,
+                    }
+                );
+
+                // Console typing effect for card text
+                card.querySelectorAll(".console-text").forEach((textEl) => {
+                    const text = textEl.getAttribute("data-text");
+                    textEl.innerHTML = "";
+                    gsap.to(textEl, {
+                        opacity: 1,
+                        duration: 0,
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%",
+                        },
+                        onStart: () => {
+                            let i = 0;
+                            function type() {
+                                if (i < text.length) {
+                                    textEl.innerHTML += text.charAt(i);
+                                    i++;
+                                    setTimeout(type, 30);
+                                }
+                            }
+                            type();
+                        },
+                    });
+                });
+
+                // Tilt effect on hover
+                const preview = card.querySelector(".preview-container");
+                if (preview) {
+                    preview.addEventListener("mousemove", (e) => {
+                        const rect = preview.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        gsap.to(card, {
+                            rotationY: x * 0.05,
+                            rotationX: -y * 0.05,
+                            duration: 0.3,
+                            ease: "power2.out",
+                        });
+                    });
+                    preview.addEventListener("mouseleave", () => {
+                        gsap.to(card, {
+                            rotationY: 0,
+                            rotationX: 0,
+                            duration: 0.3,
+                            ease: "power2.out",
+                        });
+                    });
+                }
+            });
+
+            // Terminal console enhancements
+            const terminalOutput = document.querySelector("#terminal-output");
+            if (terminalOutput) {
+                terminalOutput.querySelectorAll(".console-text").forEach((textEl) => {
+                    const text = textEl.getAttribute("data-text");
+                    textEl.innerHTML = "";
+                    gsap.to(textEl, {
+                        opacity: 1,
+                        duration: 0,
+                        onStart: () => {
+                            let i = 0;
+                            function type() {
+                                if (i < text.length) {
+                                    textEl.innerHTML += text.charAt(i);
+                                    i++;
+                                    setTimeout(type, 50);
+                                }
+                            }
+                            type();
+                        },
+                    });
+                });
+            }
+
+            // Footer Marquee Animation
+            const dynamicFooter = document.getElementById('dynamic-footer');
+            const footerText = document.getElementById('footer-text');
+            const footerTextClone = document.getElementById('footer-text-clone');
+
+            if (dynamicFooter && footerText && footerTextClone) {
+                footerTextClone.innerHTML = footerText.innerHTML;
+                requestAnimationFrame(() => {
+                    const textWidth = footerText.offsetWidth;
+                    if (textWidth > 0) {
+                        gsap.set(dynamicFooter, { x: 0 });
+                        const tween = gsap.to(dynamicFooter, { x: -textWidth, duration: 15, ease: "linear", repeat: -1 });
+                        const footerElement = document.querySelector('footer');
+                        footerElement.addEventListener('mouseenter', () => tween.pause());
+                        footerElement.addEventListener('mouseleave', () => tween.play());
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
