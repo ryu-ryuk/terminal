@@ -536,6 +536,13 @@ const SpotifyWidget = {
         method: "GET",
         headers: { Accept: "application/json" },
       });
+      
+      if (!res.ok) {
+        console.error('Failed to fetch Spotify data:', res.status);
+        this.showError(widget);
+        return;
+      }
+      
       const data = await res.json();
       
       if (data.song) {
@@ -545,11 +552,20 @@ const SpotifyWidget = {
         const artistEl = document.getElementById("spotify-artist");
         const progressBar = document.querySelector(".progress-bar");
         
+        if (!statusEl || !songEl || !artistEl || !progressBar) {
+          console.error('Missing Spotify widget elements');
+          this.showError(widget);
+          return;
+        }
+        
         // Set text content with glitch effect
         const statusText = data.isPlaying ? "NOW PLAYING" : "LAST PLAYED";
         statusEl.innerHTML = `<span class="glitch-span" data-text="${statusText}">${statusText}</span>`;
         songEl.textContent = data.song;
         artistEl.textContent = data.artist;
+        
+        // Force immediate visibility
+        widget.style.opacity = "1";
         
         // Update progress bar if available
         if (data.progress !== undefined && data.duration !== undefined) {
@@ -690,36 +706,28 @@ const SpotifyWidget = {
         });
       }
     } catch (err) {
-      // Error state with cyberpunk styling
-      widget.innerHTML = `
-        <div class="spotify-inner">
-          <div class="scanline-spotify"></div>
-          <div class="p-4 text-center relative z-10">
-            <div class="text-xs glitch-text mb-2">
-              <span class="glitch-span" data-text="ERROR">ERROR</span>
-            </div>
-            <div class="text-gray-300">
-              Connection lost
-              <span class="block text-xs text-gray-400 mt-1">Can't fetch the song</span>
-            </div>
+      console.error('Error fetching Spotify data:', err);
+      this.showError(widget);
+    }
+  },
+
+  showError(widget) {
+    if (!widget) return;
+    widget.innerHTML = `
+      <div class="spotify-inner">
+        <div class="scanline-spotify"></div>
+        <div class="p-4 text-center relative z-10">
+          <div class="text-xs glitch-text mb-2">
+            <span class="glitch-span" data-text="ERROR">ERROR</span>
+          </div>
+          <div class="text-gray-300">
+            Connection lost
+            <span class="block text-xs text-gray-400 mt-1">Can't fetch the song</span>
           </div>
         </div>
-      `;
-      
-      // Show with glitch animation
-      gsap.to(widget, {
-        opacity: 1,
-        duration: 0.5,
-        onComplete: () => {
-          gsap.to(widget, {
-            x: "+=3",
-            duration: 0.1,
-            yoyo: true,
-            repeat: 5
-          });
-        }
-      });
-    }
+      </div>
+    `;
+    widget.style.opacity = "1";
   },
 
   addRandomGlitches() {
@@ -1117,6 +1125,21 @@ const ExperienceAnimations = {
 // =====================
 // Initialize Everything
 // =====================
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize Terminal
+  const terminal = new Terminal();
+  if (!terminal.init()) console.error("Failed to initialize terminal");
+
+  // Initialize Spotify Widget
+  SpotifyWidget.initializeWidget();
+
+  // Initialize other components
+  setTimeout(() => MatrixRainEffect.createMatrixRain(), 1000);
+  JourneyTimeline.init();
+  ExperienceAnimations.init();
+  MatrixRainEffect.addMatrixStyles();
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize Terminal
   const terminal = new Terminal();
