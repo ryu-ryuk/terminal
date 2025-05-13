@@ -1,271 +1,291 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 | ryu@archy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="/src/assets/images/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            overflow-x: hidden;
-            font-family: 'Space Mono', monospace;
-            color: #33ff33;
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        overflow-x: hidden;
+        font-family: "Space Mono", monospace;
+        color: #33ff33;
+      }
+
+      /* Scanline Effect */
+      .scanline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: rgba(51, 255, 51, 0.3);
+        animation: scanline 4s linear infinite;
+        z-index: 999;
+        pointer-events: none;
+      }
+
+      @keyframes scanline {
+        0% {
+          transform: translateY(0);
         }
 
-        /* Scanline Effect */
-        .scanline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: rgba(51, 255, 51, 0.3);
-            animation: scanline 4s linear infinite;
-            z-index: 999;
-            pointer-events: none;
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      /* Glitch Effect */
+      .glitch {
+        position: relative;
+        display: inline-block;
+      }
+
+      .glitch::before,
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+      }
+
+      .glitch::before {
+        color: #ff00ff;
+        z-index: -1;
+        animation: glitch-before 2s infinite;
+      }
+
+      .glitch::after {
+        color: #00ffff;
+        z-index: -2;
+        animation: glitch-after 3s infinite;
+      }
+
+      @keyframes glitch-before {
+        0% {
+          transform: translateX(0);
         }
 
-        @keyframes scanline {
-            0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(100vh);
-            }
+        20% {
+          transform: translateX(-2px);
         }
 
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
-            display: inline-block;
+        40% {
+          transform: translateX(2px);
         }
 
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
+        60% {
+          transform: translateX(-1px);
         }
 
-        .glitch::before {
-            color: #ff00ff;
-            z-index: -1;
-            animation: glitch-before 2s infinite;
+        80% {
+          transform: translateX(1px);
         }
 
-        .glitch::after {
-            color: #00ffff;
-            z-index: -2;
-            animation: glitch-after 3s infinite;
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes glitch-after {
+        0% {
+          transform: translateX(0);
         }
 
-        @keyframes glitch-before {
-            0% {
-                transform: translateX(0);
-            }
-
-            20% {
-                transform: translateX(-2px);
-            }
-
-            40% {
-                transform: translateX(2px);
-            }
-
-            60% {
-                transform: translateX(-1px);
-            }
-
-            80% {
-                transform: translateX(1px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+        20% {
+          transform: translateX(2px);
         }
 
-        @keyframes glitch-after {
-            0% {
-                transform: translateX(0);
-            }
-
-            20% {
-                transform: translateX(2px);
-            }
-
-            40% {
-                transform: translateX(-2px);
-            }
-
-            60% {
-                transform: translateX(1px);
-            }
-
-            80% {
-                transform: translateX(-1px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+        40% {
+          transform: translateX(-2px);
         }
 
-        /* Container Styling */
-        .error-container {
-            background: rgba(0, 10, 2, 0.25);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(51, 255, 51, 0.3);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(51, 255, 51, 0.1);
-            padding: 2rem;
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            transition: all 0.4s ease;
+        60% {
+          transform: translateX(1px);
         }
 
-        .error-container:hover {
-            box-shadow: 0 8px 40px rgba(51, 255, 51, 0.2);
+        80% {
+          transform: translateX(-1px);
         }
 
-        /* Button Styling */
-        .return-btn {
-            position: relative;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #33ff33;
-            color: #33ff33;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+        100% {
+          transform: translateX(0);
         }
+      }
 
-        .return-btn:hover {
-            background: rgba(51, 255, 51, 0.2);
-            box-shadow: 0 0 20px rgba(51, 255, 51, 0.7);
-            transform: translateY(-2px);
-        }
+      /* Container Styling */
+      .error-container {
+        background: rgba(0, 10, 2, 0.25);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(51, 255, 51, 0.3);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(51, 255, 51, 0.1);
+        padding: 2rem;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        transition: all 0.4s ease;
+      }
 
-        .return-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(51, 255, 51, 0.3), transparent);
-            transition: all 0.5s ease;
-        }
+      .error-container:hover {
+        box-shadow: 0 8px 40px rgba(51, 255, 51, 0.2);
+      }
 
-        .return-btn:hover::before {
-            left: 100%;
-        }
+      /* Button Styling */
+      .return-btn {
+        position: relative;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid #33ff33;
+        color: #33ff33;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
 
-        /* Console Text Animation */
-        .console-text {
-            opacity: 0;
-            white-space: pre;
-        }
+      .return-btn:hover {
+        background: rgba(51, 255, 51, 0.2);
+        box-shadow: 0 0 20px rgba(51, 255, 51, 0.7);
+        transform: translateY(-2px);
+      }
+
+      .return-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(51, 255, 51, 0.3),
+          transparent
+        );
+        transition: all 0.5s ease;
+      }
+
+      .return-btn:hover::before {
+        left: 100%;
+      }
+
+      /* Console Text Animation */
+      .console-text {
+        opacity: 0;
+        white-space: pre;
+      }
     </style>
-</head>
+  </head>
 
-<body class="bg-black text-green-400 font-mono min-h-screen">
+  <body class="bg-black text-green-400 font-mono min-h-screen">
     <!-- Scanline -->
     <div class="scanline"></div>
 
     <!-- Main Content -->
-    <main class="w-full pt-24 pb-32 px-4 flex items-center justify-center min-h-screen">
-        <div class="error-container">
-            <h1 class="text-7xl md:text-9xl font-bold glitch" data-text="404">404</h1>
-            <p class="console-text text-xl mt-4" data-text="ERROR: PAGE_NOT_FOUND">ERROR: PAGE_NOT_FOUND</p>
-            <p class="console-text text-lg mt-2" data-text="nyan!!">
-                nyan!!</p>
-            <a href="/" class="return-btn mt-6 inline-block">RETURN TO HOME</a>
-        </div>
+    <main
+      class="w-full pt-24 pb-32 px-4 flex items-center justify-center min-h-screen"
+    >
+      <div class="error-container">
+        <h1 class="text-7xl md:text-9xl font-bold glitch" data-text="404">
+          404
+        </h1>
+        <p class="console-text text-xl mt-4" data-text="ERROR: PAGE_NOT_FOUND">
+          ERROR: PAGE_NOT_FOUND
+        </p>
+        <p class="console-text text-lg mt-2" data-text="nyan!!">nyan!!</p>
+        <a href="/" class="return-btn mt-6 inline-block">RETURN TO HOME</a>
+      </div>
     </main>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // GSAP Animations
-            gsap.registerPlugin();
+      document.addEventListener("DOMContentLoaded", function () {
+        // GSAP Animations
+        gsap.registerPlugin();
 
-            // Entrance Animation for Container
-            gsap.fromTo(
-                ".error-container",
-                { scale: 0.8, opacity: 0, y: 50 },
-                { scale: 1, opacity: 1, y: 0, duration: 1, ease: "back.out(1.7)", delay: 0.2 }
-            );
+        // Entrance Animation for Container
+        gsap.fromTo(
+          ".error-container",
+          { scale: 0.8, opacity: 0, y: 50 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "back.out(1.7)",
+            delay: 0.2,
+          },
+        );
 
-            // Typing Effect for Console Text
-            document.querySelectorAll(".console-text").forEach((textEl, index) => {
-                const text = textEl.getAttribute("data-text");
-                textEl.innerHTML = ""; // Clear initial text
+        // Typing Effect for Console Text
+        document.querySelectorAll(".console-text").forEach((textEl, index) => {
+          const text = textEl.getAttribute("data-text");
+          textEl.innerHTML = ""; // Clear initial text
 
-                gsap.to(textEl, {
-                    opacity: 1,
-                    duration: 0.5,
-                    delay: index * 0.5 + 0.5,
-                    onStart: () => {
-                        let i = 0;
-                        function type() {
-                            if (i < text.length) {
-                                textEl.innerHTML += text.charAt(i);
-                                i++;
-                                setTimeout(type, 30);
-                            }
-                        }
-                        type();
-                    },
-                });
-            });
-
-            // Random Glitch Animation
-            function addRandomGlitches() {
-                const container = document.querySelector(".error-container");
-                if (Math.random() > 0.7) {
-                    gsap.to(container, {
-                        x: "+=2",
-                        skewX: "2deg",
-                        duration: 0.1,
-                        yoyo: true,
-                        repeat: 1,
-                    });
+          gsap.to(textEl, {
+            opacity: 1,
+            duration: 0.5,
+            delay: index * 0.5 + 0.5,
+            onStart: () => {
+              let i = 0;
+              function type() {
+                if (i < text.length) {
+                  textEl.innerHTML += text.charAt(i);
+                  i++;
+                  setTimeout(type, 30);
                 }
-                setTimeout(addRandomGlitches, Math.random() * 5000 + 2000);
-            }
-            setTimeout(addRandomGlitches, 3000);
-
-            // Button Hover Animation
-            const returnBtn = document.querySelector(".return-btn");
-            returnBtn.addEventListener("mouseenter", () => {
-                gsap.to(returnBtn, {
-                    scale: 1.05,
-                    boxShadow: "0 0 20px rgba(51, 255, 51, 0.7)",
-                    duration: 0.3,
-                });
-            });
-            returnBtn.addEventListener("mouseleave", () => {
-                gsap.to(returnBtn, {
-                    scale: 1,
-                    boxShadow: "0 0 0 rgba(51, 255, 51, 0)",
-                    duration: 0.3,
-                });
-            });
+              }
+              type();
+            },
+          });
         });
-    </script>
-</body>
 
+        // Random Glitch Animation
+        function addRandomGlitches() {
+          const container = document.querySelector(".error-container");
+          if (Math.random() > 0.7) {
+            gsap.to(container, {
+              x: "+=2",
+              skewX: "2deg",
+              duration: 0.1,
+              yoyo: true,
+              repeat: 1,
+            });
+          }
+          setTimeout(addRandomGlitches, Math.random() * 5000 + 2000);
+        }
+        setTimeout(addRandomGlitches, 3000);
+
+        // Button Hover Animation
+        const returnBtn = document.querySelector(".return-btn");
+        returnBtn.addEventListener("mouseenter", () => {
+          gsap.to(returnBtn, {
+            scale: 1.05,
+            boxShadow: "0 0 20px rgba(51, 255, 51, 0.7)",
+            duration: 0.3,
+          });
+        });
+        returnBtn.addEventListener("mouseleave", () => {
+          gsap.to(returnBtn, {
+            scale: 1,
+            boxShadow: "0 0 0 rgba(51, 255, 51, 0)",
+            duration: 0.3,
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
+

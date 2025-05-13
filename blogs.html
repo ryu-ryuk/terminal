@@ -1,290 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parallax Hero Test Page | ryu@archy</title>
 
     <!-- GSAP Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <link rel="icon" href="/src/assets/images/favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Parallax Hero Styles -->
     <style>
-        body {
-            padding: 0;
-            margin: 0;
-            background-color: #130d0a;
-            /* $bronze */
-            font-family: 'Playfair Display', serif;
-            /* Default for this page, content can override */
-            color: #fff;
-            /* $white */
-        }
+      body {
+        padding: 0;
+        margin: 0;
+        background-color: #130d0a;
+        /* $bronze */
+        font-family: "Playfair Display", serif;
+        /* Default for this page, content can override */
+        color: #fff;
+        /* $white */
+      }
 
-        #hero {
-            height: 800px;
-            /* heroHeight */
-            overflow: hidden;
-            position: relative;
-            max-width: 1920px;
-            margin: 0 auto;
-        }
+      #hero {
+        height: 800px;
+        /* heroHeight */
+        overflow: hidden;
+        position: relative;
+        max-width: 1920px;
+        margin: 0 auto;
+      }
 
-        #content {
-            background-color: #130d0a;
-            /* $bronze */
-            position: relative;
-            /* To ensure it flows over fixed layers */
-            z-index: 10;
-            /* To ensure content is above parallax layers */
-        }
+      #content {
+        background-color: #130d0a;
+        /* $bronze */
+        position: relative;
+        /* To ensure it flows over fixed layers */
+        z-index: 10;
+        /* To ensure content is above parallax layers */
+      }
 
-        .layer {
-            background-position: bottom center;
-            background-size: auto;
-            background-repeat: no-repeat;
-            width: 100%;
-            height: 800px;
-            /* heroHeight */
-            position: fixed;
-            /* Key for parallax effect with GSAP */
-            left: 0;
-            /* Ensure it spans full width with fixed positioning */
-            top: 0;
-            /* Ensure it spans full height with fixed positioning */
-        }
+      .layer {
+        background-position: bottom center;
+        background-size: auto;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 800px;
+        /* heroHeight */
+        position: fixed;
+        /* Key for parallax effect with GSAP */
+        left: 0;
+        /* Ensure it spans full width with fixed positioning */
+        top: 0;
+        /* Ensure it spans full height with fixed positioning */
+      }
 
-        #hero-mobile {
-            /* Not used by current JS, but defined in original CSS */
-            display: none;
-            background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/full_illustration.png") no-repeat center bottom / cover;
-            height: 320px;
-        }
+      #hero-mobile {
+        /* Not used by current JS, but defined in original CSS */
+        display: none;
+        background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/full_illustration.png")
+          no-repeat center bottom / cover;
+        height: 320px;
+      }
 
-        /* Content section specific styling (can be adapted) */
-        #content .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+      /* Content section specific styling (can be adapted) */
+      #content .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
 
-        .first-section {
-            padding: 50px 0 20px 0;
-        }
+      .first-section {
+        padding: 50px 0 20px 0;
+      }
 
-        .text-header {
-            font-size: 50px;
-            text-align: center;
-        }
+      .text-header {
+        font-size: 50px;
+        text-align: center;
+      }
 
-        #content h1 {
-            /* Style h1 within the content differently if needed */
-            line-height: 120%;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            /* Example size */
-        }
+      #content h1 {
+        /* Style h1 within the content differently if needed */
+        line-height: 120%;
+        margin-bottom: 30px;
+        font-size: 2.5em;
+        /* Example size */
+      }
 
-        #content p {
-            color: #ede0d5;
-            font-size: 18px;
-            line-height: 150%;
-            margin-bottom: 1em;
-        }
+      #content p {
+        color: #ede0d5;
+        font-size: 18px;
+        line-height: 150%;
+        margin-bottom: 1em;
+      }
 
-        #content .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
-        }
+      #content .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -15px;
+        margin-right: -15px;
+      }
 
+      #content .col-sm-6 {
+        width: 50%;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 768px) {
         #content .col-sm-6 {
-            width: 50%;
-            padding-left: 15px;
-            padding-right: 15px;
-            box-sizing: border-box;
+          width: 100%;
         }
+      }
 
-        @media (max-width: 768px) {
-            #content .col-sm-6 {
-                width: 100%;
-            }
-        }
+      /* Specific image layers with z-index for stacking */
+      .layer-bg {
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_bg.jpg");
+        z-index: 1;
+      }
 
+      .layer-1 {
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_03.png");
+        background-position: left bottom;
+        z-index: 2;
+      }
 
-        /* Specific image layers with z-index for stacking */
-        .layer-bg {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_bg.jpg');
-            z-index: 1;
-        }
+      .layer-2 {
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_02.png");
+        z-index: 3;
+      }
 
+      .layer-3 {
+        /* man */
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_man.png");
+        background-position: right bottom;
+        z-index: 4;
+      }
+
+      .layer-overlay {
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_overlay.png");
+        z-index: 5;
+      }
+
+      .layer-4 {
+        /* foreground branch */
+        background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_01.png");
+        z-index: 6;
+      }
+
+      @media only screen and (max-width: 768px) {
         .layer-1 {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_03.png');
-            background-position: left bottom;
-            z-index: 2;
-        }
-
-        .layer-2 {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_02.png');
-            z-index: 3;
+          background-position: 26% bottom;
         }
 
         .layer-3 {
-            /* man */
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_man.png');
-            background-position: right bottom;
-            z-index: 4;
+          /* 'man' layer */
+          background-position: 35% bottom;
         }
 
-        .layer-overlay {
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_overlay.png');
-            z-index: 5;
+        #hero,
+        .layer {
+          /* Adjust hero height for smaller screens */
+          min-height: 600px;
+          height: 600px;
         }
-
-        .layer-4 {
-            /* foreground branch */
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/272781/ilu_01.png');
-            z-index: 6;
-        }
-
-        @media only screen and (max-width: 768px) {
-            .layer-1 {
-                background-position: 26% bottom;
-            }
-
-            .layer-3 {
-                /* 'man' layer */
-                background-position: 35% bottom;
-            }
-
-            #hero,
-            .layer {
-                /* Adjust hero height for smaller screens */
-                min-height: 600px;
-                height: 600px;
-            }
-        }
+      }
     </style>
 
     <!-- <link rel="stylesheet" href="/src/style.css"> -->
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  </head>
 
-</head>
-
-<body>
-
-
-    <div id='hero'>
-        <div class='layer-bg layer parallax' data-depth='0.10'></div>
-        <div class='layer-1 layer parallax' data-depth='0.20'></div>
-        <div class='layer-2 layer parallax' data-depth='0.50'></div>
-        <div class='layer-3 layer parallax' data-depth='0.80'></div>
-        <div class='layer-overlay layer parallax' data-depth='0.85'></div>
-        <div class='layer-4 layer parallax' data-depth='1.00'></div>
+  <body>
+    <div id="hero">
+      <div class="layer-bg layer parallax" data-depth="0.10"></div>
+      <div class="layer-1 layer parallax" data-depth="0.20"></div>
+      <div class="layer-2 layer parallax" data-depth="0.50"></div>
+      <div class="layer-3 layer parallax" data-depth="0.80"></div>
+      <div class="layer-overlay layer parallax" data-depth="0.85"></div>
+      <div class="layer-4 layer parallax" data-depth="1.00"></div>
     </div>
 
-    <div id='content'>
-        <div class='container'>
-            <section class='first-section'>
-                <div class='row'>
-                    <div class='col-sm-6'>
-                        <h1>Thou shan't read my blog</h1>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col-sm-6'>
-                        <p>Let me start by thanking you for staying here for this long : D</p>
-                        <p> My journery which led me to Linux, open-source, and eventually
-                            systems programming</p>
-                    </div>
-                    <div class='col-sm-6'>
-                        <p>At first they are overawing; their calm self-collectedness of simplicity seems a Socratic
-                            wisdom. I had noticed also that Queequeg never consorted at all, or but very little, with
-                            the other seamen in the inn. He made no advances whatever; appeared to have no desire to
-                            enlarge the circle of his acquaintances. All this struck me as mighty singular; yet, upon
-                            second thoughts, there was something almost sublime in it. Here was a man some twenty
-                            thousand miles from home, by the way of Cape Horn, that is-which was the only way he could
-                            get there-thrown among people as strange to him as though he were in the planet Jupiter; and
-                            yet he seemed entirely at his ease; preserving the utmost serenity; content with his own
-                            companionship; always equal to himself.</p>
-                        <p>Here was a man some twenty thousand miles from home, by the way of Cape Horn, that is-which
-                            was the only way he could get there-thrown among people as strange to him as though he were
-                            in the planet Jupiter; and yet he seemed entirely at his ease; preserving the utmost
-                            serenity; content with his own companionship; always equal to himself. Surely this was a
-                            touch of fine philosophy; though no doubt he had never heard there was such a thing as that.
-                        </p>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col-sm-6'>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                            architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                            voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-                            consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-                            dolore magnam aliquam quaerat voluptatem.</p>
-                    </div>
-                    <div class='col-sm-6'>
-                        <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam,
-                            nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea
-                            voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                            voluptas nulla pariatur?</p>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                            voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-                            cupiditate non provident, similique sunt in culpa qui officia deserunt mollit anim id est
-                            laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam
-                            libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod
-                            maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
-                            Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
-                            et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a
-                            sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis
-                            doloribus asperiores repellat.</p>
-                    </div>
-                </div>
-            </section>
-        </div>
+    <div id="content">
+      <div class="container">
+        <section class="first-section">
+          <div class="row">
+            <div class="col-sm-6">
+              <h1>Thou shan't read my blog</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <p>
+                Let me start by thanking you for staying here for this long : D
+              </p>
+              <p>
+                My journery which led me to Linux, open-source, and eventually
+                systems programming
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <p>
+                At first they are overawing; their calm self-collectedness of
+                simplicity seems a Socratic wisdom. I had noticed also that
+                Queequeg never consorted at all, or but very little, with the
+                other seamen in the inn. He made no advances whatever; appeared
+                to have no desire to enlarge the circle of his acquaintances.
+                All this struck me as mighty singular; yet, upon second
+                thoughts, there was something almost sublime in it. Here was a
+                man some twenty thousand miles from home, by the way of Cape
+                Horn, that is-which was the only way he could get there-thrown
+                among people as strange to him as though he were in the planet
+                Jupiter; and yet he seemed entirely at his ease; preserving the
+                utmost serenity; content with his own companionship; always
+                equal to himself.
+              </p>
+              <p>
+                Here was a man some twenty thousand miles from home, by the way
+                of Cape Horn, that is-which was the only way he could get
+                there-thrown among people as strange to him as though he were in
+                the planet Jupiter; and yet he seemed entirely at his ease;
+                preserving the utmost serenity; content with his own
+                companionship; always equal to himself. Surely this was a touch
+                of fine philosophy; though no doubt he had never heard there was
+                such a thing as that.
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                quae ab illo inventore veritatis et quasi architecto beatae
+                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                voluptas sit aspernatur aut odit aut fugit, sed quia
+                consequuntur magni dolores eos qui ratione voluptatem sequi
+                nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                voluptatem.
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <p>
+                Ut enim ad minima veniam, quis nostrum exercitationem ullam
+                corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+                consequatur? Quis autem vel eum iure reprehenderit qui in ea
+                voluptate velit esse quam nihil molestiae consequatur, vel illum
+                qui dolorem eum fugiat quo voluptas nulla pariatur?
+              </p>
+              <p>
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                blanditiis praesentium voluptatum deleniti atque corrupti quos
+                dolores et quas molestias excepturi sint occaecati cupiditate
+                non provident, similique sunt in culpa qui officia deserunt
+                mollit anim id est laborum et dolorum fuga. Et harum quidem
+                rerum facilis est et expedita distinctio. Nam libero tempore,
+                cum soluta nobis est eligendi optio cumque nihil impedit quo
+                minus id quod maxime placeat facere possimus, omnis voluptas
+                assumenda est, omnis dolor repellendus. Temporibus autem
+                quibusdam et aut officiis debitis aut rerum necessitatibus saepe
+                eveniet ut et voluptates repudiandae sint et molestiae non
+                recusandae. Itaque earum rerum hic tenetur a sapiente delectus,
+                ut aut reiciendis voluptatibus maiores alias consequatur aut
+                perferendis doloribus asperiores repellat.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: "#hero",
-                    start: "top top",
-                    end: "bottom top", // Animate until the bottom of #hero reaches the top of viewport
-                    scrub: true
-                }
-            });
-
-            gsap.utils.toArray(".parallax").forEach(layer => {
-                const depth = parseFloat(layer.dataset.depth); // Ensure depth is a number
-                if (isNaN(depth)) {
-                    console.warn("Layer has invalid data-depth:", layer);
-                    return;
-                }
-                // Calculate movement: move layer up by a fraction of its height based on depth
-                const movement = -(layer.offsetHeight * depth);
-
-                tl.to(layer, { y: movement, ease: "none" }, 0);
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top", // Animate until the bottom of #hero reaches the top of viewport
+            scrub: true,
+          },
         });
-    </script>
-</body>
 
+        gsap.utils.toArray(".parallax").forEach((layer) => {
+          const depth = parseFloat(layer.dataset.depth); // Ensure depth is a number
+          if (isNaN(depth)) {
+            console.warn("Layer has invalid data-depth:", layer);
+            return;
+          }
+          // Calculate movement: move layer up by a fraction of its height based on depth
+          const movement = -(layer.offsetHeight * depth);
+
+          tl.to(layer, { y: movement, ease: "none" }, 0);
+        });
+      });
+    </script>
+  </body>
 </html>
+
