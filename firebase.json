@@ -9,6 +9,26 @@
         ],
         "rewrites": [
             {
+                "source": "/",
+                "destination": "/index.html"
+            },
+            {
+                "source": "/about",
+                "destination": "/about.html"
+            },
+            {
+                "source": "/projects",
+                "destination": "/projects.html"
+            },
+            {
+                "source": "/contact",
+                "destination": "/contact.html"
+            },
+            {
+                "source": "/blogs",
+                "destination": "/blogs.html"
+            },
+            {
                 "source": "**",
                 "destination": "/404.html"
             }
