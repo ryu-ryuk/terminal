@@ -12,22 +12,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        projects: resolve(__dirname, 'pages/projects.html'),
-        contact: resolve(__dirname, 'pages/contact.html'),
-        blogs: resolve(__dirname, 'pages/blogs.html'),
-        about: resolve(__dirname, 'pages/about.html'),
+        projects: resolve(__dirname, 'projects.html'),
+        contact: resolve(__dirname, 'contact.html'),
+        blogs: resolve(__dirname, 'blogs.html'),
+        about: resolve(__dirname, 'about.html'),
         404: resolve(__dirname, '404.html'),
-      },
-      output: {
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
-        assetFileNames: ({ name }) => {
-          // Move HTML files to root
-          if (name && name.endsWith('.html')) {
-            return name.replace(/^pages\//, '');
-          }
-          return 'assets/[name].[ext]';
-        },
       },
     },
   },
@@ -37,11 +26,11 @@ export default defineConfig({
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
           const urls = {
-            '/about': '/pages/about.html',
-            '/projects': '/pages/projects.html',
-            '/contact': '/pages/contact.html',
-            '/blogs': '/pages/blogs.html',
-            '/404': '/pages/404.html',
+            '/about': '/about.html',
+            '/projects': '/projects.html',
+            '/contact': '/contact.html',
+            '/blogs': '/blogs.html',
+            '/404': '/404.html',
             '/': '/index.html',
             '/index.html': '/index.html',
           };

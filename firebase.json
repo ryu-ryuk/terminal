@@ -1,6 +1,7 @@
 {
     "hosting": {
         "public": "dist",
+        "cleanUrls": true,
         "ignore": [
             "firebase.json",
             "**/.*",
@@ -8,32 +9,8 @@
         ],
         "rewrites": [
             {
-                "source": "/projects",
-                "destination": "/pages/projects.html"
-            },
-            {
-                "source": "/contact",
-                "destination": "/pages/contact.html"
-            },
-            {
-                "source": "/blogs",
-                "destination": "/pages/blogs.html"
-            },
-            {
-                "source": "/about",
-                "destination": "/pages/about.html"
-            },
-            {
-                "source": "/404",
-                "destination": "/pages/404.html"
-            },
-            {
-                "source": "/",
-                "destination": "/index.html"
-            },
-            {
-                "source": "/api/**",
-                "destination": "https://portfolio-590285552111.us-central1.run.app"
+                "source": "**",
+                "destination": "/404.html"
             }
         ]
     }
