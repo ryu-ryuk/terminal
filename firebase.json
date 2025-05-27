@@ -26,7 +26,8 @@
             },
             {
                 "source": "/blogs",
-                "destination": "/blogs.html"
+                "type": 301,
+                "destination": "https://blogs.alokranjan.me"
             },
             {
                 "source": "**",
