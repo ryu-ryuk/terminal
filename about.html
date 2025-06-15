@@ -83,6 +83,22 @@
         }
 
         /* Timeline styles */
+        .journey-nav {
+            cursor: pointer;
+            padding: 4px 12px;
+            border: 1px solid rgba(51, 255, 51, 0.3);
+            border-radius: 4px;
+            background: rgba(51, 255, 51, 0.1);
+            color: #33FF33;
+            transition: all 0.2s ease;
+        }
+
+        .journey-nav:hover {
+            background: rgba(51, 255, 51, 0.2);
+            border-color: #33FF33;
+            box-shadow: 0 0 8px rgba(51, 255, 51, 0.5);
+        }
+
         .timeline-container {
             position: relative;
             padding-left: 2rem;
@@ -783,6 +799,59 @@
                     panel.style.transform = 'rotateY(0)';
                 });
             });
+
+            // Timeline functionality
+            const timelineNodes = document.querySelectorAll('.timeline-node');
+            const journeyNavs = document.querySelectorAll('.journey-nav');
+            const timelineEntries = document.querySelectorAll('.timeline-entry');
+            const timelineProgress = document.querySelector('.timeline-progress');
+
+            function switchTimelineEntry(year) {
+                console.log('Switching to year:', year); // Debug log
+
+                // Hide all entries
+                timelineEntries.forEach(entry => {
+                    entry.classList.add('hidden');
+                });
+
+                // Show selected entry
+                const selectedEntry = document.getElementById(`entry-${year}`);
+                if (selectedEntry) {
+                    selectedEntry.classList.remove('hidden');
+                }
+
+                // Update progress bar
+                const progress = {
+                    '2023': '0%',
+                    '2024': '50%',
+                    '2025': '100%'
+                };
+                timelineProgress.style.width = progress[year] || '0%';
+            }
+
+            // Add click handlers
+            journeyNavs.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    console.log('Nav button clicked', e.target.dataset.year); // Debug log
+                    const year = e.target.dataset.year;
+                    if (year) {
+                        switchTimelineEntry(year);
+                    }
+                });
+            });
+
+            timelineNodes.forEach(node => {
+                node.addEventListener('click', (e) => {
+                    console.log('Timeline node clicked', e.target.dataset.year); // Debug log
+                    const year = e.target.dataset.year;
+                    if (year) {
+                        switchTimelineEntry(year);
+                    }
+                });
+            });
+
+            // Show 2025 by default
+            switchTimelineEntry('2025');
         });
     </script>
 </body>

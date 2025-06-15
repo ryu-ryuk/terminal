@@ -16,6 +16,9 @@ export default {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        width: 'width'
+      },
       colors: {
         terminalGreen: "#33FF33",
         terminalBackground: "#000000",
