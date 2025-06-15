@@ -6,6 +6,66 @@ import { ScrollTrigger, Draggable, MotionPathPlugin, Physics2DPlugin } from "gsa
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, Draggable, MotionPathPlugin, Physics2DPlugin);
 
+// Timeline functionality
+function initTimeline() {
+  const timelineNodes = document.querySelectorAll('.timeline-node');
+  const journeyNavs = document.querySelectorAll('.journey-nav');
+  const timelineEntries = document.querySelectorAll('.timeline-entry');
+  const timelineProgress = document.querySelector('.timeline-progress');
+
+  function showEntry(year) {
+    // Hide all entries
+    timelineEntries.forEach(entry => entry.classList.add('hidden'));
+    
+    // Remove active states
+    timelineNodes.forEach(node => node.classList.remove('active'));
+    journeyNavs.forEach(nav => nav.classList.remove('active'));
+    
+    // Show selected entry
+    const selectedEntry = document.getElementById(`entry-${year}`);
+    if (selectedEntry) {
+      selectedEntry.classList.remove('hidden');
+      
+      // Add active states
+      timelineNodes.forEach(node => {
+        if (node.dataset.year === year) node.classList.add('active');
+      });
+      journeyNavs.forEach(nav => {
+        if (nav.dataset.year === year) nav.classList.add('active');
+      });
+      
+      // Update progress bar
+      const progress = {
+        '2023': '0%',
+        '2024': '50%',
+        '2025': '100%'
+      };
+      if (timelineProgress) {
+        timelineProgress.style.transition = 'width 0.5s ease';
+        timelineProgress.style.width = progress[year] || '0%';
+      }
+    }
+  }
+
+  // Add click handlers
+  timelineNodes.forEach(node => {
+    node.addEventListener('click', () => {
+      const year = node.dataset.year;
+      if (year) showEntry(year);
+    });
+  });
+
+  journeyNavs.forEach(nav => {
+    nav.addEventListener('click', () => {
+      const year = nav.dataset.year;
+      if (year) showEntry(year);
+    });
+  });
+
+  // Show 2025 by default
+  showEntry('2025');
+}
+
 // =====================
 // Terminal Class
 // =====================
@@ -1085,119 +1145,106 @@ document.addEventListener("DOMContentLoaded", () => {
   JourneyTimeline.init();
   ExperienceAnimations.init();
   MatrixRainEffect.addMatrixStyles();
+  initTimeline(); // Initialize the timeline functionality
 });
 
-// Terminal Journey Timeline
 const TerminalJourney = {
+  currentYear: null, // Track currently visible year
+
   init() {
-    // Elements
     this.timelineNodes = document.querySelectorAll('.timeline-node');
     this.journeyNavs = document.querySelectorAll('.journey-nav');
     this.timelineEntries = document.querySelectorAll('.timeline-entry');
     this.timelineProgress = document.querySelector('.timeline-progress');
-    
-    // Initial setup
+
     this.setupEventListeners();
-    this.showEntry('2023');
     this.typeCommand();
   },
-  
+
   setupEventListeners() {
-    // Timeline node click events
-    this.timelineNodes.forEach(node => {
-      node.addEventListener('click', () => {
-        const year = node.getAttribute('data-year');
-        this.showEntry(year);
-      });
-    });
-    
-    // Navigation button click events
-    this.journeyNavs.forEach(nav => {
-      nav.addEventListener('click', () => {
-        const year = nav.getAttribute('data-year');
-        this.showEntry(year);
+    [...this.timelineNodes, ...this.journeyNavs].forEach(elem => {
+      elem.addEventListener('click', () => {
+        const year = elem.getAttribute('data-year');
+        if (this.currentYear === year) {
+          this.hideEntry(); // toggle off
+        } else {
+          this.showEntry(year); // toggle on
+        }
       });
     });
   },
-  
+
   showEntry(year) {
-    // Update active states
-    this.timelineNodes.forEach(node => {
-      node.classList.toggle('active', node.getAttribute('data-year') === year);
-    });
-    
-    this.journeyNavs.forEach(nav => {
-      nav.classList.toggle('active', nav.getAttribute('data-year') === year);
-    });
-    
-    // Hide all entries first
-    this.timelineEntries.forEach(entry => {
-      entry.classList.add('hidden');
-    });
-    
-    // Show selected entry with animation
+    this.currentYear = year;
+
+    // Set active state
+    this.timelineNodes.forEach(node =>
+      node.classList.toggle('active', node.getAttribute('data-year') === year)
+    );
+    this.journeyNavs.forEach(nav =>
+      nav.classList.toggle('active', nav.getAttribute('data-year') === year)
+    );
+
+    // Hide all, then show selected
+    this.timelineEntries.forEach(entry => entry.classList.add('hidden'));
     const selectedEntry = document.getElementById(`entry-${year}`);
     if (selectedEntry) {
       selectedEntry.classList.remove('hidden');
-      
-      // Animate typing effect for the details
       const details = selectedEntry.querySelectorAll('.entry-details p');
       details.forEach((line, index) => {
-        const originalText = line.textContent;
+        const text = line.textContent;
         line.textContent = '';
-        
-        setTimeout(() => {
-          this.typeText(line, originalText);
-        }, 300 * index);
+        setTimeout(() => this.typeText(line, text), 300 * index);
       });
     }
-    
-    // Update progress bar
-    const progressMap = {
+
+    const progress = {
       '2023': '0%',
       '2024': '50%',
       '2025': '100%'
     };
-    
     if (this.timelineProgress) {
-      this.timelineProgress.style.width = progressMap[year] || '0%';
+      this.timelineProgress.style.transition = 'width 0.5s ease';
+      this.timelineProgress.style.width = progress[year] || '0%';
     }
   },
-  
+
+  hideEntry() {
+    this.currentYear = null;
+
+    this.timelineNodes.forEach(node => node.classList.remove('active'));
+    this.journeyNavs.forEach(nav => nav.classList.remove('active'));
+    this.timelineEntries.forEach(entry => entry.classList.add('hidden'));
+    if (this.timelineProgress) {
+      this.timelineProgress.style.width = '0%';
+    }
+  },
+
   typeCommand() {
     const commandText = document.querySelector('.command-text');
     if (!commandText) return;
-    
+
     const text = commandText.textContent;
     commandText.textContent = '';
-    
-    this.typeText(commandText, text, 50, () => {
-      // After command is typed, show first entry
-      setTimeout(() => {
-        this.showEntry('2023');
-      }, 300);
-    });
+    this.typeText(commandText, text, 50);
   },
-  
+
   typeText(element, text, speed = 30, callback) {
     let i = 0;
-    const typing = setInterval(() => {
+    const interval = setInterval(() => {
       if (i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
+        element.textContent += text[i++];
       } else {
-        clearInterval(typing);
-        if (callback) callback();
+        clearInterval(interval);
+        callback?.();
       }
     }, speed);
   }
 };
 
-// Initialize after DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   TerminalJourney.init();
 });
-
 
       anime({
         targets: '#glow-headline span',
@@ -1215,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', function() {
           { value: '0 0 5px #33FF33, 0 0 10px #33FF33, 0 0 20px #00ff99', duration: 600 }
         ],
         opacity: [0, 1],
-        delay: anime.stagger(50), // Stagger each letter by 50ms
+        delay: anime.stagger(50), 
         loop: true,
         loopDelay: 1000
       });
