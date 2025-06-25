@@ -172,8 +172,8 @@
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(51, 255, 51, 0.1));
         }
 
-        /* 
-        .scanline {
+
+        /* .scanline {
             position: absolute;
             top: 0;
             left: 0;
@@ -181,9 +181,9 @@
             height: 2px;
             background: rgba(51, 255, 51, 0.3);
             animation: scanline 4s linear infinite;
-        } */
+        }
 
-        /* @keyframes scanline {
+        @keyframes scanline {
             0% {
                 transform: translateY(0);
             }
@@ -236,8 +236,6 @@
 
     <!-- MAIN CONTENT -->
     <main class="w-full">
-        <!-- Hero Section -->
-        <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-bg"></div>
 
@@ -318,7 +316,43 @@
 
 
         </section> -->
+        <h2 class="text-3xl font-bold text-[var(--ctp-mocha-mauve)] drop-shadow-[0_0_4px_var(--ctp-mocha-mauve)] mb-6">
+            <span class="text-[var(--ctp-mocha-green)]">$</span> ls ~/projects/featured
+        </h2>
+        <pre
+            class="text-[--ctp-mocha-subtext0] font-mono text-sm mb-6 overflow-hidden whitespace-nowrap animate-typing border-r-2 border-[--ctp-mocha-subtext0]">
+            ~$------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        </pre>
+
+        <style>
+            @keyframes typing {
+                from {
+                    width: 0
+                }
+
+                to {
+                    width: 100%
+                }
+            }
+
+            @keyframes blink {
+
+                0%,
+                100% {
+                    border-color: transparent;
+                }
+
+                50% {
+                    border-color: var(--ctp-mocha-subtext0);
+                }
+            }
+
+            .animate-typing {
+                width: 0;
+                animation: typing 2.5s steps(60, end) forwards, blink 0.75s step-end infinite;
+            }
+        </style>
 
 
         <div class="project-card glass-card opacity-0" data-gsap="project">
@@ -463,6 +497,43 @@
             </div>
         </div>
 
+        <h2 class="text-2xl font-semibold text-[var(--ctp-mocha-blue)] mb-4 mt-10">
+            <span class="text-[var(--ctp-mocha-green)]">$</span> ls ~/projects
+        </h2>
+
+        <pre
+            class="text-[--ctp-mocha-subtext0] font-mono text-sm mb-6 overflow-hidden whitespace-nowrap animate-typing border-r-2 border-[--ctp-mocha-subtext0]">
+            ~$------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        </pre>
+
+        <style>
+            @keyframes typing {
+                from {
+                    width: 0
+                }
+
+                to {
+                    width: 100%
+                }
+            }
+
+            @keyframes blink {
+
+                0%,
+                100% {
+                    border-color: transparent;
+                }
+
+                50% {
+                    border-color: var(--ctp-mocha-subtext0);
+                }
+            }
+
+            .animate-typing {
+                width: 0;
+                animation: typing 2.5s steps(60, end) forwards, blink 0.75s step-end infinite;
+            }
+        </style>
 
         <div class="project-card glass-card opacity-0" data-gsap="project">
             <div class="parallax-container">
