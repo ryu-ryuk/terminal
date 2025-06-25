@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | ryu@archy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+    <link rel="icon" href="/src/assets/images/favicon.ico" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+
+    <style>
+        /* ASCII Art Styles */
+        .ascii-art {
+            opacity: 0;
+            text-shadow: 0 0 8px #33ff33, 0 0 16px #33ff33;
+            filter: brightness(1.1);
+            transform-origin: center;
+            will-change: transform, opacity, filter;
+            transition: all 0.3s ease;
+        }
+
+        .ascii-line {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .ascii-art:hover {
+            filter: brightness(1.3);
+            text-shadow: 0 0 12px #33ff33, 0 0 24px #33ff33;
+            transform: scale(1.05);
+        }
+
+        /* Styles for 3D About Panels */
+        .about-category-wrapper {
+            perspective: 1200px;
+            min-height: 250px;
+        }
+
+        .about-panel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .about-panel:hover {
+            transform: rotateY(180deg);
+        }
+
+        .panel-front,
+        .panel-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+        }
+
+        .panel-front {
+            z-index: 2;
+        }
+
+        .panel-back {
+            transform: rotateY(180deg);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Timeline styles */
+        .journey-nav {
+            cursor: pointer;
+            padding: 4px 12px;
+            border: 1px solid rgba(51, 255, 51, 0.3);
+            border-radius: 4px;
+            background: rgba(51, 255, 51, 0.1);
+            color: #33FF33;
+            transition: all 0.2s ease;
+        }
+
+        .journey-nav:hover {
+            background: rgba(51, 255, 51, 0.2);
+            border-color: #33FF33;
+            box-shadow: 0 0 8px rgba(51, 255, 51, 0.5);
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #33FF33;
+            opacity: 0.5;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: #33FF33;
+            box-shadow: 0 0 10px #33FF33;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #33FF33;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-black text-green-400 font-mono p-2 min-h-screen flex flex-col w-full min-w-full items-center justify-center pb-24">
+
+    <!-- <body class="bg-black text-green-400 font-mono p-6 min-h-screen flex flex-col items-center justify-center pb-24"> -->
+    <!-- NAVIGATION -->
+    <nav class="p-2 fixed top-0 left-0 w-full bg-black/25 backdrop-blur-lg z-50">
+        <div class="max-w px-4 mx-auto flex justify-between items-center">
+            <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
+            <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
+            <ul id="menu"
+                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/60 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="/contact.html" class="hover:text-green-300">Contact</a>
+                </li>
+                <li class="px-4 py-2 md:px-0"><a href="/projects.html" class="hover:text-green-300">Projects</a>
+                </li>
+                <li class="px-4 py-2 md:px-0"><a href="https://blogs.alokranjan.me"
+                        class="hover:text-green-300">Blogs</a></li>
+                <li class="px-4 py-2 md:px-0"><a href="/about.html"
+                        class="hover:text-green-300 font-bold underline">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="w-full max-w-2xl mt-24">
+        <div class="w-full flex justify-center select-none mb-4">
+            <pre id="ascii-art"
+                class="ascii-art text-green-400 text-xs md:text-sm font-mono leading-none text-center whitespace-pre">
+<span class="ascii-line">            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="ascii-line">            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⡋⠁⠀⠀⠀⠀⢀⣀⣀⡀</span>
+<span class="ascii-line">            ⠀⠀⠀⠀⠀⠠⠒⣶⣶⣿⣿⣷⣾⣿⣿⣿⣿⣛⣋⣉⠀⠀</span>
+<span class="ascii-line">            ⠀⠀⠀⠀⢀⣤⣞⣫⣿⣿⣿⡻⢿⣿⣿⣿⣿⣿⣦⡀⠀⠀</span>
+<span class="ascii-line">            ⠀⠀⣶⣾⡿⠿⠿⠿⠿⠋⠈⠀⣸⣿⣿⣿⣿⣷⡈⠙⢆⠀</span>
+<span class="ascii-line">            ⠀⠀⠉⠁⠀⠤⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⠿⣿⣷⠀⠀⠀</span>
+<span class="ascii-line">            ⠀⠀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⢹⣿⠀⠀⠀</span>
+<span class="ascii-line">            ⢠⣾⣿⣿⣿⣿⠟⠋⠉⠛⠋⠉⠁⣀⠀⠀⠀⠸⠃⠀⠀⠀</span>
+<span class="ascii-line">            ⣿⣿⣿⣿⠹⣇⠀⠀⠀⠀⢀⡀⠀⢀⡙⢷⣦⣄⡀⠀⠀⠀</span>
+<span class="ascii-line">            ⣿⢿⣿⣿⣷⣦⠤⠤⠀⠀⣠⣿⣶⣶⣿⣿⣿⣿⣿⣷⣄⠀</span>
+<span class="ascii-line">            ⠈⠈⣿⡿⢿⣿⣿⣷⣿⣿⡿⢿⣿⣿⣁⡀⠀⠀⠉⢻⣿⣧</span>
+<span class="ascii-line">            ⠀⢀⡟⠀⠀⠉⠛⠙⠻⢿⣦⡀⠙⠛⠯⠤⠄⠀⠀⠈⠈⣿</span>
+<span class="ascii-line">            ⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⡆⠀⠀⠀⠀⠀⠀⠀⢀⠟</span></pre>
+        </div>
+        <h2 id="about-section-title"
+            class="sticky top-0 z-30 bg-black text-2xl md:text-3xl font-bold text-green-400 mt-6 mb-4">
+            About Me
+        </h2>
+
+        <p class="text-gray-300">
+            Here's a bit more about <span class="text-gray-300 underline">who i am</span> (≖ᴗ≖✿)
+        </p>
+
+        <!-- Bio Section -->
+        <section class="mb-10 mt-4">
+            <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/bio.txt</h3>
+            <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
+                <p class="text-gray-300 mb-3">
+                    Hey there! I'm an undergrad (ECE|DS) student and a developer about building efficient tools driven
+                    by
+                    my passion for linux systems. You
+                    can learn more about me on my <a href="https://blogs.alokranjan.me"
+                        class="text-green-300 underline">blogs</a>
+                    page.
+                </p>
+            </div>
+        </section>
+
+        <!-- Terminal Journey Timeline -->
+        <section class="milestone-section my-1">
+            <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/journey.log</h3>
+
+            <div
+                class="terminal-journey overflow-x-visible  bg-black/40  border border-green-700/50 rounded-md p-4 font-mono text-sm">
+                <div class="terminal-header flex justify-between items-center mb-4">
+                    <div class="terminal-title text-[var(--terminal-green)]">journey.log - User Timeline</div>
+                    <div class="terminal-controls flex gap-2">
+                        <button class="journey-nav" data-year="2023">2023</button>
+                        <button class="journey-nav" data-year="2024">2024</button>
+                        <button class="journey-nav" data-year="2025">2025</button>
+                    </div>
+
+                </div>
+
+                <div class="terminal-content">
+                    <!-- Command prompt -->
+                    <div class="command-line mb-2">
+                        <span class="text-[var(--terminal-green)]">ryu@archy:~$</span>
+                        <span class="command-text ml-2">timeline --view-all</span>
+                    </div>
+
+                    <!-- Timeline visualization -->
+                    <div class="timeline-visual flex items-center my-4 relative">
+                        <div class="timeline-track h-1 bg-[var(--terminal-green)]/30 flex-grow relative">
+                            <div class="timeline-progress h-full bg-[var(--terminal-green)]" style="width: 0%"></div>
+                            <div class="timeline-node absolute -top-2 -left-2 w-5 h-5 rounded-full bg-[var(--terminal-green)] cursor-pointer"
+                                data-year="2023" style="left: 0%"></div>
+                            <div class="timeline-node absolute -top-2 -left-2 w-5 h-5 rounded-full bg-[var(--terminal-green)] cursor-pointer"
+                                data-year="2024" style="left: 50%"></div>
+                            <div class="timeline-node absolute -top-2 -left-2 w-5 h-5 rounded-full bg-[var(--terminal-green)] cursor-pointer"
+                                data-year="2025" style="left: 100%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline entries container -->
+                    <div class="timeline-entries">
+                        <div id="entry-2023" class="timeline-entry hidden">
+                            <div class="entry-header flex items-center">
+                                <span class="text-[var(--terminal-green)]">[2023]</span>
+                                <span class="ml-2 text-white">Discovered the world of Linux and open-source</span>
+                            </div>
+                            <div class="entry-details ml-6 mt-2 text-gray-300">
+                                <p>> Learned basic terminal commands</p>
+
+                                <p>> Got into Android Modding</p>
+
+                                <div class="typing-indicator mt-1">█</div>
+                            </div>
+                        </div>
+
+                        <div id="entry-2024" class="timeline-entry hidden">
+                            <div class="entry-header flex items-center">
+                                <span class="text-[var(--terminal-green)]">[2024]</span>
+                                <span class="ml-2 text-white">Started learning Python and exploring cloud
+                                    technologies</span>
+                            </div>
+                            <div class="entry-details ml-6 mt-2 text-gray-300">
+                                <p>> Switched to Arch Linux (btw)</p>
+                                <p>> Built my first android [root] module, check my github for that </p>
+                                <p>> Earned lots of skill badges from Google Cloud</p>
+                                <div class="typing-indicator mt-1">█</div>
+                            </div>
+                        </div>
+
+                        <div id="entry-2025" class="timeline-entry hidden">
+                            <div class="entry-header flex items-center">
+                                <span class="text-[var(--terminal-green)]">[2025 - Present]</span>
+                                <span class="ml-2 text-white">Diving deep into Rust and systems programming</span>
+                            </div>
+                            <div class="entry-details ml-6 mt-2 text-gray-300">
+                                <p>> Learning Rust programming language</p>
+                                <p>> Exploring systems programming concepts</p>
+                                <p>> Focusing on Cybersecurity domain</p>
+                                <div class="typing-indicator mt-1">█</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="parallax-bg"></div>
+
+        <style>
+            .parallax-bg {
+                position: absolute;
+                width: 100%;
+                height: 150%;
+                background-size: cover;
+                opacity: 0.05;
+                z-index: 0;
+            }
+        </style>
+
+        <h3 class="text-xl text-[var(--terminal-green)] pt-8">$ cat ~/work_experience.log</h3>
+
+        <section class="work-experience-section my-12">
+
+            <div class="experience-container relative">
+
+                <!-- Company Header with Reveal Animation -->
+                <div class="company-header mb-6 overflow-hidden">
+                    <h4 class="company-name text-2xl font-bold text-green-400 font-sans experience-reveal">IITM Paradox
+                    </h4>
+                    <p class="company-title text-lg text-green-300 experience-reveal">Backend Developer</p>
+                    <p class="company-period text-sm text-gray-400 experience-reveal">Oct 2024 - Present</p>
+                </div>
+
+                <!-- Experience Cards Container -->
+                <div class="experience-cards-container relative">
+                    <!-- Vertical Line -->
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-green-500/30 experience-line"></div>
+
+                    <!-- Experience Cards -->
+                    <div class="experience-card ml-12 mb-8 opacity-0">
+                        <div
+                            class="card-dot absolute left-4 w-4 h-4 bg-green-400 rounded-full transform -translate-x-2">
+                        </div>
+                        <h5 class="text-green-300 font-semibold mb-2">API Development</h5>
+                        <p class="text-gray-300 text-sm">Designed and implemented RESTful APIs for dashboard handling
+                            user and roles based access, working on dynamic points allocation system for participants.
+                        </p>
+                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Python</span>
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Django</span>
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">JWT</span>
+
+                        </div>
+                    </div>
+
+                    <div class="experience-card ml-12 mb-8 opacity-0">
+                        <div
+                            class="card-dot absolute left-4 w-4 h-4 bg-green-400 rounded-full transform -translate-x-2">
+                        </div>
+                        <h5 class="text-green-300 font-semibold mb-2">Testing</h5>
+                        <p class="text-gray-300 text-sm">Tested 30+ API endpoints using Postman and creating a cohesive
+                            and detailed analysis on them as well as documenting them.</p>
+                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">ORM</span>
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Postman</span>
+                        </div>
+                    </div>
+
+                    <div class="experience-card ml-12 mb-8 opacity-0">
+                        <div
+                            class="card-dot absolute left-4 w-4 h-4 bg-green-400 rounded-full transform -translate-x-2">
+                        </div>
+                        <h5 class="text-green-300 font-semibold mb-2">DevOps</h5>
+                        <p class="text-gray-300 text-sm">Handle DDoS and many other nuances of Deployments</p>
+                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Docker</span>
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Ubuntu
+                                Server</span>
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Fail2Ban</span>
+                            <span
+                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Nginx</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Highlight Card -->
+                    <div
+                        class="experience-card project-highlight ml-12 mb-4 opacity-0 border-l-2 border-green-400 pl-4">
+                        <h5 class="text-green-400 font-semibold mb-2">Project Highlight: Event Registration System for
+                            10,000+ attendees</h5>
+                        <p class="text-gray-300 text-sm">Handled optimizations in reducing the queries to the Database
+                            and making the app faster for our users.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            // Add to your script
+            gsap.to('.parallax-bg', {
+                y: -100,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: '.work-experience-section',
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 0.5
+                }
+            });
+        </script>
+
+
+        <!-- Skills Section -->
+        <h2 id="skills-section-title" class="text-xl text-[var(--terminal-green)] mt-4 mb-4:">
+            <section class="skills-section">
+                <h2 id="skills-section-title"
+                    class="text-xl sticky top-0 z-30 bg-black  md:text-3xl text-green-400 mt-6 mb-sticky font-bold text-[var(--terminal-green)]">
+                    Skills &
+                    Tools</h2>
+                <p class="text-gray-400 text-sm">Some of the technologies and domains I enjoy working with （´・｀ ）♡</p>
+                <div id="skills-section-pinned-container" class="w-full overflow-hidden relative"
+                    aria-label="Horizontal scrolling skills showcase">
+                    <div class="horizontal-skill-cards-wrapper flex px-8 py-12">
+                        <div id="skills-content-to-scroll">
+                            <div class="flex flex-wrap gap-6 justify-start">
+                                <!-- Card 1: Programming -->
+                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
+                                    <div class="skill-panel h-full" tabindex="0">
+                                        <div class="panel-front">
+                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Programming</h3>
+                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
+                                                <li>🦀 Rust (TUI, CLI, async)</li>
+                                                <li>🐍 Python (FastAPI, Django, Scripting)</li>
+                                                <li>🐚 Bash/Zsh (Dotfiles, Automation)</li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-back">
+                                            <h4 class="text-green-300 font-bold text-lg">Code & Logic</h4>
+                                            <p class="text-gray-400 mt-2 text-xs">
+                                                Building efficient systems, web backends, and powerful CLI tools.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Ops & Cloud -->
+                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
+                                    <div class="skill-panel h-full" tabindex="1">
+                                        <div class="panel-front">
+                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Ops & Cloud</h3>
+                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
+                                                <li>🐧 Arch Linux, Neovim, Tmux</li>
+                                                <li>☁️ GCP, Firebase, CI/CD Actions</li>
+                                                <li>🐳 Docker, Ansible, Git, GitLab</li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-back">
+                                            <h4 class="text-green-300 font-bold text-lg">Infra & Deploy</h4>
+                                            <p class="text-gray-400 mt-2 text-xs">Managing and deploying robust
+                                                applications
+                                                at
+                                                scale.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3: Networking & Security -->
+                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
+                                    <div class="skill-panel h-full" tabindex="2">
+                                        <div class="panel-front">
+                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Networking & Security
+                                            </h3>
+                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
+                                                <li>🌐 TCP/IP, DNS, DHCP, Firewalls</li>
+                                                <li>🔒 Cybersecurity Basics, RE, CTFs*</li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-back">
+                                            <h4 class="text-green-300 font-bold text-lg">Secure & Connected</h4>
+                                            <p class="text-gray-400 mt-2 text-xs">Understanding network pipes and
+                                                protecting
+                                                assets ;) .</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 4: Frameworks & Tools -->
+                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
+                                    <div class="skill-panel h-full" tabindex="3">
+                                        <div class="panel-front">
+                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Frameworks & Tools
+                                            </h3>
+                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
+                                                <li>🚀 FastAPI, Flask, Django, Express</li>
+                                                <li>🛠️ JWT, (Neo)Vim, Tmux, Hugo</li>
+                                            </ul>
+                                        </div>
+                                        <div class="panel-back">
+                                            <h4 class="text-green-300 font-bold text-lg">Developer Arsenal</h4>
+                                            <p class="text-gray-400 mt-2 text-xs">efficiency ></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+
+            <!-- Philosophy Section -->
+            <section class="mb-10">
+                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/a-word.md</h3>
+                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
+                    <p class="text-gray-300 mb-3">
+                        I heavily believe in the power of open-source and knowledge sharing. Technology should be
+                        accessible to
+                        everyone,
+                        and the best way to learn is by doing and then teaching others.
+                    </p>
+                    <!-- <p class="text-gray-300"> -->
+                    <!-- My approach to problem-solving is methodical yet creative. I enjoy breaking down complex issues -->
+                    <!-- into -->
+                    <!-- manageable parts and finding elegant solutions that prioritize efficiency and maintainability. -->
+                    <!-- </p> -->
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="mb-10">
+                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/contact.txt</h3>
+                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
+                    <p class="text-gray-300 mb-3">
+                        React out to me if you have something to talk about ヾ(*′○`)ﾟ.+:｡ﾟ☆
+                    </p>
+                    <p class="text-gray-300">
+                        You can check the <a href="/contact.html" class="text-green-300 underline">contacts</a>
+                        page
+                        for
+                        more ways to reach me.
+                    </p>
+                    <p class="text-gray-300">
+                        🐙 GitHub: <a href="https://github.com/ryu-ryuk/"
+                            class="text-green-300 underline">@ryu-ryuk</a><br>
+                        📧 Email: <a href="mailto:alokraj3850@gmail.com"
+                            class="text-green-300 underline">alokraj3850@gmail.com</a>
+                    </p>
+                </div>
+            </section>
+            <!-- Interests Section -->
+            <section class="mb-10">
+                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/interests.txt</h3>
+                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
+                    <p class="text-gray-300 mb-3">What i enjoy on my free time?
+                    </p>
+                    <p class="text-gray-300">I love playing badminton and walking o(｀^´*) <br>
+                    </p>
+                </div>
+            </section>
+
+            <div class="mt-10 text-center">
+                <a href="/" class="text-green-300 underline hover:text-green-400">← cd ..</a>
+            </div>
+    </main>
+
+
+    <!-- TERMINAL TAB & OVERLAY -->
+    <div id="terminal-tab"
+        class="fixed bottom-16 right-2 z-50  border border-green-700/50 rounded-lg p-4 bg-black/70 text-[var(--terminal-green)] rounded px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-['Space_Mono',_monospace]">
+        <!-- Icon that's always visible -->
+        <span class="text-xl transition-all duration-300">
+            >_<span class="ml-2"></span>
+        </span>
+
+        <!-- "Terminal" text that slides in from right on hover -->
+        <span class="text-[var(--terminal-green)] text-xs ml-1">
+            Terminal<span class="blinking-cursor"></span>
+        </span>
+    </div>
+
+    <div id="terminal-overlay"
+        class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden transition-all duration-300 ease-in-out">
+        <div id="terminal-window"
+            class="relative w-full max-w-lg terminal-window scale-95 opacity-100 transition-all duration-300 ease-in-out">
+            <div class="terminal-header">
+                <button id="close-terminal" class="terminal-button bg-red-500 hover:bg-red-400"></button>
+                <button id="minimize-terminal" class="terminal-button bg-yellow-400 hover:bg-yellow-300"></button>
+                <button id="maximize-terminal" class="terminal-button bg-green-400 hover:bg-green-300"></button>
+                <span class="ml-4 text-[var(--terminal-green)]">ryu@archy:~</span>
+            </div>
+            <div id="terminal-output" class="terminal-output">
+                <div>Type <span class="text-[var(--terminal-green)] font-bold">help</span> for available commands</div>
+            </div>
+            <form id="terminal-form" class="terminal-form">
+                <span class="pl-4 text-[var(--terminal-green)] ">$</span>
+                <input id="terminal-input" type="text" autocomplete="off" class="terminal-input"
+                    placeholder="type your command...">
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer
+        class="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm border-t border-green-400/50 overflow-hidden z-50">
+        <div class="footer-ticker-container">
+            <div id="footer-ticker" class="whitespace-nowrap flex items-center py-3">
+                <!-- Multiple text elements with different styles and languages -->
+                <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span
+                        class="ticker-translation">Blog</span></a>
+                <span class="ticker-divider">•</span>
+                <a href="/projects.html" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">thanks for visiting (^^;)</span>
+                <span class="ticker-divider">•</span>
+                <a href="/contact.html" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">サイバーパンク <span class="ticker-translation">Cyberpunk</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
+                <span class="ticker-divider">•</span>
+
+                <!-- Clone of the above for continuous scrolling -->
+                <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span
+                        class="ticker-translation">Blog</span></a>
+                <span class="ticker-divider">•</span>
+                <a href="/projects.html" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">thanks for visiting (^^;)</span>
+                <span class="ticker-divider">•</span>
+                <a href="/contact.html" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">サイバーパンク <span class="ticker-translation">Cyberpunk</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
+                <span class="ticker-divider">•</span>
+                <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
+                <span class="ticker-divider">•</span>
+                <a href="/projects.html" class="ticker-item">スキル <span class="ticker-translation">Skills</span></a>
+                <span class="ticker-divider">•</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SPOTIFY WIDGET -->
+    <div id="spotify-widget" class="fixed bottom-16 left-4 spotify-container z-60" style="opacity: 1 !important;">
+        <div class="spotify-inner">
+            <div class="scanline-spotify"></div>
+            <div class="flex items-center gap-3 p-3 relative z-10">
+                <div class="album-art-container">
+                    <img id="album-art" class="w-12 h-12 rounded hidden" alt="Album Art" />
+                    <div class="album-glow"></div>
+                </div>
+                <div class="spotify-info">
+                    <div id="spotify-status" class="text-xs glitch-text">
+                        <span class="glitch-span" data-text="PLAYING :D">PLAYING :D</span>
+                    </div>
+                    <div id="spotify-song" class="font-medium text-green-300 truncate max-w-[180px]"></div>
+                    <div id="spotify-artist" class="text-sm text-gray-400 truncate max-w-[180px]"></div>
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // ASCII Art Animation
+            const asciiArt = document.querySelector('#ascii-art');
+            if (asciiArt) {
+                const lines = asciiArt.querySelectorAll('.ascii-line');
+                setTimeout(() => { asciiArt.style.opacity = '1'; }, 300);
+                lines.forEach((line, index) => {
+                    setTimeout(() => {
+                        line.style.opacity = '1';
+                        line.style.transform = 'translateY(0)';
+                        line.style.transition = 'all 0.5s ease';
+                    }, 100 * index + 500);
+                });
+                setTimeout(() => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: '#ascii-art',
+                            translateY: [
+                                { value: -5, duration: 2000, easing: 'easeInOutQuad' },
+                                { value: 5, duration: 2000, easing: 'easeInOutQuad' }
+                            ],
+                            scale: [
+                                { value: 1.02, duration: 1500, easing: 'easeInOutSine' },
+                                { value: 0.98, duration: 1500, easing: 'easeInOutSine' }
+                            ],
+                            loop: true, direction: 'alternate', easing: 'linear'
+                        });
+                    }
+                }, 2000 + (lines.length * 100));
+
+                asciiArt.addEventListener('mouseenter', () => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: '#ascii-art', scale: 1.05, duration: 400,
+                            filter: 'brightness(1.2)', textShadow: '0 0 12px #33ff33, 0 0 24px #33ff33',
+                            easing: 'easeOutElastic(1, .5)'
+                        });
+                    }
+                });
+                asciiArt.addEventListener('mouseleave', () => {
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: '#ascii-art', scale: 1, duration: 400,
+                            filter: 'brightness(1.1)', textShadow: '0 0 8px #33ff33, 0 0 16px #33ff33',
+                            easing: 'easeOutElastic(1, .5)'
+                        });
+                    }
+                });
+            }
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById("menu-toggle");
+            const menu = document.getElementById("menu");
+            menuToggle?.addEventListener("click", function () {
+                menu.classList.toggle("hidden");
+                menu.classList.toggle("flex");
+            });
+            gsap.registerPlugin(ScrollTrigger);
+
+            const container = document.getElementById('skills-section-pinned-container');
+            const scroller = container?.querySelector('.horizontal-skill-cards-wrapper');
+
+            if (!container || !scroller) {
+                console.error('Container or scroller not found');
+                return;
+            }
+
+            // Calculate total scroll distance
+            let totalScroll = scroller.scrollWidth - container.offsetWidth;
+
+            // Horizontal scroll animation
+            let scrollTween = gsap.to(scroller, {
+                x: -totalScroll,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: container,
+                    pin: true,
+                    scrub: 0.2,
+                    start: "top center",
+                    end: () => `+=${window.innerHeight * 0.5}`,
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1,
+                },
+            });
+
+
+            document.querySelectorAll('.tech-tag').forEach(tag => {
+                tag.addEventListener('mouseenter', () => {
+                    gsap.to(tag, {
+                        scale: 1.1,
+                        backgroundColor: 'rgba(51, 255, 51, 0.2)',
+                        color: '#33ff33',
+                        duration: 0.3
+                    });
+                });
+
+                tag.addEventListener('mouseleave', () => {
+                    gsap.to(tag, {
+                        scale: 1,
+                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                        color: '#7dd3fc',
+                        duration: 0.3
+                    });
+                });
+            });
+
+            if (gsap) {
+                const workExperienceTitle = document.querySelector('.work-experience-section h3');
+
+                // Simple typing effect
+                const text = workExperienceTitle.textContent;
+                workExperienceTitle.textContent = '';
+
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.work-experience-section',
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                });
+
+                for (let i = 0; i < text.length; i++) {
+                    tl.to(workExperienceTitle, {
+                        text: text.substring(0, i + 1),
+                        duration: 0.05,
+                        ease: "none"
+                    });
+                }
+            }
+
+            // Initialize flip panels
+            document.querySelectorAll('.about-panel').forEach(panel => {
+                panel.addEventListener('mouseenter', () => {
+                    panel.style.transform = 'rotateY(180deg)';
+                });
+                panel.addEventListener('mouseleave', () => {
+                    panel.style.transform = 'rotateY(0)';
+                });
+            });
+
+            // Timeline functionality
+            const timelineNodes = document.querySelectorAll('.timeline-node');
+            const journeyNavs = document.querySelectorAll('.journey-nav');
+            const timelineEntries = document.querySelectorAll('.timeline-entry');
+            const timelineProgress = document.querySelector('.timeline-progress');
+
+            function switchTimelineEntry(year) {
+                console.log('Switching to year:', year); // Debug log
+
+                // Hide all entries
+                timelineEntries.forEach(entry => {
+                    entry.classList.add('hidden');
+                });
+
+                // Show selected entry
+                const selectedEntry = document.getElementById(`entry-${year}`);
+                if (selectedEntry) {
+                    selectedEntry.classList.remove('hidden');
+                }
+
+                // Update progress bar
+                const progress = {
+                    '2023': '0%',
+                    '2024': '50%',
+                    '2025': '100%'
+                };
+                timelineProgress.style.width = progress[year] || '0%';
+            }
+
+            // Add click handlers
+            journeyNavs.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    console.log('Nav button clicked', e.target.dataset.year); // Debug log
+                    const year = e.target.dataset.year;
+                    if (year) {
+                        switchTimelineEntry(year);
+                    }
+                });
+            });
+
+            timelineNodes.forEach(node => {
+                node.addEventListener('click', (e) => {
+                    console.log('Timeline node clicked', e.target.dataset.year); // Debug log
+                    const year = e.target.dataset.year;
+                    if (year) {
+                        switchTimelineEntry(year);
+                    }
+                });
+            });
+
+            // Show 2025 by default
+            switchTimelineEntry('2025');
+        });
+    </script>
+</body>
+
+</html>

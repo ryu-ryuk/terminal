@@ -1,11 +1,38 @@
 {
-  "hosting": {
-    "site": "archya",
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+    "hosting": {
+        "public": "dist",
+        "cleanUrls": true,
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "/",
+                "destination": "/index.html"
+            },
+            {
+                "source": "/about",
+                "destination": "/about.html"
+            },
+            {
+                "source": "/projects",
+                "destination": "/projects.html"
+            },
+            {
+                "source": "/contact",
+                "destination": "/contact.html"
+            },
+            {
+                "source": "/blogs",
+                "type": 301,
+                "destination": "https://blogs.alokranjan.me"
+            },
+            {
+                "source": "**",
+                "destination": "/404.html"
+            }
+        ]
+    }
 }

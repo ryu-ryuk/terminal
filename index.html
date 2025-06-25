@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ryu@archy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link rel="icon" href="/src/assets/images/favicon.ico" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="bg-black text-green-400 font-mono p-6 min-h-screen flex flex-col items-center justify-center pb-20">
+  <nav class="p-2 fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50">
+    <div class="max-w px-4 mx-auto flex justify-between items-center">
+      <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
+      <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">
+        ☰
+      </button>
+      <ul id="menu"
+        class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+        <li class="px-4 py-2 md:px-0">
+          <a href="/" class="hover:text-green-300 font-bold underline">Home</a>
+        </li>
+        <li class="px-4 py-2 md:px-0">
+          <a href="/contact.html" class="hover:text-green-300">Contact</a>
+        </li>
+        <li class="px-4 py-2 md:px-0">
+          <a href="/projects.html" class="hover:text-green-300">Projects</a>
+        </li>
+        <li class="px-4 py-2 md:px-0">
+          <a href="https://blogs.alokranjan.me" class="blog-link hover:text-green-300">Blogs</a>
+        </li>
+        <li class="px-4 py-2 md:px-0">
+          <a href="/about.html" class="hover:text-green-300">About</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="w-full max-w-2xl mt-20">
+    <!-- <h1 id="glow-headline" class="text-3xl md:text-5xl font-bold text-green-400" data-text="Alok@Ranjan ᓚᘏᗢ">Alok@Ranjan -->
+    <!-- ᓚᘏᗢ</h1> -->
+    <!-- <h1 class="glow-green text-3xl md:text-5xl font-bold">Alok@Ranjan ᓚᘏᗢ</h1> -->
+
+    <!-- Individual spans for each character -->
+    <!-- Alok Ranjan<span>ᓚ</span><span>ᘏ</span><span>ᗢ</span> -->
+    <!-- </h1> -->
+    <svg id="svg-headline" viewBox="0 0 731.9 98.802" width="100%" height="98.802">
+      <g>
+        <path class="headline-path"
+          d="M 0 47.401 L 0 45.801 Q 0 37.994 2.881 32.416 A 21.877 21.877 0 0 1 3.1 32.001 A 22.462 22.462 0 0 1 7.677 26.075 A 20.415 20.415 0 0 1 11.45 23.351 Q 16.7 20.401 23 20.401 A 19.942 19.942 0 0 1 29.281 21.368 A 18.115 18.115 0 0 1 32.25 22.651 A 15.195 15.195 0 0 1 37.753 27.793 A 19.308 19.308 0 0 1 38.8 29.601 L 40 29.601 L 40 21.801 L 47.8 21.801 L 47.8 61.201 A 4.856 4.856 0 0 0 47.921 62.333 Q 48.285 63.848 49.755 64.134 A 3.902 3.902 0 0 0 50.5 64.201 L 53 64.201 L 53 71.401 L 47.7 71.401 Q 44.6 71.401 42.3 69.401 Q 40 67.401 40 63.001 L 38.8 63.001 A 18.337 18.337 0 0 1 35.834 67.403 A 15.547 15.547 0 0 1 32.15 70.351 Q 27.9 72.801 23.2 72.801 A 24.677 24.677 0 0 1 15.385 71.59 A 22.419 22.419 0 0 1 11.45 69.851 A 21.203 21.203 0 0 1 3.547 62.032 A 25.539 25.539 0 0 1 3.1 61.251 Q 0 55.601 0 47.401 Z M 40 47.201 L 40 46.001 A 22.791 22.791 0 0 0 39.442 40.854 A 18.371 18.371 0 0 0 37.9 36.601 A 17.133 17.133 0 0 0 34.401 31.881 A 15.84 15.84 0 0 0 32.2 30.151 Q 28.6 27.801 24 27.801 A 16.054 16.054 0 0 0 18.891 28.594 A 14.414 14.414 0 0 0 15.8 30.051 A 15.639 15.639 0 0 0 10.507 35.607 A 18.751 18.751 0 0 0 10.1 36.351 A 18.411 18.411 0 0 0 8.296 41.941 A 24.285 24.285 0 0 0 8 45.801 L 8 47.401 A 25.34 25.34 0 0 0 8.532 52.75 Q 9.294 56.276 11.145 58.929 A 14.952 14.952 0 0 0 12.5 60.601 A 14.944 14.944 0 0 0 23.35 65.39 A 19.917 19.917 0 0 0 24 65.401 A 15.975 15.975 0 0 0 30.014 64.302 A 14.728 14.728 0 0 0 35.5 60.401 A 17.056 17.056 0 0 0 39.469 52.46 A 24.686 24.686 0 0 0 40 47.201 Z"
+          id="0" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 109 71.401 L 65.2 71.401 L 65.2 64.201 L 83.2 64.201 L 83.2 8.601 L 65.8 8.601 L 65.8 1.401 L 91 1.401 L 91 64.201 L 109 64.201 L 109 71.401 Z"
+          id="1" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 123.4 47.201 L 123.4 46.001 A 31.332 31.332 0 0 1 124.07 39.363 A 23.198 23.198 0 0 1 126.9 32.151 A 23.837 23.837 0 0 1 133.839 24.737 A 23.25 23.25 0 0 1 136.05 23.401 Q 141.7 20.401 148.3 20.401 Q 154.9 20.401 160.55 23.401 A 23.492 23.492 0 0 1 169.673 32.106 A 27.707 27.707 0 0 1 169.7 32.151 A 23.53 23.53 0 0 1 172.708 40.256 A 32.095 32.095 0 0 1 173.2 46.001 L 173.2 47.201 Q 173.2 55.401 169.7 61.101 Q 166.2 66.801 160.55 69.801 Q 154.9 72.801 148.3 72.801 Q 141.7 72.801 136.05 69.801 Q 130.4 66.801 126.9 61.101 A 23.026 23.026 0 0 1 123.978 53.451 A 32.175 32.175 0 0 1 123.4 47.201 Z M 165.2 47.201 L 165.2 46.001 Q 165.2 40.601 162.95 36.501 Q 160.7 32.401 156.85 30.101 Q 153 27.801 148.3 27.801 Q 143.6 27.801 139.75 30.101 Q 135.9 32.401 133.65 36.501 Q 131.4 40.601 131.4 46.001 L 131.4 47.201 A 23.472 23.472 0 0 0 131.862 51.968 A 17.617 17.617 0 0 0 133.65 56.901 A 16.196 16.196 0 0 0 137.872 61.94 A 15.616 15.616 0 0 0 139.75 63.201 Q 143.6 65.401 148.3 65.401 A 17.937 17.937 0 0 0 153.648 64.625 A 15.857 15.857 0 0 0 156.9 63.201 A 15.845 15.845 0 0 0 162.663 57.406 A 18.901 18.901 0 0 0 162.95 56.901 A 17.899 17.899 0 0 0 164.871 51.269 A 24.069 24.069 0 0 0 165.2 47.201 Z"
+          id="2" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 200.4 71.401 L 192.6 71.401 L 192.6 1.401 L 200.4 1.401 L 200.4 42.401 L 202.1 42.401 L 221 21.801 L 230.6 21.801 L 230.6 22.401 L 210 45.101 L 210 46.901 L 233 70.801 L 233 71.401 L 223.4 71.401 L 202.3 49.601 L 200.4 49.601 L 200.4 71.401 Z"
+          id="3" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 337.8 71.401 L 306 71.401 L 306 64.201 L 317.4 64.201 L 317.4 29.001 L 307.2 29.001 L 307.2 21.801 L 325.2 21.801 L 325.2 28.401 L 326.4 28.401 Q 328.3 24.301 331.85 22.351 A 15.924 15.924 0 0 1 338.647 20.435 A 19.131 19.131 0 0 1 339.8 20.401 A 18.203 18.203 0 0 1 345.555 21.273 A 15.13 15.13 0 0 1 351.85 25.301 A 16.405 16.405 0 0 1 355.408 31.312 Q 356.262 33.773 356.6 36.768 A 35.336 35.336 0 0 1 356.8 39.601 L 348.6 40.801 A 22.762 22.762 0 0 0 348.339 37.224 Q 348.048 35.395 347.429 33.946 A 8.903 8.903 0 0 0 345.3 30.851 A 11.394 11.394 0 0 0 337.684 27.809 A 14.758 14.758 0 0 0 337.2 27.801 A 13.2 13.2 0 0 0 333.537 28.28 A 9.406 9.406 0 0 0 328.15 32.251 A 17.291 17.291 0 0 0 325.633 38.525 A 24.108 24.108 0 0 0 325.2 43.201 L 325.2 64.201 L 337.8 64.201 L 337.8 71.401 Z"
+          id="5" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 367.2 47.401 L 367.2 45.801 Q 367.2 37.994 370.081 32.416 A 21.877 21.877 0 0 1 370.3 32.001 A 22.462 22.462 0 0 1 374.877 26.075 A 20.415 20.415 0 0 1 378.65 23.351 Q 383.9 20.401 390.2 20.401 A 19.942 19.942 0 0 1 396.481 21.368 A 18.115 18.115 0 0 1 399.45 22.651 A 15.195 15.195 0 0 1 404.953 27.793 A 19.308 19.308 0 0 1 406 29.601 L 407.2 29.601 L 407.2 21.801 L 415 21.801 L 415 61.201 A 4.856 4.856 0 0 0 415.121 62.333 Q 415.485 63.848 416.955 64.134 A 3.902 3.902 0 0 0 417.7 64.201 L 420.2 64.201 L 420.2 71.401 L 414.9 71.401 Q 411.8 71.401 409.5 69.401 Q 407.2 67.401 407.2 63.001 L 406 63.001 A 18.337 18.337 0 0 1 403.034 67.403 A 15.547 15.547 0 0 1 399.35 70.351 Q 395.1 72.801 390.4 72.801 A 24.677 24.677 0 0 1 382.585 71.59 A 22.419 22.419 0 0 1 378.65 69.851 A 21.203 21.203 0 0 1 370.747 62.032 A 25.539 25.539 0 0 1 370.3 61.251 Q 367.2 55.601 367.2 47.401 Z M 407.2 47.201 L 407.2 46.001 A 22.791 22.791 0 0 0 406.642 40.854 A 18.371 18.371 0 0 0 405.1 36.601 A 17.133 17.133 0 0 0 401.601 31.881 A 15.84 15.84 0 0 0 399.4 30.151 Q 395.8 27.801 391.2 27.801 A 16.054 16.054 0 0 0 386.091 28.594 A 14.414 14.414 0 0 0 383 30.051 A 15.639 15.639 0 0 0 377.707 35.607 A 18.751 18.751 0 0 0 377.3 36.351 A 18.411 18.411 0 0 0 375.496 41.941 A 24.285 24.285 0 0 0 375.2 45.801 L 375.2 47.401 A 25.34 25.34 0 0 0 375.732 52.75 Q 376.494 56.276 378.345 58.929 A 14.952 14.952 0 0 0 379.7 60.601 A 14.944 14.944 0 0 0 390.55 65.39 A 19.917 19.917 0 0 0 391.2 65.401 A 15.975 15.975 0 0 0 397.214 64.302 A 14.728 14.728 0 0 0 402.7 60.401 A 17.056 17.056 0 0 0 406.669 52.46 A 24.686 24.686 0 0 0 407.2 47.201 Z"
+          id="6" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 440.2 71.401 L 432.4 71.401 L 432.4 21.801 L 440.2 21.801 L 440.2 30.201 L 441.4 30.201 A 17.593 17.593 0 0 1 445.695 24.325 Q 450.186 20.401 457.4 20.401 A 22.39 22.39 0 0 1 463.358 21.153 A 16.56 16.56 0 0 1 471.1 25.751 A 16.73 16.73 0 0 1 474.761 31.942 Q 476.2 36.116 476.2 41.801 L 476.2 71.401 L 468.4 71.401 L 468.4 43.401 A 27.803 27.803 0 0 0 468.092 39.113 Q 467.738 36.851 466.978 35.041 A 11.775 11.775 0 0 0 464.9 31.701 A 11.529 11.529 0 0 0 457.649 27.95 A 16.419 16.419 0 0 0 455.4 27.801 A 16.283 16.283 0 0 0 450.374 28.541 A 13.096 13.096 0 0 0 444.3 32.651 A 16.642 16.642 0 0 0 440.903 39.45 Q 440.288 41.897 440.211 44.771 A 31.026 31.026 0 0 0 440.2 45.601 L 440.2 71.401 Z"
+          id="7" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 518.9 91.401 L 496.6 91.401 L 496.6 84.201 L 516.1 84.201 A 3.467 3.467 0 0 0 517.218 84.036 Q 518.763 83.511 518.8 81.309 A 6.487 6.487 0 0 0 518.8 81.201 L 518.8 29.001 L 499 29.001 L 499 21.801 L 526.6 21.801 L 526.6 83.601 A 8.797 8.797 0 0 1 526.196 86.324 A 7.272 7.272 0 0 1 524.45 89.201 A 7.22 7.22 0 0 1 519.756 91.364 A 9.81 9.81 0 0 1 518.9 91.401 Z M 517.837 12.034 A 6.679 6.679 0 0 0 522.6 14.001 A 6.951 6.951 0 0 0 524.816 13.654 A 6.815 6.815 0 0 0 527.55 11.901 Q 529.6 9.801 529.6 7.001 A 8.15 8.15 0 0 0 529.6 6.91 A 6.736 6.736 0 0 0 527.55 2.051 A 8.142 8.142 0 0 0 527.486 1.987 A 6.737 6.737 0 0 0 522.6 0.001 A 6.739 6.739 0 0 0 520.014 0.497 A 7.259 7.259 0 0 0 517.7 2.051 A 8.212 8.212 0 0 0 517.603 2.147 A 6.65 6.65 0 0 0 515.6 7.001 A 6.577 6.577 0 0 0 516.176 9.74 A 7.318 7.318 0 0 0 517.7 11.901 A 8.768 8.768 0 0 0 517.837 12.034 Z"
+          id="8" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 550.8 47.401 L 550.8 45.801 Q 550.8 37.994 553.681 32.416 A 21.877 21.877 0 0 1 553.9 32.001 A 22.462 22.462 0 0 1 558.477 26.075 A 20.415 20.415 0 0 1 562.25 23.351 Q 567.5 20.401 573.8 20.401 A 19.942 19.942 0 0 1 580.081 21.368 A 18.115 18.115 0 0 1 583.05 22.651 A 15.195 15.195 0 0 1 588.553 27.793 A 19.308 19.308 0 0 1 589.6 29.601 L 590.8 29.601 L 590.8 21.801 L 598.6 21.801 L 598.6 61.201 A 4.856 4.856 0 0 0 598.721 62.333 Q 599.085 63.848 600.555 64.134 A 3.902 3.902 0 0 0 601.3 64.201 L 603.8 64.201 L 603.8 71.401 L 598.5 71.401 Q 595.4 71.401 593.1 69.401 Q 590.8 67.401 590.8 63.001 L 589.6 63.001 A 18.337 18.337 0 0 1 586.634 67.403 A 15.547 15.547 0 0 1 582.95 70.351 Q 578.7 72.801 574 72.801 A 24.677 24.677 0 0 1 566.185 71.59 A 22.419 22.419 0 0 1 562.25 69.851 A 21.203 21.203 0 0 1 554.347 62.032 A 25.539 25.539 0 0 1 553.9 61.251 Q 550.8 55.601 550.8 47.401 Z M 590.8 47.201 L 590.8 46.001 A 22.791 22.791 0 0 0 590.242 40.854 A 18.371 18.371 0 0 0 588.7 36.601 A 17.133 17.133 0 0 0 585.201 31.881 A 15.84 15.84 0 0 0 583 30.151 Q 579.4 27.801 574.8 27.801 A 16.054 16.054 0 0 0 569.691 28.594 A 14.414 14.414 0 0 0 566.6 30.051 A 15.639 15.639 0 0 0 561.307 35.607 A 18.751 18.751 0 0 0 560.9 36.351 A 18.411 18.411 0 0 0 559.096 41.941 A 24.285 24.285 0 0 0 558.8 45.801 L 558.8 47.401 A 25.34 25.34 0 0 0 559.332 52.75 Q 560.094 56.276 561.945 58.929 A 14.952 14.952 0 0 0 563.3 60.601 A 14.944 14.944 0 0 0 574.15 65.39 A 19.917 19.917 0 0 0 574.8 65.401 A 15.975 15.975 0 0 0 580.814 64.302 A 14.728 14.728 0 0 0 586.3 60.401 A 17.056 17.056 0 0 0 590.269 52.46 A 24.686 24.686 0 0 0 590.8 47.201 Z"
+          id="9" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 623.8 71.401 L 616 71.401 L 616 21.801 L 623.8 21.801 L 623.8 30.201 L 625 30.201 A 17.593 17.593 0 0 1 629.295 24.325 Q 633.786 20.401 641 20.401 A 22.39 22.39 0 0 1 646.958 21.153 A 16.56 16.56 0 0 1 654.7 25.751 A 16.73 16.73 0 0 1 658.361 31.942 Q 659.8 36.116 659.8 41.801 L 659.8 71.401 L 652 71.401 L 652 43.401 A 27.803 27.803 0 0 0 651.692 39.113 Q 651.338 36.851 650.578 35.041 A 11.775 11.775 0 0 0 648.5 31.701 A 11.529 11.529 0 0 0 641.249 27.95 A 16.419 16.419 0 0 0 639 27.801 A 16.283 16.283 0 0 0 633.974 28.541 A 13.096 13.096 0 0 0 627.9 32.651 A 16.642 16.642 0 0 0 624.503 39.45 Q 623.888 41.897 623.811 44.771 A 31.026 31.026 0 0 0 623.8 45.601 L 623.8 71.401 Z"
+          id="10" id="10" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+        <path class="headline-path"
+          d="M 550.8 47.401 L 550.8 45.801 Q 550.8 37.994 553.681 32.416 A 21.877 21.877 0 0 1 553.9 32.001 A 22.462 22.462 0 0 1 558.477 26.075 A 20.415 20.415 0 0 1 562.25 23.351 Q 567.5 20.401 573.8 20.401 A 19.942 19.942 0 0 1 580.081 21.368 A 18.115 18.115 0 0 1 583.05 22.651 A 15.195 15.195 0 0 1 588.553 27.793 A 19.308 19.308 0 0 1 589.6 29.601 L 590.8 29.601 L 590.8 21.801 L 598.6 21.801 L 598.6 61.201 A 4.856 4.856 0 0 0 598.721 62.333 Q 599.085 63.848 600.555 64.134 A 3.902 3.902 0 0 0 601.3 64.201 L 603.8 64.201 L 603.8 71.401 L 598.5 71.401 Q 595.4 71.401 593.1 69.401 Q 590.8 67.401 590.8 63.001 L 589.6 63.001 A 18.337 18.337 0 0 1 586.634 67.403 A 15.547 15.547 0 0 1 582.95 70.351 Q 578.7 72.801 574 72.801 A 24.677 24.677 0 0 1 566.185 71.59 A 22.419 22.419 0 0 1 562.25 69.851 A 21.203 21.203 0 0 1 554.347 62.032 A 25.539 25.539 0 0 1 553.9 61.251 Q 550.8 55.601 550.8 47.401 Z M 590.8 47.201 L 590.8 46.001 A 22.791 22.791 0 0 0 590.242 40.854 A 18.371 18.371 0 0 0 588.7 36.601 A 17.133 17.133 0 0 0 585.201 31.881 A 15.84 15.84 0 0 0 583 30.151 Q 579.4 27.801 574.8 27.801 A 16.054 16.054 0 0 0 569.691 28.594 A 14.414 14.414 0 0 0 566.6 30.051 A 15.639 15.639 0 0 0 561.307 35.607 A 18.751 18.751 0 0 0 560.9 36.351 A 18.411 18.411 0 0 0 559.096 41.941 A 24.285 24.285 0 0 0 558.8 45.801 L 558.8 47.401 A 25.34 25.34 0 0 0 559.332 52.75 Q 560.094 56.276 561.945 58.929 A 14.952 14.952 0 0 0 563.3 60.601 A 14.944 14.944 0 0 0 574.15 65.39 A 19.917 19.917 0 0 0 574.8 65.401 A 15.975 15.975 0 0 0 580.814 64.302 A 14.728 14.728 0 0 0 586.3 60.401 A 17.056 17.056 0 0 0 590.269 52.46 A 24.686 24.686 0 0 0 590.8 47.201 Z"
+          id="9" stroke=" #33FF33" stroke-width="4" fill="none" vector-effect="scaling-stroke" />
+      </g>
+    </svg>
+
+    <!-- <h1 class="text-3xl md:text-5xl font-bold text-green-400 drop-shadow-[0_0_20px_#33FF33]">Alok@Ranjan ᓚᘏᗢ</h1> -->
+    <p class="glow-3d text-gray-300 mt-2 animate-blink">
+      Welcome to my adobe! (^^)/
+    </p>
+    <div class="mt-6">
+      <p class="text-green-400">&gt; whoami</p>
+      <p class="text-gray-300">
+        a linux nerd, a rustacean, a DevOps & cybersecurity enthusiast
+      </p>
+    </div>
+    <div class="mt-6">
+      <p class="text-green-400">&gt; Currently Working On:</p>
+      <ul class="text-gray-300 list-disc pl-5">
+        <li>
+          (*＞ｖ＜)ゞ*゜+<a href="https://blogs.alokranjan.me" class="text-green-300 underline">making blogs page</a>
+        </li>
+        <li>
+          🍃
+          <a href="https://www.geeksforgeeks.org/software-engineering-reverse-engineering/"
+            class="text-green-300 underline">Reverse Engineering</a>
+        </li>
+      </ul>
+    </div>
+    <div class="w-full max-w-xl mt-14 text-center">
+      <h1 class="glow-3d md:text-2xl font-bold text-green-400">
+        ~$ echo "quote~"
+      </h1>
+      <div id="quote-container" class="mt-8">
+        <p id="quote" class="text-gray-300 text-lg"></p>
+        <script>
+          const quotes = [
+            "Talk is cheap. Show me the code. — Linus Torvalds",
+            "Software is like s3x: it's better when it's free. — Linus Torvalds",
+            "Linux is not user-friendly. It _is_ user-friendly. It is not ignorant-friendly and idiot-friendly.",
+            "The Linux philosophy is 'laugh in the face of danger'. Oops. Wrong one. 'Do it yourself'. That's it. — Linus Torvalds",
+            "We all know Linux is great... it does infinite loops in 5 seconds.",
+            "When you say 'I wrote a program that crashed Windows,' people just stare at you blankly and say 'Hey, I got those with the system, for free.' — Linus Torvalds",
+            "Only wimps use tape backup: _real_ men just upload their important stuff on ftp and let the rest of the world mirror it. — Linus Torvalds",
+            "Those who don't understand Linux are doomed to reinvent it, poorly.",
+            "Linux hackers are funny people: They count the time in patchlevels.",
+            "One OS to rule them all, One OS to find them, One OS to call them all, And in salvation bind them. — J. Scott Thayer",
+          ];
+          function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote").innerText = quotes[randomIndex];
+          }
+          window.onload = displayRandomQuote;
+        </script>
+      </div>
+    </div>
+
+    <script>
+      // Anime.js Animation for #glow-headline
+    </script>
+
+    <!-- Contact Section -->
+    <section class="mb-10">
+      <h3 class="text-xl pb-4 pt-3 text-[var(--terminal-green)] mb-4">
+        $ cat ~/contact.txt
+      </h3>
+      <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
+        <p class="text-gray-300 mb-3">
+          You can check the
+          <a href="/contact.html" class="text-green-300 underline">contacts</a>
+          page to reach me.
+        </p>
+        <p class="text-gray-300">
+          🐙 GitHub:
+          <a href="https://github.com/ryu-ryuk/" class="text-green-300 underline">@ryu-ryuk</a><br />
+          📧 Email:
+          <a href="mailto:alokraj3850@gmail.com" class="text-green-300 underline">alokraj3850@gmail.com</a>
+        </p>
+      </div>
+    </section>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+
+  <!-- TERMINAL TAB & OVERLAY -->
+  <div id="terminal-tab"
+    class="fixed bottom-16 right-2 z-50 border border-green-700/50 p-4 bg-black/70 text-[var(--terminal-green)] rounded px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-['Space_Mono',_monospace]">
+    <!-- Icon that's always visible -->
+    <span class="text-xl transition-all duration-300">
+      >_<span class="ml-2"></span>
+    </span>
+
+    <!-- "Terminal" text that slides in from right on hover -->
+    <span class="text-[var(--terminal-green)] text-xs ml-1">
+      Terminal<span class="blinking-cursor"></span>
+    </span>
+  </div>
+
+  <div id="terminal-overlay"
+    class="fixed inset-0 z-50 bg-black/90 flex backdrop-blur-sm items-center hidden justify-center transition-all duration-300 ease-in-out">
+    <div id="terminal-window"
+      class="relative w-full max-w-lg terminal-window scale-95 opacity-100 transition-all duration-300 ease-in-out">
+      <div class="terminal-header">
+        <button id="close-terminal" class="terminal-button bg-red-500 hover:bg-red-400"></button>
+        <button id="minimize-terminal" class="terminal-button bg-yellow-400 hover:bg-yellow-300"></button>
+        <button id="maximize-terminal" class="terminal-button bg-green-400 hover:bg-green-300"></button>
+        <span class="ml-4 text-[var(--terminal-green)]">ryu@archy:~</span>
+      </div>
+      <div id="terminal-output" class="terminal-output">
+        <div>
+          Type
+          <span class="text-[var(--terminal-green)] font-bold">help</span> for
+          available commands
+        </div>
+      </div>
+      <form id="terminal-form" class="terminal-form">
+        <span class="pl-4 text-[var(--terminal-green)]">$</span>
+        <input id="terminal-input" type="text" autocomplete="off" class="terminal-input"
+          placeholder="type your command..." />
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer
+    class="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm border-t border-green-400/50 overflow-hidden z-50">
+    <div class="footer-ticker-container">
+      <div id="footer-ticker" class="whitespace-nowrap flex items-center py-3">
+        <!-- Multiple text elements with different styles and languages -->
+        <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
+        <span class="ticker-divider">•</span>
+        <a href="/projects.html" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
+        <span class="ticker-divider">•</span>
+        <span class="ticker-item">thanks for visiting (^^;)</span>
+        <span class="ticker-divider">•</span>
+        <a href="/contact.html" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
+        <span class="ticker-divider">•</span>
+        <span class="ticker-item">サイバーパンク
+          <span class="ticker-translation">Cyberpunk</span></span>
+        <span class="ticker-divider">•</span>
+        <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
+        <span class="ticker-divider">•</span>
+        <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
+        <span class="ticker-divider">•</span>
+
+        <!-- Clone of the above for continuous scrolling -->
+        <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
+        <span class="ticker-divider">•</span>
+        <a href="/projects.html" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
+        <span class="ticker-divider">•</span>
+        <span class="ticker-item">thanks for visiting (^^;)</span>
+        <span class="ticker-divider">•</span>
+        <a href="/contact.html" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
+        <span class="ticker-divider">•</span>
+        <span class="ticker-item">サイバーパンク
+          <span class="ticker-translation">Cyberpunk</span></span>
+        <span class="ticker-divider">•</span>
+        <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
+        <span class="ticker-divider">•</span>
+        <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
+        <span class="ticker-divider">•</span>
+        <a href="/projects.html" class="ticker-item">スキル <span class="ticker-translation">Skills</span></a>
+        <span class="ticker-divider">•</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SPOTIFY WIDGET -->
+  <div id="spotify-widget" class="fixed bottom-16 left-4 spotify-container z-60" style="opacity: 1 !important">
+    <div class="spotify-inner">
+      <div class="scanline-spotify"></div>
+      <div class="flex items-center gap-3 p-3 relative z-10">
+        <div class="album-art-container">
+          <img id="album-art" class="w-12 h-12 rounded hidden" alt="Album Art" />
+          <div class="album-glow"></div>
+        </div>
+        <div class="spotify-info">
+          <div id="spotify-status" class="text-xs glitch-text">
+            <span class="glitch-span" data-text="PLAYING :D">PLAYING :D</span>
+          </div>
+          <div id="spotify-song" class="font-medium text-green-300 truncate max-w-[180px]"></div>
+          <div id="spotify-artist" class="text-sm text-gray-400 truncate max-w-[180px]"></div>
+          <div class="progress-container">
+            <div class="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+  <style>
+    .blog-link {
+      position: relative;
+      color: #33ff33;
+      transition: color 0.3s ease;
+    }
+
+    .blog-link.glow {
+      text-shadow:
+        0 0 12px rgba(51, 255, 51, 1),
+        0 0 24px rgba(51, 255, 51, 0.6),
+        0 0 36px rgba(51, 255, 51, 0.4);
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Existing mobile menu toggle
+      const menuToggle = document.getElementById("menu-toggle");
+      const menu = document.getElementById("menu");
+      menuToggle?.addEventListener("click", function () {
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("flex");
+      });
+
+      // GSAP Animations for Blogs link
+      const blogLink = document.querySelector(".blog-link");
+
+      // Initial bounce on load
+      gsap.fromTo(
+        blogLink,
+        { y: -25 },
+        { y: 0, duration: 0.8, ease: "bounce.out" },
+      );
+      // Strong pulsating glow
+      gsap.to(blogLink, {
+        className: "blog-link glow",
+        duration: 0.7,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      // Random bounce effect
+      function addRandomBounce() {
+        if (Math.random() > 0.5) {
+          gsap.fromTo(
+            blogLink,
+            { y: -15 },
+            {
+              y: 0,
+              duration: 0.6,
+              ease: "bounce.out",
+            },
+          );
+        }
+        setTimeout(addRandomBounce, Math.random() * 3000 + 2000);
+      }
+      setTimeout(addRandomBounce, 3000);
+    });
+  </script>
+</body>
+
+</html>
