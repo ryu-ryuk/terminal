@@ -1135,3 +1135,9 @@ nav a.text-green-400 {
   z-index: 10;
 }
 
+/* gpg code block */
+.bg-black\/40 pre { 
+    overflow-x: hidden;
+    white-space: pre-wrap; 
+    word-break: break-word; 
+}
