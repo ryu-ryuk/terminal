@@ -107,7 +107,9 @@ async def save_to_notion(name, email, subject, message):
         }
     }
     async with httpx.AsyncClient() as client:
-        await client.post(url, json=data, headers=headers)
+        res = await client.post(url, json=data, headers=headers)
+        print("notion response:", res.status_code, res.text)
+
 
 
 @app.get("/api/spotify")
@@ -211,10 +213,11 @@ async def submit_contact(
             "text": text,
             "parse_mode": "Markdown"
         }
+        print("sending telegram message:", payload)
 
         async with httpx.AsyncClient() as client:
-            await client.post(url, data=payload)
-
+            res = await client.post(url, data=payload)
+            print("telegram response:", res.status_code, await res.text())
         # save to Notion
         await save_to_notion(name, email, subject, message)
 
