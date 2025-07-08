@@ -7,7 +7,10 @@ import os
 from dotenv import load_dotenv
 import requests
 import base64
+import httpx
 from datetime import datetime, timedelta
+from fastapi.routing import APIRouter
+
 
 load_dotenv()
 
@@ -25,6 +28,8 @@ app.add_middleware(
 async def ping():
     return {"status": "ok"}
 
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_OWNER_CHAT_ID = os.getenv("BOT_OWNER_CHAT_ID")
 
 @app.get("/updates", response_class=HTMLResponse)
 async def updates(request: Request):
@@ -148,8 +153,6 @@ async def set_footer_message(request: Request):
 @app.get("/api/footer-message")
 async def get_footer_message():
     return {"text": footer_message["text"]}
-
-
 @app.post("/api/submit-contact")
 async def submit_contact(
     name: str = Form("Anonymous"),
@@ -157,12 +160,31 @@ async def submit_contact(
     subject: str = Form("No Subject"),
     message: str = Form(...)
 ):
-    """Submit a contact form"""
     if not email:
         raise HTTPException(status_code=400, detail="Email is required")
-    
-    # Here you would typically send the email or save it to a database
-    # For this example, we'll just return the data
+
+    text = (
+        "📩 *New Contact Form Submission!*\n\n"
+        f"👤 *Name:* {name}\n"
+        f"✉️ *Email:* {email}\n"
+        f"📌 *Subject:* {subject}\n"
+        f"💬 *Message:* {message}"
+    )
+
+    try:
+        url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+        payload = {
+            "chat_id": BOT_OWNER_CHAT_ID,
+            "text": text,
+            "parse_mode": "Markdown"
+        }
+
+        async with httpx.AsyncClient() as client:
+            await client.post(url, data=payload)
+
+    except Exception as e:
+        print(f"[contact error] failed to send to Telegram: {e}")
+
     return {
         "status": "ok",
         "name": name,
