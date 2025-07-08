@@ -2,23 +2,22 @@ from fastapi import FastAPI, Request, Response, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
-import json
 import os
-from dotenv import load_dotenv
 import requests
 import base64
 import httpx
 from datetime import datetime, timedelta
-from fastapi.routing import APIRouter
-
+from dotenv import load_dotenv
 
 load_dotenv()
-
 app = FastAPI()
+
+templates = Jinja2Templates(directory="templates")
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://alokranjan.me", "https://archya.web.app"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,41 +29,26 @@ async def ping():
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 BOT_OWNER_CHAT_ID = os.getenv("BOT_OWNER_CHAT_ID")
-
-@app.get("/updates", response_class=HTMLResponse)
-async def updates(request: Request):
-    posts = load_posts()
-    return templates.TemplateResponse("updates.html", {"request": request, "posts": reversed(posts)})
-
-@app.get("/")
-async def root():
-    return HTMLResponse(content="<html><body><h1>Spotify API Server Running</h1></body></html>")
-
-# Spotify API credentials
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REFRESH_TOKEN = os.getenv("REFRESH_TOKEN") 
+REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 NOTION_DB_ID = os.getenv("NOTION_DB_ID")
 
-# Global token cache
 token_cache = {
     "access_token": None,
     "expires_at": None
 }
 
 def get_access_token():
-    """Get a valid access token using the refresh token"""
     global token_cache
-    
-    # If we have a valid cached token, use it
+
     if token_cache["access_token"] and token_cache["expires_at"] and datetime.now() < token_cache["expires_at"]:
         return token_cache["access_token"]
-    
-    # Otherwise, get a new token
+
     try:
         auth_header = base64.b64encode(f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
-        
+
         response = requests.post(
             "https://accounts.spotify.com/api/token",
             data={
@@ -76,18 +60,15 @@ def get_access_token():
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         )
-        
+
         if response.status_code == 200:
             data = response.json()
             token_cache["access_token"] = data["access_token"]
-            # Set expiry time with a small buffer
             token_cache["expires_at"] = datetime.now() + timedelta(seconds=data["expires_in"] - 60)
             return data["access_token"]
         else:
-            print(f"Error refreshing token: {response.text}")
             return None
-    except Exception as e:
-        print(f"Exception getting token: {str(e)}")
+    except Exception:
         return None
 
 async def save_to_notion(name, email, subject, message):
@@ -108,26 +89,18 @@ async def save_to_notion(name, email, subject, message):
     }
     async with httpx.AsyncClient() as client:
         res = await client.post(url, json=data, headers=headers)
-        print("notion response:", res.status_code, res.text)
-
-
+        res.raise_for_status()
 
 @app.get("/api/spotify")
 async def get_now_playing():
-    """Get the currently playing or recently played track"""
     access_token = get_access_token()
-    
     if not access_token:
-        return JSONResponse({
-            "error": "Failed to get Spotify token"
-        })
-    
+        return JSONResponse({"error": "Failed to get Spotify token"})
+
     try:
         headers = {"Authorization": f"Bearer {access_token}"}
-        
-        # Try currently playing first
         now = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers=headers)
-        
+
         if now.status_code == 200 and now.content:
             data = now.json()
             if data.get("item"):
@@ -138,13 +111,12 @@ async def get_now_playing():
                     "isPlaying": True,
                     "spotifyUrl": data["item"]["external_urls"]["spotify"],
                 }
-        
-        # If not playing, get recently played
+
         recent = requests.get(
             "https://api.spotify.com/v1/me/player/recently-played?limit=1",
             headers=headers
         )
-        
+
         if recent.status_code == 200:
             data = recent.json()
             if data["items"]:
@@ -158,13 +130,10 @@ async def get_now_playing():
                     "spotifyUrl": track["external_urls"]["spotify"],
                     "playedAt": played_at.isoformat()
                 }
-                
-        return {"error": "No recent tracks found"}
-        
-    except Exception as e:
-        print(f"Error fetching Spotify data: {str(e)}")
-        return {"error": f"Failed to fetch music data: {str(e)}"}
 
+        return {"error": "No recent tracks found"}
+    except Exception as e:
+        return {"error": f"Failed to fetch music data: {str(e)}"}
 
 footer_message = {"text": "Welcome to my portfolio!"}
 
@@ -178,15 +147,6 @@ async def set_footer_message(request: Request):
 async def get_footer_message():
     return {"text": footer_message["text"]}
 
-# @app.post("/api/notify-visit")
-# async def notify_visit(request: Request):
-#     ip = request.client.host
-#     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-#     text = f"a new kitty is here from `{ip}` at {timestamp}"
-#     await send_telegram(text)
-#     return {"status": "ok"}
-
 @app.post("/api/submit-contact")
 async def submit_contact(
     name: str = Form("Anonymous"),
@@ -199,9 +159,13 @@ async def submit_contact(
 
     text = (
         "📩 *New Contact Form Submission!*\n\n"
+        f"\n"
         f"👤 *Name:* {name}\n"
+        f"\n"
         f"✉️ *Email:* {email}\n"
+        f"\n"
         f"📌 *Subject:* {subject}\n"
+        f"\n"
         f"💬 *Message:* {message}"
     )
 
@@ -213,16 +177,12 @@ async def submit_contact(
             "text": text,
             "parse_mode": "Markdown"
         }
-        print("sending telegram message:", payload)
 
         async with httpx.AsyncClient() as client:
-            res = await client.post(url, data=payload)
-            body = await res.aread()
-            print("telegram response:", res.status_code, body.decode())
+            await client.post(url, data=payload)
 
         # save to Notion
         await save_to_notion(name, email, subject, message)
-
 
     except Exception as e:
         print(f"[contact error] failed: {e}")
@@ -234,9 +194,3 @@ async def submit_contact(
         "subject": subject,
         "message": message
     }
-
-# @app.get("/api/posts")
-# async def get_posts():
-#     """Get the list of posts"""
-#     posts = load_posts()
-#     return JSONResponse(posts)  
