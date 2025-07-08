@@ -44,7 +44,9 @@ async def root():
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 REFRESH_TOKEN = os.getenv("REFRESH_TOKEN") 
-
+NOTION_TOKEN = os.getenv("NOTION_TOKEN")
+NOTION_DB_ID = os.getenv("NOTION_DB_ID")
+1
 # Global token cache
 token_cache = {
     "access_token": None,
@@ -87,6 +89,26 @@ def get_access_token():
     except Exception as e:
         print(f"Exception getting token: {str(e)}")
         return None
+
+async def save_to_notion(name, email, subject, message):
+    url = "https://api.notion.com/v1/pages"
+    headers = {
+        "Authorization": f"Bearer {NOTION_TOKEN}",
+        "Content-Type": "application/json",
+        "Notion-Version": "2022-06-28"
+    }
+    data = {
+        "parent": {"database_id": NOTION_DB_ID},
+        "properties": {
+            "Name": {"title": [{"text": {"content": name}}]},
+            "Email": {"rich_text": [{"text": {"content": email}}]},
+            "Subject": {"rich_text": [{"text": {"content": subject}}]},
+            "Message": {"rich_text": [{"text": {"content": message}}]}
+        }
+    }
+    async with httpx.AsyncClient() as client:
+        await client.post(url, json=data, headers=headers)
+
 
 @app.get("/api/spotify")
 async def get_now_playing():
@@ -154,6 +176,15 @@ async def set_footer_message(request: Request):
 async def get_footer_message():
     return {"text": footer_message["text"]}
 
+# @app.post("/api/notify-visit")
+# async def notify_visit(request: Request):
+#     ip = request.client.host
+#     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+#     text = f"a new kitty is here from `{ip}` at {timestamp}"
+#     await send_telegram(text)
+#     return {"status": "ok"}
+
 @app.post("/api/submit-contact")
 async def submit_contact(
     name: str = Form("Anonymous"),
@@ -173,6 +204,7 @@ async def submit_contact(
     )
 
     try:
+        # send to Telegram
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
         payload = {
             "chat_id": BOT_OWNER_CHAT_ID,
@@ -183,8 +215,12 @@ async def submit_contact(
         async with httpx.AsyncClient() as client:
             await client.post(url, data=payload)
 
+        # save to Notion
+        await save_to_notion(name, email, subject, message)
+
+
     except Exception as e:
-        print(f"[contact error] failed to send to Telegram: {e}")
+        print(f"[contact error] failed: {e}")
 
     return {
         "status": "ok",
@@ -193,6 +229,7 @@ async def submit_contact(
         "subject": subject,
         "message": message
     }
+
 # @app.get("/api/posts")
 # async def get_posts():
 #     """Get the list of posts"""
