@@ -153,6 +153,7 @@ async def set_footer_message(request: Request):
 @app.get("/api/footer-message")
 async def get_footer_message():
     return {"text": footer_message["text"]}
+
 @app.post("/api/submit-contact")
 async def submit_contact(
     name: str = Form("Anonymous"),
