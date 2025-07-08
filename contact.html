@@ -537,6 +537,9 @@
   <script type="module" src="/src/main.js"></script>
 
   <script>
+
+    const BACKEND_URL = "https://spotify-portfolio-6nvo.onrender.com";
+
     document.addEventListener("DOMContentLoaded", function () {
       // Mobile menu toggle
       const menuToggle = document.getElementById("menu-toggle");
@@ -606,7 +609,8 @@
 
         try {
           const formData = new FormData(contactForm);
-          const response = await fetch("/api/submit-contact", {
+
+          const response = await fetch(`${BACKEND_URL}/api/submit-contact`, {
             method: "POST",
             body: formData,
           });
