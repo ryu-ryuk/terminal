@@ -87,9 +87,17 @@ async def save_to_notion(name, email, subject, message):
             "Message": {"rich_text": [{"text": {"content": message}}]}
         }
     }
+    
+    print(f"[DEBUG] Notion Token: {NOTION_TOKEN[:10]}..." if NOTION_TOKEN else "[DEBUG] Notion Token: None")
+    print(f"[DEBUG] Database ID: {NOTION_DB_ID}")
+    print(f"[DEBUG] Sending data: {data}")
+    
     async with httpx.AsyncClient() as client:
         res = await client.post(url, json=data, headers=headers)
+        print(f"[DEBUG] Notion API Response Status: {res.status_code}")
+        print(f"[DEBUG] Notion API Response: {res.text}")
         res.raise_for_status()
+        return res.json()
 
 @app.get("/api/spotify")
 async def get_now_playing():
@@ -179,13 +187,19 @@ async def submit_contact(
         }
 
         async with httpx.AsyncClient() as client:
-            await client.post(url, data=payload)
+            telegram_response = await client.post(url, data=payload)
+            print(f"[DEBUG] Telegram response: {telegram_response.status_code}")
 
         # save to Notion
-        await save_to_notion(name, email, subject, message)
+        print("[DEBUG] Attempting to save to Notion...")
+        notion_response = await save_to_notion(name, email, subject, message)
+        print(f"[DEBUG] Notion save successful: {notion_response}")
 
     except Exception as e:
         print(f"[contact error] failed: {e}")
+        print(f"[contact error] error type: {type(e)}")
+        import traceback
+        traceback.print_exc()
 
     return {
         "status": "ok",
