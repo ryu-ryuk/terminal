@@ -88,14 +88,8 @@ async def save_to_notion(name, email, subject, message):
         }
     }
     
-    print(f"[DEBUG] Notion Token: {NOTION_TOKEN[:10]}..." if NOTION_TOKEN else "[DEBUG] Notion Token: None")
-    print(f"[DEBUG] Database ID: {NOTION_DB_ID}")
-    print(f"[DEBUG] Sending data: {data}")
-    
     async with httpx.AsyncClient() as client:
         res = await client.post(url, json=data, headers=headers)
-        print(f"[DEBUG] Notion API Response Status: {res.status_code}")
-        print(f"[DEBUG] Notion API Response: {res.text}")
         res.raise_for_status()
         return res.json()
 
