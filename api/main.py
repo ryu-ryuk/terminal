@@ -21,12 +21,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/ping")
+async def ping():
+    return {"status": "ok"}
+
 
 @app.get("/updates", response_class=HTMLResponse)
 async def updates(request: Request):
     posts = load_posts()
     return templates.TemplateResponse("updates.html", {"request": request, "posts": reversed(posts)})
-
 
 @app.get("/")
 async def root():
