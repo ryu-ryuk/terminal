@@ -217,7 +217,9 @@ async def submit_contact(
 
         async with httpx.AsyncClient() as client:
             res = await client.post(url, data=payload)
-            print("telegram response:", res.status_code, await res.text())
+            body = await res.aread()
+            print("telegram response:", res.status_code, body.decode())
+
         # save to Notion
         await save_to_notion(name, email, subject, message)
 
