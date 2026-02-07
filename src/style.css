@@ -1,15 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+/* Geist Sans Variable */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/geist:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+}
+/* Geist Mono Variable */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/geist-mono:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #0a0a0a;
+  background: linear-gradient(180deg, #0a0a0a 0%, #050505 50%, #0a0a0a 100%);
+  background-attachment: fixed;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -43,12 +59,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
   padding: 0 1rem;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist', system-ui, sans-serif;
 }
 
 a {
   font-weight: 500;
-  color: #33FF33;
+  color: var(--terminal-green);
   text-decoration: none;
 }
 
@@ -57,23 +73,12 @@ a:hover {
   text-shadow: 0 0 5px #00ff99;
 }
 
-h1,
-h3,
-.font-semibold,
-p,
-ul,
-.console-text,
-h2,
-li,
-span {
-  font-family: 'Space Mono', monospace;
-}
 
 #glow-headline {
   position: relative;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   display: inline-flex;
 }
 
@@ -99,7 +104,7 @@ span {
     display: inline-flex;
     align-items: center;
     padding: 0 1rem;
-    color: #33ff33;
+    color: var(--terminal-green);
     font-size: 1rem;
     text-shadow: 0 0 8px rgba(51, 255, 51, 0.6);
     transition: all 0.3s ease;
@@ -173,7 +178,7 @@ a.ticker-item:hover::after {
 }
 
 #glow-headline span {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   display: inline-block;
 }
 
@@ -191,13 +196,13 @@ a.ticker-item:hover::after {
   opacity: 0;
   transform: translate(2px, 2px);
   z-index: -1;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist Mono', monospace;
 }
 
 /* Glow Effect for Navigation */
 .glow-nav {
   text-shadow: 0 0 5px #33FF33, 0 0 10px #33FF33;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist Mono', monospace;
 }
 
 /* Blinking Cursor */
@@ -235,13 +240,13 @@ a.ticker-item:hover::after {
 
 /* Glow 3D Effect */
 .glow-3d {
-  color: #33FF33;
+  color: var(--terminal-green);
   text-shadow:
     0 0 10px #33FF33,
     0 0 20px #33FF33,
     0 0 30px #33FF33;
   animation: wobbleGlow 2.5s cubic-bezier(.4, 2, .6, 1) infinite alternate;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist', system-ui, sans-serif;
 }
 
 @keyframes wobbleGlow {
@@ -301,7 +306,7 @@ a.ticker-item:hover::after {
   border: 1px solid var(--terminal-green);
   border-radius: 0.5rem;
   padding: 0.5rem;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   opacity: 0;
   box-shadow: 0 0 10px rgba(51, 255, 51, 0.3);
 }
@@ -382,12 +387,12 @@ a.ticker-item:hover::after {
 
   .terminal-output {
     @apply p-4 h-64 overflow-y-auto text-green-300 text-sm bg-black/90;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Geist Mono', monospace;
   }
 
   .terminal-input {
     @apply bg-black/90 text-[var(--terminal-green)] flex-1 p-4 focus:outline-none border-none;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Geist Mono', monospace;
   }
 
   .terminal-form {
@@ -570,11 +575,10 @@ nav {
   -webkit-backdrop-filter: blur(10px);
   /* Safari */
   z-index: 50;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist', system-ui, sans-serif;
 }
 
 #menu {
-  font-family: 'Space Mono', monospace;
   color: var(--terminal-green);
 }
 
@@ -615,7 +619,7 @@ nav {
 }
 
 nav a.text-green-400 {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist', system-ui, sans-serif;
   color: var(--terminal-green);
 }
 
@@ -674,7 +678,7 @@ nav a.text-green-400 {
 .glass-card:hover {
   background: rgba(0, 10, 2, 0.35);
   box-shadow: 0 8px 40px rgba(51, 255, 51, 0.2);
-  transform: translateY(-10px);
+  transform: translateY(-4px);
 }
 /* Parallax Container */
 .parallax-container {
@@ -811,7 +815,7 @@ nav a.text-green-400 {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  color: #33ff33;
+  color: var(--terminal-green);
 }
 
 .glitch-text {
@@ -875,13 +879,6 @@ nav a.text-green-400 {
   100% { transform: translateX(2px); opacity: 0; }
 }
 
-.text-green-300 {
-  color: #33ff33 !important;
-}
-
-.text-gray-400 {
-  color: #9ca3af !important;
-}
 
 .progress-container {
   width: 100%;
@@ -963,10 +960,10 @@ nav a.text-green-400 {
 .card-dot {
   position: absolute;
   left: 0px;
-  top: 20px; 
+  top: 20px;
   width: 2px;
   height: 12px;
-  background-color: #33ff33;
+  background-color: var(--terminal-green);
   border-radius: 50%;
   transform: translateX(-50%); 
   box-shadow: 0 0 10px #33ff33;
@@ -974,7 +971,7 @@ nav a.text-green-400 {
 }
 /* Terminal Journey Timeline Styles */
 .terminal-journey {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   overflow: hidden;
   position: relative;
 }

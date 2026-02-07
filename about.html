@@ -13,7 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
 
     <style>
@@ -141,16 +140,14 @@
 </head>
 
 <body
-    class="bg-black text-green-400 font-mono p-2 min-h-screen flex flex-col w-full min-w-full items-center justify-center pb-24">
-
-    <!-- <body class="bg-black text-green-400 font-mono p-6 min-h-screen flex flex-col items-center justify-center pb-24"> -->
+    class="bg-black text-green-400 font-sans p-6 min-h-screen flex flex-col items-center justify-center pb-24">
     <!-- NAVIGATION -->
-    <nav class="p-2 fixed top-0 left-0 w-full bg-black/25 backdrop-blur-lg z-50">
+    <nav class="p-2 fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50">
         <div class="max-w px-4 mx-auto flex justify-between items-center">
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu"
-                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/60 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
                 <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="/contact.html" class="hover:text-green-300">Contact</a>
                 </li>
@@ -207,11 +204,11 @@
         </section>
 
         <!-- Terminal Journey Timeline -->
-        <section class="milestone-section my-1">
+        <section class="milestone-section mb-10">
             <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/journey.log</h3>
 
             <div
-                class="terminal-journey overflow-x-visible  bg-black/40  border border-green-700/50 rounded-md p-4 font-mono text-sm">
+                class="terminal-journey overflow-x-visible bg-black/40 border border-green-700/50 rounded-lg p-4 font-mono text-sm">
                 <div class="terminal-header flex justify-between items-center mb-4">
                     <div class="terminal-title text-[var(--terminal-green)]">journey.log - User Timeline</div>
                     <div class="terminal-controls flex gap-2">
@@ -305,7 +302,7 @@
 
         <h3 class="text-xl text-[var(--terminal-green)] pt-8">$ cat ~/work_experience.log</h3>
 
-        <section class="work-experience-section my-12">
+        <section class="work-experience-section mb-10">
 
             <div class="experience-container relative">
 
@@ -405,7 +402,7 @@
         <!-- Skills Section -->
             <section class="skills-section">
                 <h2 id="skills-section-title"
-                    class="text-xl sticky top-0 z-30 bg-black md:text-3xl text-green-400 mt-6 mb-4 font-bold text-[var(--terminal-green)]">
+                    class="text-xl md:text-3xl text-[var(--terminal-green)] mt-6 mb-4 font-bold">
                     Skills &
                     Tools</h2>
                 <p class="text-gray-400 text-sm">Some of the technologies and domains I enjoy working with （´・｀ ）♡</p>
@@ -535,14 +532,15 @@
                         📧 Email: <a href="mailto:meow@alokranjan.me"
                             class="text-green-300 underline">meow@alokranjan.me</a>
                     </p>
-                    <section class="mb-10 mt-10">
-                        <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
-                            > fetch my PGP key
-                            <pre
-                                class="bg-black/20 border border-green-700/30 rounded p-2 mt-2 text-sm text-gray-200"><code>gpg --keyserver hkps://keys.openpgp.org --recv-keys 11DF186173E073C463D0A441DF0D13A03A97C43A</code></pre>
-                            </p>
-                        </div>
-                    </section>
+                </div>
+            </section>
+
+            <!-- PGP Key Section -->
+            <section class="mb-10">
+                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ gpg --fetch-key</h3>
+                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4 font-mono text-sm">
+                    <span class="text-gray-300">&gt; fetch my PGP key</span>
+                    <pre class="bg-black/20 border border-green-700/30 rounded p-2 mt-2 text-gray-200"><code>gpg --keyserver hkps://keys.openpgp.org --recv-keys 11DF186173E073C463D0A441DF0D13A03A97C43A</code></pre>
                 </div>
             </section>
             <!-- Interests Section -->
@@ -564,7 +562,7 @@
 
     <!-- TERMINAL TAB & OVERLAY -->
     <div id="terminal-tab"
-        class="fixed bottom-16 right-2 z-50  border border-green-700/50 rounded-lg p-4 bg-black/70 text-[var(--terminal-green)] rounded px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-['Space_Mono',_monospace]">
+        class="fixed bottom-16 right-2 z-50 border border-green-700/50 rounded-lg bg-black/70 text-[var(--terminal-green)] px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-mono">
         <!-- Icon that's always visible -->
         <span class="text-xl transition-all duration-300">
             >_<span class="ml-2"></span>

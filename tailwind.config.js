@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./about.html", "./projects.html", "./contact.html", "./src/**/*.{js,ts,jsx,tsx}"],
   safelist: [
     'card-dot',
     'experience-card',
@@ -24,7 +24,8 @@ export default {
         terminalBackground: "#000000",
       },
       fontFamily: {
-        mono: ["Fira Code", "monospace"],
+        sans: ['"Geist"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', 'monospace'],
       },
       animation: {
         glow: "glow 2s ease-in-out infinite",

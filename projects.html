@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/src/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
     <style>
@@ -213,13 +212,13 @@
     </style>
 </head>
 
-<body class="bg-black text-green-400 font-mono p-6 min-h-screen flex flex-col items-center justify-center pb-20">
-    <nav class="p-2 fixed top-0 left-0 w-full bg-black/25 backdrop-blur-lg z-50">
+<body class="bg-black text-green-400 font-sans p-6 min-h-screen flex flex-col items-center justify-center pb-20">
+    <nav class="p-2 fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50">
         <div class="max-w px-4 mx-auto flex justify-between items-center">
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu"
-                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/60 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
                 <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="/contact.html" class="hover:text-green-300">Contact</a>
                 </li>
@@ -245,7 +244,7 @@
             </div>
 
             <div class="hero-text flex flex-col items-center text-center mt-8 px-4">
-                <h2 class="large grid centered square-grid ustify-center flex-wrap text-5xl md:text-9xl font-bold"
+                <h2 class="large grid centered square-grid justify-center flex-wrap text-5xl md:text-9xl font-bold"
                     data-text="Yoru">
                     <span data-text="~">~</span>
                     <span data-text="Y">Y</span>
@@ -426,6 +425,7 @@
 
 
         <!-- Projects List -->
+        <div class="space-y-8">
         <div class="project-card glass-card opacity-0" data-gsap="project">
             <div class="parallax-container">
                 <div class="parallax-bg"
@@ -857,6 +857,7 @@
                     </a>
                 </div>
             </div>
+        </div>
     </main>
 
     <!-- SPOTIFY WIDGET
@@ -886,7 +887,7 @@
 
     <!-- TERMINAL TAB & OVERLAY -->
     <div id="terminal-tab"
-        class="fixed bottom-16 right-2 z-50  border border-green-700/50 p-4 bg-black/70 text-[var(--terminal-green)] rounded px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-['Space_Mono',_monospace]">
+        class="fixed bottom-16 right-2 z-50  border border-green-700/50 p-4 bg-black/70 text-[var(--terminal-green)] rounded px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-mono">
         <!-- Icon that's always visible -->
         <span class="text-xl transition-all duration-300">
             >_<span class="ml-2"></span>
@@ -924,7 +925,7 @@
         <div class="footer-ticker-container">
             <div id="footer-ticker" class="whitespace-nowrap flex items-center py-3">
                 <!-- Multiple text elements with different styles and languages -->
-                <a href="/blogs.html" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
+                <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
                 <span class="ticker-divider">•</span>
                 <a href="/projects.html" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
                 <span class="ticker-divider">•</span>
@@ -940,7 +941,7 @@
                 <span class="ticker-divider">•</span>
 
                 <!-- Clone of the above for continuous scrolling -->
-                <a href="/blogs.html" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
+                <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span class="ticker-translation">Blog</span></a>
                 <span class="ticker-divider">•</span>
                 <a href="/projects.html" class="ticker-item">プロジェクト <span class="ticker-translation">Projects</span></a>
                 <span class="ticker-divider">•</span>
