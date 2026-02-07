@@ -13,7 +13,15 @@ load_dotenv()
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "").split(",")
+raw_origins = os.getenv("ALLOWED_ORIGINS", "")
+ALLOWED_ORIGINS = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+if not ALLOWED_ORIGINS:
+    ALLOWED_ORIGINS = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,11 +48,38 @@ token_cache = {
     "expires_at": None
 }
 
+def _spotify_token_error_message(response):
+    try:
+        payload = response.json()
+    except ValueError:
+        payload = {}
+
+    spotify_error = payload.get("error")
+    description = payload.get("error_description")
+
+    if spotify_error and description:
+        return f"{spotify_error}: {description}"
+    if spotify_error:
+        return str(spotify_error)
+
+    body = (response.text or "").strip()
+    return body[:200] if body else f"HTTP {response.status_code}"
+
 def get_access_token():
     global token_cache
 
+    missing = [
+        key for key, value in {
+            "CLIENT_ID": CLIENT_ID,
+            "CLIENT_SECRET": CLIENT_SECRET,
+            "REFRESH_TOKEN": REFRESH_TOKEN,
+        }.items() if not value
+    ]
+    if missing:
+        return None, f"Missing required env vars: {', '.join(missing)}"
+
     if token_cache["access_token"] and token_cache["expires_at"] and datetime.now() < token_cache["expires_at"]:
-        return token_cache["access_token"]
+        return token_cache["access_token"], None
 
     try:
         auth_header = base64.b64encode(f"{CLIENT_ID}:{CLIENT_SECRET}".encode()).decode()
@@ -58,18 +93,24 @@ def get_access_token():
             headers={
                 "Authorization": f"Basic {auth_header}",
                 "Content-Type": "application/x-www-form-urlencoded"
-            }
+            },
+            timeout=10
         )
 
         if response.status_code == 200:
             data = response.json()
-            token_cache["access_token"] = data["access_token"]
-            token_cache["expires_at"] = datetime.now() + timedelta(seconds=data["expires_in"] - 60)
-            return data["access_token"]
-        else:
-            return None
-    except Exception:
-        return None
+            access_token = data.get("access_token")
+            expires_in = data.get("expires_in")
+            if not access_token or not expires_in:
+                return None, "Spotify token response missing required fields"
+            token_cache["access_token"] = access_token
+            token_cache["expires_at"] = datetime.now() + timedelta(seconds=max(expires_in - 60, 0))
+            return access_token, None
+        return None, _spotify_token_error_message(response)
+    except requests.RequestException as e:
+        return None, f"Spotify token request failed: {str(e)}"
+    except Exception as e:
+        return None, f"Unexpected token error: {str(e)}"
 
 async def save_to_notion(name, email, subject, message):
     url = "https://api.notion.com/v1/pages"
@@ -95,9 +136,12 @@ async def save_to_notion(name, email, subject, message):
 
 @app.get("/api/spotify")
 async def get_now_playing():
-    access_token = get_access_token()
+    access_token, token_error = get_access_token()
     if not access_token:
-        return JSONResponse({"error": "Failed to get Spotify token"})
+        return JSONResponse(
+            {"error": "Failed to get Spotify token", "details": token_error},
+            status_code=502
+        )
 
     try:
         headers = {"Authorization": f"Bearer {access_token}"}
