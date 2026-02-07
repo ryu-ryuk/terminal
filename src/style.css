@@ -428,11 +428,6 @@ a.ticker-item:hover::after {
   }
 }
 
-.blinking-cursor::after {
-  content: "█";
-  animation: blink 1s steps(2, start) infinite;
-}
-
 #terminal-tab .group:hover .text-xl {
   font-size: 1.5rem;
 }

@@ -1,8 +1,8 @@
+import { animate, stagger, svg } from "animejs";
+import { gsap } from "gsap";
+import { Draggable, MotionPathPlugin, Physics2DPlugin, ScrollTrigger } from "gsap/all";
 import "./style.css";
-import { animate, svg, stagger, utils } from "animejs";
 const API_BASE = import.meta.env.VITE_API_URL;
-import { gsap } from "gsap"; 
-import { ScrollTrigger, Draggable, MotionPathPlugin, Physics2DPlugin } from "gsap/all";
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, Draggable, MotionPathPlugin, Physics2DPlugin);
 
@@ -744,8 +744,6 @@ const SpotifyWidget = {
   },
 };
 
-SpotifyWidget.initializeWidget();
-
 // =====================
 // Journey Timeline
 // =====================
@@ -1242,136 +1240,3 @@ const TerminalJourney = {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  TerminalJourney.init();
-});
-
-      anime({
-        targets: '#glow-headline span',
-        translateY: [
-          { value: '-2rem', duration: 600, easing: 'easeOutExpo' },
-          { value: 0, duration: 800, easing: 'easeOutBounce' }
-        ],
-        rotate: {
-          value: '1turn',
-          duration: 1200,
-          easing: 'easeInOutSine'
-        },
-        textShadow: [
-          { value: '0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99', duration: 600 },
-          { value: '0 0 5px #33FF33, 0 0 10px #33FF33, 0 0 20px #00ff99', duration: 600 }
-        ],
-        opacity: [0, 1],
-        delay: anime.stagger(50), 
-        loop: true,
-        loopDelay: 1000
-      });
-
-      // GSAP Animations
-      // Heading Animation with Glow, Glitch, and Scanline
-      gsap.to("#glow-headline", {
-        textShadow: [
-          "0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99",
-          "0 0 20px #33FF33, 0 0 40px #33FF33, 0 0 80px #00ff99",
-          "0 0 10px #33FF33, 0 0 20px #33FF33, 0 0 40px #00ff99"
-        ],
-        color: ["#33FF33", "#00ff99", "#33FF33"],
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true
-      });
-
-      // Glitch Effect
-      gsap.to("#glow-headline", {
-        x: gsap.utils.random([-2, 2]),
-        y: gsap.utils.random([-2, 2]),
-        opacity: [1, 0.8, 1],
-        duration: 0.1,
-        repeat: -1,
-        repeatDelay: gsap.utils.random(1, 3),
-        ease: "none"
-      });
-
-      // Navigation Link Animation
-      document.querySelectorAll('.nav-link').forEach(link => {
-        gsap.fromTo(link,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.1 }
-        );
-      });
-
-
-          document.addEventListener("DOMContentLoaded", function () {
-      // Mobile menu toggle (unchanged)
-      const menuToggle = document.getElementById("menu-toggle");
-      const menu = document.getElementById("menu");
-      menuToggle?.addEventListener("click", function () {
-        menu.classList.toggle("hidden");
-        menu.classList.toggle("flex");
-      });
-
-      // GSAP Animations for Blogs link
-      const blogLink = document.querySelector(".blog-link");
-      const blogIcon = document.querySelector(".blog-icon");
-
-      // Pulsating glow effect on load
-      gsap.to(blogLink, {
-        textShadow: "0 0 8px rgba(51, 255, 51, 0.8), 0 0 16px rgba(51, 255, 51, 0.4)",
-        duration: 1.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      // Blinking icon
-      gsap.to(blogIcon, {
-        opacity: 0,
-        duration: 0.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "steps(1)",
-      });
-
-      // Hover effects
-      blogLink.addEventListener("mouseenter", () => {
-        gsap.to(blogLink, {
-          color: "#33ff33",
-          textShadow: "0 0 12px rgba(51, 255, 51, 1)",
-          duration: 0.3,
-        });
-        gsap.to(".blog-underline", {
-          width: "100%",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      });
-
-      blogLink.addEventListener("mouseleave", () => {
-        gsap.to(blogLink, {
-          color: "#9ca3af",
-          textShadow: "0 0 8px rgba(51, 255, 51, 0.4)",
-          duration: 0.3,
-        });
-        gsap.to(".blog-underline", {
-          width: "0%",
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      });
-
-      // Random glitch animation
-      function addRandomGlitches() {
-        if (Math.random() > 0.7) {
-          gsap.to(blogLink, {
-            x: "+=2",
-            skewX: "2deg",
-            duration: 0.1,
-            yoyo: true,
-            repeat: 1,
-          });
-        }
-        setTimeout(addRandomGlitches, Math.random() * 5000 + 2000);
-      }
-      setTimeout(addRandomGlitches, 3000);
-    });
