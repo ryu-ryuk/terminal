@@ -97,42 +97,120 @@
       </p>
     </div>
     <div class="mt-6">
-      <p class="text-green-400">&gt; Currently Working On:</p>
+      <p class="text-green-400">&gt; currently focused on:</p>
       <ul class="text-gray-300 list-disc pl-5">
         <li>
           (*＞ｖ＜)ゞ*゜+ <a href="https://www.asterisk.org/" class="text-green-300 underline">mastering asterisk</a>
         </li>
         <li>
-          🍃
-          <a href="https://www.geeksforgeeks.org/software-engineering-reverse-engineering/"
-            class="text-green-300 underline">Reverse Engineering</a>
+          📟 <a href="https://www.rfc-editor.org/rfc/rfc3261" class="text-green-300 underline">SIP tracing & call-flow hell</a>
         </li>
+        <li>
+          <a href="https://wiki.archlinux.org/" class="text-green-300 underline">reading manuals ;)</a>
+
       </ul>
     </div>
-    <div class="w-full max-w-xl mt-14 text-center">
+    <div class="w-full mt-14 text-center">
       <h1 class="glow-3d md:text-2xl font-bold text-green-400">
         ~$ echo "quote~"
       </h1>
       <div id="quote-container" class="mt-8">
-        <p id="quote" class="text-gray-300 text-lg"></p>
+        <p id="quote" class="quote-terminal-text text-gray-300 text-lg text-center"></p>
         <script>
-          const quotes = [
-            "Talk is cheap. Show me the code. — Linus Torvalds",
-            "Software is like s3x: it's better when it's free. — Linus Torvalds",
-            "Linux is not user-friendly. It _is_ user-friendly. It is not ignorant-friendly and idiot-friendly.",
-            "The Linux philosophy is 'laugh in the face of danger'. Oops. Wrong one. 'Do it yourself'. That's it. — Linus Torvalds",
-            "We all know Linux is great... it does infinite loops in 5 seconds.",
-            "When you say 'I wrote a program that crashed Windows,' people just stare at you blankly and say 'Hey, I got those with the system, for free.' — Linus Torvalds",
-            "Only wimps use tape backup: _real_ men just upload their important stuff on ftp and let the rest of the world mirror it. — Linus Torvalds",
-            "Those who don't understand Linux are doomed to reinvent it, poorly.",
-            "Linux hackers are funny people: They count the time in patchlevels.",
-            "One OS to rule them all, One OS to find them, One OS to call them all, And in salvation bind them. — J. Scott Thayer",
-          ];
-          function displayRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            document.getElementById("quote").innerText = quotes[randomIndex];
+          const quoteElement = document.getElementById("quote");
+
+          const typeBaseDelay = 22;
+          const quoteRotationMs = 9500;
+          let quotes = [];
+          let queue = [];
+          let cycleTimer = null;
+          let renderToken = 0;
+
+          function shuffleQueue() {
+            queue = quotes.map((_, index) => index);
+            for (let i = queue.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [queue[i], queue[j]] = [queue[j], queue[i]];
+            }
           }
-          window.onload = displayRandomQuote;
+
+          function nextQuoteIndex() {
+            if (queue.length === 0) {
+              shuffleQueue();
+            }
+            return queue.pop();
+          }
+
+          function wait(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+          }
+
+          function escapeHtml(value) {
+            return value
+              .replaceAll("&", "&amp;")
+              .replaceAll("<", "&lt;")
+              .replaceAll(">", "&gt;")
+              .replaceAll('"', "&quot;")
+              .replaceAll("'", "&#39;");
+          }
+
+          function formatQuoteHtml(rawText) {
+            const escaped = escapeHtml(rawText);
+            const withEmphasis = escaped.replace(/_([^_]+)_/g, "<em>$1</em>");
+            return withEmphasis.replace(
+              /\b(Linux|code|free|Windows|OS|patchlevels)\b/gi,
+              "<strong>$1</strong>",
+            );
+          }
+
+          async function typeQuoteText(text, token) {
+            quoteElement.textContent = "";
+            for (const char of text) {
+              if (token !== renderToken) return;
+              quoteElement.textContent += char;
+              const delay = [".", ",", "!", "?", ":"].includes(char) ? 80 : typeBaseDelay + Math.random() * 18;
+              await wait(delay);
+            }
+          }
+
+          async function renderQuote(index) {
+            const token = ++renderToken;
+            const entry = quotes[index];
+            await typeQuoteText(entry.text, token);
+            if (token !== renderToken) return;
+            quoteElement.innerHTML = formatQuoteHtml(entry.text);
+          }
+
+          function queueNextQuote() {
+            clearTimeout(cycleTimer);
+            cycleTimer = setTimeout(showNextQuote, quoteRotationMs);
+          }
+
+          function showNextQuote() {
+            if (!quotes.length) return;
+            renderQuote(nextQuoteIndex());
+            queueNextQuote();
+          }
+
+          async function initializeQuoteStream() {
+            try {
+              const response = await fetch("/data/linux-quotes.json");
+              if (!response.ok) {
+                throw new Error(`Failed to load quotes: ${response.status}`);
+              }
+              const data = await response.json();
+              quotes = Array.isArray(data) ? data.filter((entry) => entry?.text && entry?.author) : [];
+              if (!quotes.length) {
+                throw new Error("Quote data is empty.");
+              }
+              showNextQuote();
+            } catch (error) {
+              clearTimeout(cycleTimer);
+              quoteElement.textContent = "Quote stream offline.";
+            }
+          }
+
+          document.addEventListener("DOMContentLoaded", initializeQuoteStream);
         </script>
       </div>
     </div>

@@ -1,11 +1,8 @@
 #!/bin/bash
-
-# Build the project
+set -euo pipefail
 
 echo "Building the project..."
 npm run build
-
-# Deploy to Firebase Hosting
 
 echo "Deploying to Firebase Hosting..."
 firebase deploy --only hosting
