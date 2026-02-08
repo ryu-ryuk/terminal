@@ -39,10 +39,22 @@
         </div>
     </nav>
 
-    <main class="w-full max-w-2xl mt-24">
-        <div class="w-full flex justify-center select-none mb-4">
-            <pre id="ascii-art"
-                class="ascii-art text-green-400 text-xs md:text-sm font-mono leading-none text-center whitespace-pre">
+    <main class="w-full max-w-5xl mt-24">
+
+        <h2 id="about-section-title"
+            class="text-2xl md:text-3xl font-bold text-green-400 mb-6">
+            About Me
+        </h2>
+        <p class="text-gray-300 mb-6">
+            Here's a bit more about <span class="text-gray-300 underline">who i am</span> (≖ᴗ≖✿)
+        </p>
+
+        <div class="bento-grid">
+
+            <div class="bento-card bento-span-2">
+                <div class="w-full flex justify-center select-none mb-4">
+                    <pre id="ascii-art"
+                        class="ascii-art text-green-400 text-xs md:text-sm font-mono leading-none text-center whitespace-pre">
 <span class="ascii-line">            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀</span>
 <span class="ascii-line">            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⡋⠁⠀⠀⠀⠀⢀⣀⣀⡀</span>
 <span class="ascii-line">            ⠀⠀⠀⠀⠀⠠⠒⣶⣶⣿⣿⣷⣾⣿⣿⣿⣿⣛⣋⣉⠀⠀</span>
@@ -56,20 +68,8 @@
 <span class="ascii-line">            ⠈⠈⣿⡿⢿⣿⣿⣷⣿⣿⡿⢿⣿⣿⣁⡀⠀⠀⠉⢻⣿⣧</span>
 <span class="ascii-line">            ⠀⢀⡟⠀⠀⠉⠛⠙⠻⢿⣦⡀⠙⠛⠯⠤⠄⠀⠀⠈⠈⣿</span>
 <span class="ascii-line">            ⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⡆⠀⠀⠀⠀⠀⠀⠀⢀⠟</span></pre>
-        </div>
-        <h2 id="about-section-title"
-            class="text-2xl md:text-3xl font-bold text-green-400 mt-6 mb-4">
-            About Me
-        </h2>
-
-        <p class="text-gray-300">
-            Here's a bit more about <span class="text-gray-300 underline">who i am</span> (≖ᴗ≖✿)
-        </p>
-
-        <!-- Bio Section -->
-        <section class="mb-10 mt-4">
-            <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/bio.txt</h3>
-            <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
+                </div>
+                <h3 class="text-lg text-[var(--terminal-green)] mb-3 font-mono">$ cat ~/bio.txt</h3>
                 <p class="text-gray-300 mb-3">
                     Hey there! I'm a Software Engineer at <a href="https://omnidim.io" class="text-green-300 underline">OmniDimension</a>, working in Voice AI. I'm a developer passionate about building efficient tools driven
                     by
@@ -83,291 +83,263 @@
                     accessible to everyone, and the best way to learn is by doing and then teaching others.
                 </p>
             </div>
-        </section>
 
-        <div class="w-full h-px bg-gradient-to-r from-transparent via-green-700/30 to-transparent my-8"></div>
+            <!-- ── Card 2: Quick Stats (neofetch) ── -->
+            <div class="bento-card">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-3 font-mono">$ neofetch</h3>
+                <div class="flex flex-col gap-1">
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">role</span>
+                        <span class="neofetch-value">~ SWE @ OmniDimension</span>
+                    </div>
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">focus</span>
+                        <span class="neofetch-value">~ Voice AI / VoIP</span>
+                    </div>
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">os</span>
+                        <span class="neofetch-value">~ Arch Linux btw</span>
+                    </div>
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">editor</span>
+                        <span class="neofetch-value">~ Neovim</span>
+                    </div>
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">shell</span>
+                        <span class="neofetch-value">~ zsh + tmux</span>
+                    </div>
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">langs</span>
+                        <span class="neofetch-value">~ Python, Go, TS, Bash</span>
+                    </div>
+                    <div class="neofetch-row">
+                        <span class="neofetch-label">sysadmin</span>
+                        <span class="neofetch-value">~ Docker, Traefik, Nginx, Fail2Ban</span>
+                    </div>
+                </div>
+                <!-- Color palette blocks -->
+                <div class="flex gap-1 mt-4">
+                    <span class="w-4 h-4 rounded-sm bg-[#f38ba8]"></span>
+                    <span class="w-4 h-4 rounded-sm bg-[#fab387]"></span>
+                    <span class="w-4 h-4 rounded-sm bg-[#f9e2af]"></span>
+                    <span class="w-4 h-4 rounded-sm bg-[#a6e3a1]"></span>
+                    <span class="w-4 h-4 rounded-sm bg-[#89b4fa]"></span>
+                    <span class="w-4 h-4 rounded-sm bg-[#cba6f7]"></span>
+                    <span class="w-4 h-4 rounded-sm bg-[#f5c2e7]"></span>
+                </div>
+            </div>
 
-        <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/work_experience.log</h3>
-
-        <section class="work-experience-section mb-10">
-
-            <div class="experience-container relative">
-
-                <!-- Company Header: Omnidimension -->
-                <div class="company-header mb-6 overflow-hidden">
-                    <h4 class="company-name text-2xl font-bold text-green-400 font-sans experience-reveal">
+            <!-- ── Card 3: OmniDimension ── -->
+            <div class="bento-card work-experience-section">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-1 font-mono">$ cat ~/work_experience.log</h3>
+                <div class="company-header mb-4 mt-3">
+                    <h4 class="text-xl font-bold text-green-400 experience-reveal">
                         <a href="https://omnidim.io" class="hover:text-green-300 transition-colors">OmniDimension</a>
                     </h4>
-                    <p class="company-title text-lg text-green-300 experience-reveal">Software Engineer — Voice AI / VoIP & DevOps</p>
-                    <p class="company-period text-sm text-gray-400 experience-reveal">July 2025 - Present</p>
+                    <p class="text-sm text-green-300 experience-reveal">Software Engineer — Voice AI / VoIP & DevOps</p>
+                    <p class="text-xs text-gray-400 experience-reveal">July 2025 - Present</p>
                 </div>
 
-                <!-- Omnidimension Experience Cards -->
-                <div class="experience-cards-container border-l-2 border-green-500/30 pl-6 mb-10">
-                    <div class="experience-card mb-8 opacity-0">
-                        <h5 class="text-green-300 font-semibold mb-2">VoIP Engineering</h5>
-                        <p class="text-gray-300 text-sm">Building and optimizing voice AI pipelines, working on real-time VoIP systems and telephony infrastructure.</p>
-                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Python</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">FastAPI</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Voice AI</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">VoIP</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">SIP</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Asterisk</span>
+                <div class="experience-cards-container border-l-2 border-green-500/30 pl-4 space-y-4">
+                    <div class="experience-card mb-0 opacity-0">
+                        <h5 class="text-green-300 font-semibold mb-1 text-sm">VoIP Engineering</h5>
+                        <p class="text-gray-300 text-xs">Building and optimizing voice AI pipelines, working on real-time VoIP systems and telephony infrastructure.</p>
+                        <div class="tech-tags flex flex-wrap gap-1.5 mt-2">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Python</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">FastAPI</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Voice AI</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">VoIP</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">SIP</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Asterisk</span>
                         </div>
                     </div>
 
-                    <div class="experience-card mb-8 opacity-0">
-                        <h5 class="text-green-300 font-semibold mb-2">DevOps</h5>
-                        <p class="text-gray-300 text-sm">Managing infrastructure, CI/CD pipelines, and deployment workflows for voice AI services at scale.</p>
-                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Docker</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">CI/CD</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Infrastructure</span>
+                    <div class="experience-card mb-0 opacity-0">
+                        <h5 class="text-green-300 font-semibold mb-1 text-sm">DevOps</h5>
+                        <p class="text-gray-300 text-xs">Managing infrastructure, CI/CD pipelines, and deployment workflows for voice AI services at scale.</p>
+                        <div class="tech-tags flex flex-wrap gap-1.5 mt-2">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Docker</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">CI/CD</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Infrastructure</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section class="work-experience-section mb-10">
-            <div class="experience-container relative">
-
-                <!-- Company Header: IITM Paradox -->
-                <div class="company-header mb-6 overflow-hidden">
-                    <h4 class="company-name text-2xl font-bold text-green-400 font-sans experience-reveal">IITM Paradox
-                    </h4>
-                    <p class="company-title text-lg text-green-300 experience-reveal">Backend Developer</p>
-                    <p class="company-period text-sm text-gray-400 experience-reveal">Oct 2024 - July 2025</p>
+            <!-- ── Card 4: IITM Paradox ── -->
+            <div class="bento-card">
+                <div class="company-header mb-4">
+                    <h4 class="text-xl font-bold text-green-400 experience-reveal">IITM Paradox</h4>
+                    <p class="text-sm text-green-300 experience-reveal">Backend Developer</p>
+                    <p class="text-xs text-gray-400 experience-reveal">Oct 2024 - July 2025</p>
                 </div>
 
-                <!-- Experience Cards Container -->
-                <div class="experience-cards-container border-l-2 border-green-500/30 pl-6">
-                    <!-- Experience Cards -->
-                    <div class="experience-card mb-8 opacity-0">
-                        <h5 class="text-green-300 font-semibold mb-2">API Development</h5>
-                        <p class="text-gray-300 text-sm">Designed and implemented RESTful APIs for dashboard handling
-                            user and roles based access, working on dynamic points allocation system for participants.
-                        </p>
-                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Python</span>
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Django</span>
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">JWT</span>
-
+                <div class="experience-cards-container border-l-2 border-green-500/30 pl-4 space-y-4">
+                    <div class="experience-card mb-0 opacity-0">
+                        <h5 class="text-green-300 font-semibold mb-1 text-sm">API Development</h5>
+                        <p class="text-gray-300 text-xs">Designed and implemented RESTful APIs for dashboard handling user and roles based access, working on dynamic points allocation system.</p>
+                        <div class="tech-tags flex flex-wrap gap-1.5 mt-2">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Python</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Django</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">JWT</span>
                         </div>
                     </div>
 
-                    <div class="experience-card mb-8 opacity-0">
-                        <h5 class="text-green-300 font-semibold mb-2">Testing</h5>
-                        <p class="text-gray-300 text-sm">Tested 30+ API endpoints using Postman and creating a cohesive
-                            and detailed analysis on them as well as documenting them.</p>
-                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">ORM</span>
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Postman</span>
+                    <div class="experience-card mb-0 opacity-0">
+                        <h5 class="text-green-300 font-semibold mb-1 text-sm">Testing & DevOps</h5>
+                        <p class="text-gray-300 text-xs">Tested 30+ API endpoints using Postman. Handled DDoS mitigation and deployment nuances.</p>
+                        <div class="tech-tags flex flex-wrap gap-1.5 mt-2">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Postman</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Docker</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Nginx</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Fail2Ban</span>
                         </div>
                     </div>
 
-                    <div class="experience-card mb-8 opacity-0">
-                        <h5 class="text-green-300 font-semibold mb-2">DevOps</h5>
-                        <p class="text-gray-300 text-sm">Handle DDoS and many other nuances of Deployments</p>
-                        <div class="tech-tags flex flex-wrap gap-2 mt-3">
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Docker</span>
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Ubuntu
-                                Server</span>
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Fail2Ban</span>
-                            <span
-                                class="tech-tag bg-black/40 border border-green-700/50 px-2 py-1 text-xs text-green-300 rounded">Nginx</span>
-                        </div>
-                    </div>
-
-                    <!-- Project Highlight Card -->
-                    <div
-                        class="experience-card project-highlight mb-4 opacity-0 border-l-2 border-green-400 pl-4">
-                        <h5 class="text-green-400 font-semibold mb-2">Project Highlight: Event Registration System for
-                            10,000+ attendees</h5>
-                        <p class="text-gray-300 text-sm">Handled optimizations in reducing the queries to the Database
-                            and making the app faster for our users.</p>
+                    <div class="experience-card project-highlight mb-0 opacity-0 border-l-2 border-green-400 pl-3">
+                        <h5 class="text-green-400 font-semibold mb-1 text-sm">Event Registration System</h5>
+                        <p class="text-gray-300 text-xs">10,000+ attendees — optimized DB queries for faster load times.</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <div class="w-full h-px bg-gradient-to-r from-transparent via-green-700/30 to-transparent my-8"></div>
+            <!-- ── Card 5: Tech Stack ── -->
+            <div class="bento-card">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-3 font-mono">$ cat ~/skills.txt</h3>
 
-        <!-- Skills Section -->
-            <section class="skills-section mb-10">
-                <h3 id="skills-section-title" class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/skills.txt</h3>
-                <p class="text-gray-400 text-sm mb-2">Some of the technologies and domains I enjoy working with （´・｀ ）♡</p>
-                <div id="skills-section-pinned-container" class="w-full overflow-hidden relative"
-                    aria-label="Horizontal scrolling skills showcase">
-                    <div class="horizontal-skill-cards-wrapper flex px-8 py-12">
-                        <div id="skills-content-to-scroll">
-                            <div class="flex flex-wrap gap-6 justify-start">
-                                <!-- Card 1: Programming -->
-                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
-                                    <div class="skill-panel h-full" tabindex="0">
-                                        <div class="panel-front">
-                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Programming</h3>
-                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
-                                                <li>🦀 Rust (TUI, CLI, async)</li>
-                                                <li>🐍 Python (FastAPI, Django, Scripting)</li>
-                                                <li>🐚 Bash/Zsh (Dotfiles, Automation)</li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel-back">
-                                            <h4 class="text-green-300 font-bold text-lg">Code & Logic</h4>
-                                            <p class="text-gray-400 mt-2 text-xs">
-                                                Building efficient systems, web backends, and powerful CLI tools.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card 2: Ops & Cloud -->
-                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
-                                    <div class="skill-panel h-full" tabindex="1">
-                                        <div class="panel-front">
-                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Ops & Cloud</h3>
-                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
-                                                <li>🐧 Arch Linux, Neovim, Tmux</li>
-                                                <li>☁️ GCP, Firebase, CI/CD Actions</li>
-                                                <li>🐳 Docker, Ansible, Git, GitLab</li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel-back">
-                                            <h4 class="text-green-300 font-bold text-lg">Infra & Deploy</h4>
-                                            <p class="text-gray-400 mt-2 text-xs">Managing and deploying robust
-                                                applications
-                                                at
-                                                scale.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card 3: Networking & Security -->
-                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
-                                    <div class="skill-panel h-full" tabindex="2">
-                                        <div class="panel-front">
-                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Networking & Security
-                                            </h3>
-                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
-                                                <li>🌐 TCP/IP, DNS, DHCP, Firewalls</li>
-                                                <li>🔒 Cybersecurity Basics, RE, CTFs*</li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel-back">
-                                            <h4 class="text-green-300 font-bold text-lg">Secure & Connected</h4>
-                                            <p class="text-gray-400 mt-2 text-xs">Understanding network pipes and
-                                                protecting
-                                                assets ;) .</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card 4: Frameworks & Tools -->
-                                <div class="skill-category-wrapper flex-shrink-0 snap-center">
-                                    <div class="skill-panel h-full" tabindex="3">
-                                        <div class="panel-front">
-                                            <h3 class="text-green-400 font-semibold mb-3 text-lg">Frameworks & Tools
-                                            </h3>
-                                            <ul class="pl-0 space-y-1 text-sm text-gray-300">
-                                                <li>🚀 FastAPI, Flask, Django, Express</li>
-                                                <li>🛠️ JWT, (Neo)Vim, Tmux, Hugo</li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel-back">
-                                            <h4 class="text-green-300 font-bold text-lg">Developer Arsenal</h4>
-                                            <p class="text-gray-400 mt-2 text-xs">efficiency ></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="space-y-3">
+                    <div>
+                        <p class="tech-group-label">Programming</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Go</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Python</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">TypeScript</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Bash/Zsh</span>
                         </div>
                     </div>
-            </section>
 
-            <div class="w-full h-px bg-gradient-to-r from-transparent via-green-700/30 to-transparent my-8"></div>
-
-            <!-- Connect Section (Contact + PGP + Interests) -->
-            <section class="mb-10">
-                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/connect.txt</h3>
-                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4">
-                    <!-- Contact -->
-                    <p class="text-gray-300 mb-3">
-                        Reach out to me if you have something to talk about ヾ(*′○`)ﾟ.+:｡ﾟ☆
-                    </p>
-                    <p class="text-gray-300 mb-3">
-                        You can check the <a href="/contact.html" class="text-green-300 underline">contacts</a> page for more ways to reach me.
-                    </p>
-                    <p class="text-gray-300 mb-4">
-                        🐙 GitHub: <a href="https://github.com/ryu-ryuk/" class="text-green-300 underline">@ryu-ryuk</a><br>
-                        📧 Email: <a href="mailto:meow@alokranjan.me" class="text-green-300 underline">meow@alokranjan.me</a>
-                    </p>
-
-                    <!-- PGP Key -->
-                    <div class="border-t border-green-700/30 pt-4 mb-4">
-                        <span class="text-[var(--terminal-green)] text-sm font-mono">&gt; fetch my PGP key</span>
-                        <pre class="bg-black/20 border border-green-700/30 rounded p-2 mt-2 text-sm text-gray-200 font-mono"><code>curl https://alokranjan.me/key.pub | gpg --import</code></pre>
+                    <div>
+                        <p class="tech-group-label">Frameworks</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">FastAPI</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Django</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Flask</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Express</span>
+                        </div>
                     </div>
 
-                    <!-- Interests -->
-                    <div class="border-t border-green-700/30 pt-4">
-                        <p class="text-gray-300 mb-1">What I enjoy in my free time?</p>
-                        <p class="text-gray-300">I love playing badminton and walking o(｀^´*)</p>
+                    <div>
+                        <p class="tech-group-label">Ops & Cloud</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Docker</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">GCP</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Firebase</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">CI/CD</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Ansible</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="tech-group-label">Networking & Security</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">TCP/IP</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">DNS</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Firewalls</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">CTFs</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="tech-group-label">System Administration</p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Arch Linux</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Docker</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Traefik</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Fail2Ban</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Nginx</span>
+                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Dotfiles</span>
+                        </div>
                     </div>
                 </div>
-            </section>
-
-            <div class="w-full h-px bg-gradient-to-r from-transparent via-green-700/30 to-transparent my-8"></div>
-
-            <!-- GitHub Activity Snake — ryu-ryuk (active) -->
-            <section class="mb-10">
-                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/github_activity.svg <span class="text-gray-500 text-sm">— @ryu-ryuk</span></h3>
-                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4 overflow-hidden">
-                    <picture>
-                        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ryu-ryuk/ryu-ryuk/refs/heads/output/github-snake-dark.svg">
-                        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ryu-ryuk/ryu-ryuk/refs/heads/output/github-snake.svg">
-                        <img alt="github-snake" src="https://raw.githubusercontent.com/ryu-ryuk/ryu-ryuk/refs/heads/output/github-snake.svg" class="w-full">
-                    </picture>
-                </div>
-            </section>
-
-            <!-- GitHub Activity Snake — aloki-alok (personal) -->
-            <section class="mb-10">
-                <h3 class="text-xl text-[var(--terminal-green)] mb-4">$ cat ~/github_activity_alt.svg <span class="text-gray-500 text-sm">— @aloki-alok</span></h3>
-                <div class="bg-black/40 border border-green-700/50 rounded-lg p-4 overflow-hidden">
-                    <picture>
-                        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/aloki-alok/aloki-alok/output/github-snake-dark.svg">
-                        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/aloki-alok/aloki-alok/output/github-snake.svg">
-                        <img alt="github-snake" src="https://raw.githubusercontent.com/aloki-alok/aloki-alok/output/github-snake.svg" class="w-full">
-                    </picture>
-                </div>
-            </section>
-
-            <div class="mt-10 text-center">
-                <a href="/" class="text-green-300 underline hover:text-green-400">← cd ..</a>
             </div>
+
+            <!-- ── Card 6: Connect (span 2) ── -->
+            <div class="bento-card bento-span-2">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-3 font-mono">$ cat ~/connect.txt</h3>
+                <p class="text-gray-300 mb-3">
+                    Reach out to me if you have something to talk about ヾ(*′○`)ﾟ.+:｡ﾟ☆
+                </p>
+                <p class="text-gray-300 mb-3">
+                    You can check the <a href="/contact.html" class="text-green-300 underline">contacts</a> page for more ways to reach me.
+                </p>
+                <p class="text-gray-300 mb-4">
+                    🐙 GitHub: <a href="https://github.com/ryu-ryuk/" class="text-green-300 underline">@ryu-ryuk</a><br>
+                    📧 Email: <a href="mailto:meow@alokranjan.me" class="text-green-300 underline">meow@alokranjan.me</a>
+                </p>
+
+                <!-- PGP Key -->
+                <div class="border-t border-green-700/30 pt-3">
+                    <span class="text-[var(--terminal-green)] text-sm font-mono">&gt; fetch my PGP key</span>
+                    <pre class="bg-black/20 border border-green-700/30 rounded p-2 mt-2 text-sm text-gray-200 font-mono"><code>curl https://alokranjan.me/key.pub | gpg --import</code></pre>
+                </div>
+            </div>
+
+            <!-- ── Card 7: Interests ── -->
+            <div class="bento-card">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-3 font-mono">$ cat ~/interests.txt</h3>
+                <p class="text-gray-300 mb-2">What I enjoy in my free time?</p>
+                <p class="text-gray-300">I love playing badminton and walking o(｀^´*)</p>
+            </div>
+
+            <!-- ── Card 8: GitHub Snakes (full width) ── -->
+            <div class="bento-card bento-span-full">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-4 font-mono">$ cat ~/github_activity.svg</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- ryu-ryuk -->
+                    <div>
+                        <p class="text-gray-500 text-xs mb-2 font-mono">@ryu-ryuk</p>
+                        <div class="bg-black/30 border border-green-700/30 rounded-lg p-3 overflow-hidden">
+                            <picture>
+                                <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ryu-ryuk/ryu-ryuk/refs/heads/output/github-snake-dark.svg">
+                                <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ryu-ryuk/ryu-ryuk/refs/heads/output/github-snake.svg">
+                                <img alt="github-snake" src="https://raw.githubusercontent.com/ryu-ryuk/ryu-ryuk/refs/heads/output/github-snake.svg" class="w-full">
+                            </picture>
+                        </div>
+                    </div>
+                    <!-- aloki-alok -->
+                    <div>
+                        <p class="text-gray-500 text-xs mb-2 font-mono">@aloki-alok</p>
+                        <div class="bg-black/30 border border-green-700/30 rounded-lg p-3 overflow-hidden">
+                            <picture>
+                                <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/aloki-alok/aloki-alok/output/github-snake-dark.svg">
+                                <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/aloki-alok/aloki-alok/output/github-snake.svg">
+                                <img alt="github-snake" src="https://raw.githubusercontent.com/aloki-alok/aloki-alok/output/github-snake.svg" class="w-full">
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- END BENTO GRID -->
+
+        <!-- GitHub GIF -->
+        <div class="mt-10 flex justify-center">
+            <img src="/github.gif" alt="GitHub contribution animation" class="w-32 rounded opacity-60 hover:opacity-90 transition-opacity">
+        </div>
+
+        <div class="mt-6 text-center">
+            <a href="/" class="text-green-300 underline hover:text-green-400">← cd ..</a>
+        </div>
     </main>
 
 
     <!-- TERMINAL TAB & OVERLAY -->
     <div id="terminal-tab"
         class="fixed bottom-16 right-2 z-50 border border-green-700/50 rounded-lg bg-black/70 text-[var(--terminal-green)] px-6 py-4 cursor-pointer hover:-translate-x-6 transition-all duration-300 flex items-center group font-mono">
-        <!-- Icon that's always visible -->
         <span class="text-xl transition-all duration-300">
             >_<span class="ml-2"></span>
         </span>
-
-        <!-- "Terminal" text that slides in from right on hover -->
         <span class="text-[var(--terminal-green)] text-xs ml-1">
             Terminal<span class="blinking-cursor"></span>
         </span>
@@ -399,7 +371,6 @@
         class="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-sm border-t border-green-400/50 overflow-hidden z-50">
         <div class="footer-ticker-container">
             <div id="footer-ticker" class="whitespace-nowrap flex items-center py-3">
-                <!-- Multiple text elements with different styles and languages -->
                 <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span
                         class="ticker-translation">Blog</span></a>
                 <span class="ticker-divider">•</span>
@@ -416,7 +387,7 @@
                 <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
                 <span class="ticker-divider">•</span>
 
-                <!-- Clone of the above for continuous scrolling -->
+                <!-- Clone for continuous scrolling -->
                 <a href="https://blogs.alokranjan.me" class="ticker-item">ブログ <span
                         class="ticker-translation">Blog</span></a>
                 <span class="ticker-divider">•</span>
@@ -528,35 +499,35 @@
                 menu.classList.toggle("hidden");
                 menu.classList.toggle("flex");
             });
+
+            // GSAP Bento card staggered reveal
             gsap.registerPlugin(ScrollTrigger);
 
-            const container = document.getElementById('skills-section-pinned-container');
-            const scroller = container?.querySelector('.horizontal-skill-cards-wrapper');
-
-            if (!container || !scroller) {
-                console.error('Container or scroller not found');
-                return;
-            }
-
-            // Calculate total scroll distance
-            let totalScroll = scroller.scrollWidth - container.offsetWidth;
-
-            // Horizontal scroll animation
-            let scrollTween = gsap.to(scroller, {
-                x: -totalScroll,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: container,
-                    pin: true,
-                    scrub: 0.2,
-                    start: "top center",
-                    end: () => `+=${window.innerHeight * 0.5}`,
-                    invalidateOnRefresh: true,
-                    anticipatePin: 1,
-                },
+            gsap.utils.toArray('.bento-card').forEach((card, i) => {
+                gsap.fromTo(card,
+                    { y: 30, opacity: 0 },
+                    {
+                        y: 0, opacity: 1, duration: 0.6, ease: "power2.out",
+                        scrollTrigger: { trigger: card, start: "top 92%" },
+                        delay: i * 0.08
+                    }
+                );
             });
 
+            // Experience card reveal inside bento cards
+            const cards = gsap.utils.toArray('.experience-card');
+            cards.forEach((card, i) => {
+                gsap.fromTo(card,
+                    { x: 20, opacity: 0 },
+                    {
+                        x: 0, opacity: 1, duration: 0.6, ease: "back.out(1.2)",
+                        scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" },
+                        delay: i * 0.1
+                    }
+                );
+            });
 
+            // Tech tag hover
             document.querySelectorAll('.tech-tag').forEach(tag => {
                 tag.addEventListener('mouseenter', () => {
                     gsap.to(tag, {
@@ -566,7 +537,6 @@
                         duration: 0.3
                     });
                 });
-
                 tag.addEventListener('mouseleave', () => {
                     gsap.to(tag, {
                         scale: 1,
@@ -577,30 +547,17 @@
                 });
             });
 
-            if (gsap) {
-                const workExperienceTitle = document.querySelector('.work-experience-section h3');
-
-                // Simple typing effect
-                const text = workExperienceTitle.textContent;
-                workExperienceTitle.textContent = '';
-
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: '.work-experience-section',
-                        start: "top 80%",
-                        toggleActions: "play none none none"
-                    }
+            // Project highlight glow
+            const highlight = document.querySelector('.project-highlight');
+            if (highlight) {
+                gsap.to(highlight, {
+                    boxShadow: "0 0 15px rgba(51, 255, 51, 0.15)",
+                    duration: 1.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
                 });
-
-                for (let i = 0; i < text.length; i++) {
-                    tl.to(workExperienceTitle, {
-                        text: text.substring(0, i + 1),
-                        duration: 0.05,
-                        ease: "none"
-                    });
-                }
             }
-
         });
     </script>
 </body>

@@ -76,24 +76,21 @@ class Terminal {
     this.input = null;
     this.output = null;
     this.form = null;
-    this.isMinimized = false;
     this.isMaximized = false;
-    this.fileSystem = {
-      home: {
-        "about.txt": "Linux enthusiast | Rust developer | Cybersecurity learner",
-        projects: {
-          "lenrs.md": "TUI OCR tool in Rust",
-          "reverse-engineering.md": "GeeksForGeeks articles",
-        },
-        "secret-easter-egg.txt": 'HINT: Try "sudo give me coffee"',
+    this.fs = {
+      "about.txt": "Linux enthusiast | Rust developer | Cybersecurity learner",
+      projects: {
+        "lenrs.md": "TUI OCR tool in Rust",
+        "reverse-engineering.md": "GeeksForGeeks articles",
       },
+      "secret-easter-egg.txt": 'HINT: Try "sudo give me coffee"',
     };
-    this.currentPath = "home";
+    this.cwd = []; // path segments relative to home root
     this.history = [];
     this.historyIndex = -1;
+    this.savedInput = "";
     this.tabCandidates = [];
     this.tabIndex = 0;
-    this.lastInputBeforeTab = "";
   }
 
   init() {
@@ -102,13 +99,7 @@ class Terminal {
     this.input = document.getElementById("terminal-input");
     this.output = document.getElementById("terminal-output");
     this.form = document.getElementById("terminal-form");
-    if (
-      !this.overlay ||
-      !this.window ||
-      !this.input ||
-      !this.output ||
-      !this.form
-    ) {
+    if (!this.overlay || !this.window || !this.input || !this.output || !this.form) {
       console.error("Terminal elements not found");
       return false;
     }
@@ -117,125 +108,121 @@ class Terminal {
   }
 
   bindEvents() {
-    document
-      .getElementById("close-terminal")
-      ?.addEventListener("click", () => this.hide());
-    document
-      .getElementById("minimize-terminal")
-      ?.addEventListener("click", () => this.minimize());
-    document
-      .getElementById("maximize-terminal")
-      ?.addEventListener("click", () => this.maximize());
+    document.getElementById("close-terminal")?.addEventListener("click", () => this.hide());
+    document.getElementById("minimize-terminal")?.addEventListener("click", () => this.hide());
+    document.getElementById("maximize-terminal")?.addEventListener("click", () => this.toggleMaximize());
     this.overlay?.addEventListener("click", (e) => {
       if (e.target === this.overlay) this.hide();
     });
     this.window?.addEventListener("click", () => this.input.focus());
     this.form?.addEventListener("submit", (e) => this.handleCommand(e));
     this.input.addEventListener("keydown", (e) => {
-      // Command history navigation
       if (e.key === "ArrowUp") {
-        if (this.history.length && this.historyIndex > 0) {
-          this.historyIndex--;
-          this.input.value = this.history[this.historyIndex];
-        } else if (this.history.length && this.historyIndex === -1) {
-          this.historyIndex = this.history.length - 1;
-          this.input.value = this.history[this.historyIndex];
-        }
         e.preventDefault();
-        this.resetTabCompletion();
+        if (!this.history.length) return;
+        if (this.historyIndex === -1) {
+          this.savedInput = this.input.value;
+          this.historyIndex = this.history.length - 1;
+        } else if (this.historyIndex > 0) {
+          this.historyIndex--;
+        }
+        this.input.value = this.history[this.historyIndex];
+        this.resetTab();
       } else if (e.key === "ArrowDown") {
-        if (this.history.length && this.historyIndex < this.history.length - 1) {
+        e.preventDefault();
+        if (this.historyIndex === -1) return;
+        if (this.historyIndex < this.history.length - 1) {
           this.historyIndex++;
           this.input.value = this.history[this.historyIndex];
         } else {
           this.historyIndex = -1;
-          this.input.value = "";
+          this.input.value = this.savedInput;
         }
+        this.resetTab();
+      } else if (e.key === "Tab") {
         e.preventDefault();
-        this.resetTabCompletion();
-      }
-      // Tab completion
-      else if (e.key === "Tab") {
-        e.preventDefault();
-        this.handleTabCompletion();
+        this.handleTab();
       } else {
-        // Reset tab completion state on any other key
-        this.resetTabCompletion();
+        this.resetTab();
       }
     });
   }
 
-  // --- Tab Completion Logic ---
-  handleTabCompletion() {
-    const val = this.input.value.trim();
-    if (this.tabCandidates.length === 0) {
-      // First tab press: build candidates
-      const [cmd, ...args] = val.split(" ");
-      if (args.length === 0) {
-        // Complete command names
-        this.tabCandidates = Object.keys(this.commands).filter((c) =>
-          c.startsWith(cmd)
-        );
-      } else {
-        // Complete file/dir names for ls/cd/cat
-        let dir = this.fileSystem[this.currentPath];
-        if (!dir) dir = this.fileSystem["home"];
-        const last = args[args.length - 1];
-        if (last) {
-          this.tabCandidates = Object.keys(dir).filter((f) =>
-            f.startsWith(last)
-          );
-        }
-      }
-      this.lastInputBeforeTab = val;
-      this.tabIndex = 0;
+  // Resolve a directory from the filesystem given path segments
+  resolveDir(segments) {
+    let node = this.fs;
+    for (const seg of segments) {
+      if (typeof node !== "object" || node === null || !(seg in node)) return null;
+      node = node[seg];
     }
-
-    if (this.tabCandidates.length === 1) {
-      // Only one match, autocomplete
-      const [cmd, ...args] = val.split(" ");
-      if (args.length === 0) {
-        this.input.value = this.tabCandidates[0] + " ";
-      } else {
-        const before = val.slice(0, val.lastIndexOf(" ") + 1);
-        this.input.value = before + this.tabCandidates[0];
-      }
-    } else if (this.tabCandidates.length > 1) {
-      // Cycle through candidates
-      const [cmd, ...args] = val.split(" ");
-      let completed = "";
-      if (args.length === 0) {
-        completed = this.tabCandidates[this.tabIndex] + " ";
-      } else {
-        const before = val.slice(0, val.lastIndexOf(" ") + 1);
-        completed = before + this.tabCandidates[this.tabIndex];
-      }
-      this.input.value = completed;
-      this.tabIndex = (this.tabIndex + 1) % this.tabCandidates.length;
-    }
+    return typeof node === "object" ? node : null;
   }
 
-  resetTabCompletion() {
+  // Get the current directory object
+  currentDir() {
+    return this.resolveDir(this.cwd) || this.fs;
+  }
+
+  // Resolve a path string (supports .., ., ~, and relative paths)
+  resolvePath(pathStr) {
+    if (!pathStr || pathStr === "~") return [];
+    const parts = pathStr.startsWith("~/")
+      ? pathStr.slice(2).split("/")
+      : pathStr.startsWith("/")
+        ? pathStr.slice(1).split("/")
+        : [...this.cwd, ...pathStr.split("/")];
+    const resolved = [];
+    for (const p of parts) {
+      if (p === "" || p === ".") continue;
+      if (p === "..") { resolved.pop(); continue; }
+      resolved.push(p);
+    }
+    return resolved;
+  }
+
+  handleTab() {
+    const val = this.input.value;
+    if (this.tabCandidates.length === 0) {
+      const parts = val.split(" ");
+      if (parts.length <= 1) {
+        const prefix = parts[0] || "";
+        this.tabCandidates = Object.keys(this.commands).filter((c) => c.startsWith(prefix));
+      } else {
+        const partial = parts[parts.length - 1] || "";
+        const dir = this.currentDir();
+        if (dir) {
+          this.tabCandidates = Object.keys(dir).filter((f) => f.startsWith(partial));
+        }
+      }
+      this.tabIndex = 0;
+    }
+    if (this.tabCandidates.length === 0) return;
+    const parts = val.split(" ");
+    const replacement = this.tabCandidates[this.tabIndex];
+    if (parts.length <= 1) {
+      this.input.value = replacement + " ";
+    } else {
+      parts[parts.length - 1] = replacement;
+      this.input.value = parts.join(" ");
+    }
+    this.tabIndex = (this.tabIndex + 1) % this.tabCandidates.length;
+  }
+
+  resetTab() {
     this.tabCandidates = [];
     this.tabIndex = 0;
-    this.lastInputBeforeTab = "";
   }
 
   show() {
     this.overlay.classList.remove("hidden");
-    this.input.focus();
+    requestAnimationFrame(() => this.input.focus());
   }
 
   hide() {
     this.overlay.classList.add("hidden");
   }
 
-  minimize() {
-    this.output.classList.toggle("hidden");
-    this.isMinimized = !this.isMinimized;
-  }
-
-  maximize() {
+  toggleMaximize() {
     this.window.classList.toggle("max-w-full");
     this.window.classList.toggle("h-[90vh]");
     this.isMaximized = !this.isMaximized;
@@ -247,7 +234,8 @@ class Terminal {
     if (!inputValue) return;
 
     this.history.push(inputValue);
-    this.historyIndex = -1; // Reset index after each command
+    this.historyIndex = -1;
+    this.savedInput = "";
 
     const [cmd, ...args] = inputValue.split(" ");
     this.writeOutput(`$ ${inputValue}`, "text-terminalGreen");
@@ -256,65 +244,76 @@ class Terminal {
       const result = this.commands[cmd].call(this, args);
       if (result) this.writeOutput(result);
     } else {
-      this.writeOutput(`Command not found: ${cmd}`, "text-red-400");
+      this.writeOutput(`command not found: ${cmd}`, "text-red-400");
     }
 
     this.input.value = "";
     this.output.scrollTop = this.output.scrollHeight;
-    this.resetTabCompletion();
+    this.updatePrompt();
+    this.resetTab();
+  }
+
+  updatePrompt() {
+    const prompt = document.getElementById("terminal-prompt");
+    if (prompt) {
+      const path = this.cwd.length ? "~/" + this.cwd.join("/") : "~";
+      prompt.textContent = path + "$";
+    }
   }
 
   writeOutput(text, className = "") {
-    this.output.innerHTML += `<div class="${className}">${text}</div>`;
+    const lines = text.split("\n");
+    for (const line of lines) {
+      const div = document.createElement("div");
+      if (className) div.className = className;
+      div.textContent = line;
+      this.output.appendChild(div);
+    }
   }
 
   commands = {
-    help: () => "Available commands: " + Object.keys(this.commands).join(", "),
+    help: () => "commands: " + Object.keys(this.commands).join(", "),
     clear: () => {
-      this.output.innerHTML =
-        '<div>Type <span class="text-terminalGreen font-bold">help</span> for available commands</div>';
+      this.output.innerHTML = '<div>Type <span class="text-terminalGreen font-bold">help</span> for available commands</div>';
       return "";
     },
-    ls: (args) => {
-      const path = args[0] || this.currentPath;
-      const dir = path
-        .split("/")
-        .reduce((acc, part) => acc?.[part], this.fileSystem);
-      return dir ? Object.keys(dir).join(" ") : "Directory not found";
+    ls: function (args) {
+      const target = args[0] ? this.resolvePath(args[0]) : this.cwd;
+      const dir = this.resolveDir(target);
+      if (!dir) return "ls: no such directory";
+      return Object.keys(dir).map((k) => typeof dir[k] === "object" ? k + "/" : k).join("  ");
     },
-    cd: (args) => {
+    cd: function (args) {
       const path = args[0];
-      if (path === "~") {
-        this.currentPath = "home";
-        return "Changed to home directory";
-      }
-      const newPath = path
-        .split("/")
-        .reduce((acc, part) => acc?.[part], this.fileSystem);
-      if (newPath) {
-        this.currentPath = path;
-        return `Changed to ${path}`;
-      }
-      return "Invalid directory";
+      if (!path || path === "~") { this.cwd = []; return ""; }
+      if (path === "..") { this.cwd.pop(); return ""; }
+      const resolved = this.resolvePath(path);
+      const dir = this.resolveDir(resolved);
+      if (!dir) return "cd: no such directory: " + path;
+      this.cwd = resolved;
+      return "";
     },
-    cat: (args) => {
-      const path = args[0];
-      if (!path) return "Please specify a file";
-      const file = path
-        .split("/")
-        .reduce((acc, part) => acc?.[part], this.fileSystem);
-      return typeof file === "string" ? file : "Not a file";
+    cat: function (args) {
+      if (!args[0]) return "cat: missing file";
+      const segments = this.resolvePath(args[0]);
+      let node = this.fs;
+      for (const seg of segments) {
+        if (typeof node !== "object" || !(seg in node)) return "cat: no such file: " + args[0];
+        node = node[seg];
+      }
+      return typeof node === "string" ? node : "cat: is a directory";
     },
-    neofetch: () => `
-      ryu@archy
-      ------------------------
-      OS: Arch Linux (btw)
-      Shell: Zsh
-      WM: Hyprland
-      Editor: Neovim 🦀
-      Hobbies: Linux ricing, scripting
-      Uptime: null
-    `,
+    pwd: () => "~" + (this.cwd.length ? "/" + this.cwd.join("/") : ""),
+    whoami: () => "ryu",
+    neofetch: () => [
+      "  ryu@archy",
+      "  ----------------",
+      "  OS: Arch Linux (btw)",
+      "  Shell: Zsh",
+      "  WM: Hyprland",
+      "  Editor: Neovim",
+      "  Uptime: infinity",
+    ].join("\n"),
     fortune: () => {
       const fortunes = [
         "You will rm -rf / accidentally... soon.",
@@ -326,11 +325,10 @@ class Terminal {
     },
     sudo: (args) => {
       const cmd = args.join(" ");
-      if (cmd === "give me coffee") return `ERROR: Out of coffee! ☕`;
+      if (cmd === "give me coffee") return "ERROR: Out of coffee!";
       if (cmd === "rm -rf /") return "NICE TRY! System protected";
-      return "Permission denied";
+      return "permission denied";
     },
-    pwd: () => `/home/${this.currentPath}`,
   };
 }
 
