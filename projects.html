@@ -14,202 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <link rel="stylesheet" href="/src/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Physics2DPlugin.min.js"></script>
-    <style>
-        .project-card {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(51, 255, 51, 0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        .project-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(51, 255, 51, 0.7);
-        }
-
-        .preview-container {
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .preview-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero-section {
-            height: 100vh;
-            width: 100vw;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding-bottom: 120px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(51, 255, 51, 0.2));
-            z-index: -1;
-        }
-
-        .hero-gif {
-            height: 100%;
-            width: 90%;
-            max-width: 100%;
-            height: auto;
-            border: 2px solid rgba(51, 255, 51, 0.5);
-            border-radius: 8px;
-            object-fit: cover;
-            z-index: 0;
-            margin-bottom: 80px;
-
-
-            max-height: 60vh;
-        }
-
-        .hero-text {
-            position: absolute;
-            bottom: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            color: #33ff33;
-            text-shadow: 0 0 15px #33ff33, 0 0 30px #33ff33;
-            z-index: 1;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        /* 
-        .hero-text-container {
-            position: absolute;
-            bottom: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            background: rgba(0, 10, 2, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(51, 255, 51, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            z-index: 2;
-        } */
-
-        .large.grid.centered.square-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 3rem;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            margin: 0 auto;
-        }
-
-        .large.grid.centered.square-grid span {
-            display: inline-block;
-            width: 6rem;
-            height: 6rem;
-            line-height: 6rem;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(51, 255, 51, 0.3);
-            border-radius: 4px;
-            transition: text-shadow 0.3s ease, transform 0.3s ease;
-        }
-
-        .large.grid.centered.square-grid span:hover {
-            text-shadow: 0 0 20px #33ff33, 0 0 40px #33ff33;
-            transform: scale(1.1);
-        }
-
-        .glitch {
-            position: relative;
-            display: inline-block;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%);
-        }
-
-        .glitch::before {
-            color: rgba(255, 0, 0, 0.7);
-            transform: translate(-3px, -3px);
-        }
-
-        .glitch::after {
-            color: rgba(0, 255, 255, 0.7);
-            transform: translate(3px, 3px);
-        }
-
-        .console-text {
-            opacity: 0;
-            padding-top: 2rem;
-            /* white-space: pre; */
-        }
-
-        .terminal-window {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(51, 255, 51, 0.1));
-        }
-
-
-        /* .scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: rgba(51, 255, 51, 0.3);
-            animation: scanline 4s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(1000px);
-            }
-        } */
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .large.grid.centered.square-grid {
-                grid-template-columns: repeat(7, 1fr);
-                gap: 2rem;
-            }
-
-            .large.grid.centered.square-grid span {
-                width: 4rem;
-                height: 4rem;
-                line-height: 4rem;
-                font-size: 2.5rem;
-            }
-
-            .hero-text {
-                bottom: 3%;
-            }
-        }
-    </style>
 </head>
 
 <body class="bg-black text-green-400 font-sans p-6 min-h-screen flex flex-col items-center justify-center pb-20">
@@ -237,7 +41,7 @@
         <section class="hero-section">
             <div class="hero-bg"></div>
 
-            <div class="w-full flex justify-center items-center" style="height: 60vh">
+            <div class="w-full flex justify-center items-center h-[60vh]">
                 <img src="https://raw.githubusercontent.com/ryu-ryuk/yoru-pastebin/main/docs/assets/yoru.gif"
                     loading="lazy" alt="yoru pastebin preview" class="hero-gif max-w-[50%] md:max-w-[80%] h-auto"
                     data-gsap="hero-gif">
@@ -277,44 +81,13 @@
                 </a>
 
                 <a href="https://github.com/ryu-ryuk/yoru-pastebin.git"
-                    class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                    class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all relative z-10">
                     View on GitHub
                 </a>
             </div>
         </section>
 
-        <!-- <section class="hero-section">
-            <div class="hero-bg"></div>
-
-            <div class="w-full flex justify-center items-center" style="height: 60vh">
-                <img src="/src/assets/projects/beruRS.gif" loading="lazy" alt="beruRS preview" class="hero-gif"
-                    data-gsap="hero-gif">
-            </div>
-
-
-            <div class="hero-text">
-                <h2 class="large grid centered square-grid text-5xl md:text-9xl font-bold" data-text="beru RS">
-                    <span data-text="b">b</span>
-                    <span data-text="e">e</span>
-                    <span data-text="r">r</span>
-                    <span data-text="u">u</span>
-                    <span data-text="R">R</span>
-                    <span data-text="S">S</span>
-                </h2>
-                <p class="console-text text-lg md:text-xl mt-6 pt-2 mx-auto max-w-2xl">
-                    network security tool written in rust: <a href="https://github.com/ryu-ryuk/cybeRs"
-                        class="text-green-300 underline hover:text-green-400">GitHub</a>
-                </p>
-                <div class="project-context border-t border-green-400/30 pt-4">
-
-                    <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
-                    </div>
-                </div>
-
-
-        </section> -->
-        <h2 class="text-3xl font-bold text-[var(--ctp-mocha-mauve)] drop-shadow-[0_0_4px_var(--ctp-mocha-mauve)] mb-6">
+        <h2 class="text-2xl font-bold text-accent drop-shadow-[0_0_4px_var(--ctp-mocha-mauve)] mb-6">
             <span class="text-[var(--ctp-mocha-green)]">$</span> ls ~/projects/featured
         </h2>
         <pre
@@ -359,7 +132,7 @@
                     style="background-image: url('https://raw.githubusercontent.com/ryu-ryuk/porterm/main/docs/preview.gif')">
                 </div>
                 <div class="parallax-content">
-                    <h3 class="text-xl font-semibold" style="color: var(--ctp-mocha-mauve);">
+                    <h3 class="text-xl font-semibold text-accent">
                         <span>🧃</span> porterm — Terminal Portfolio Viewer
                     </h3>
                 </div>
@@ -372,34 +145,28 @@
                 </p>
 
                 <!-- Project Context Section -->
-                <div class="project-context mt-4 border-t pt-4 relative z-10"
-                    style="border-color: color-mix(in srgb, var(--ctp-mocha-mauve) 30%, transparent);">
+                <div class="project-context mt-4 border-t pt-4 relative z-10 border-accent">
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">Go</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">BubbleTea</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">Glamour</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">Lipgloss</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">Terminal
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Go</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">BubbleTea</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Glamour</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Lipgloss</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Terminal
                             UI</span>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-sm font-semibold mb-1" style="color: var(--ctp-mocha-mauve);">Role:</h4>
+                        <h4 class="text-sm font-semibold mb-1 text-accent">Role:</h4>
                         <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-sm font-semibold mb-1" style="color: var(--ctp-mocha-mauve);">Status:</h4>
+                        <h4 class="text-sm font-semibold mb-1 text-accent">Status:</h4>
                         <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Active | Used as primary CLI portfolio</p>
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-semibold mb-1" style="color: var(--ctp-mocha-mauve);">Key Features:</h4>
+                        <h4 class="text-sm font-semibold mb-1 text-accent">Key Features:</h4>
                         <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                             <li>Catppuccin Mocha themed animated interface</li>
                             <li>Dynamic About, Projects, and Resume viewer</li>
@@ -409,14 +176,12 @@
                 </div>
 
                 <a href="https://scripts.alokranjan.me/porterm.sh"
-                    class="inline-block mt-4 mr-2 px-4 py-2 rounded-md border transition-all relative z-10 shadow-md"
-                    style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 20%, transparent); color: var(--ctp-mocha-mauve); border-color: color-mix(in srgb, var(--ctp-mocha-mauve) 40%, transparent);">
+                    class="inline-block mt-4 mr-2 px-4 py-2 rounded-md border transition-all relative z-10 shadow-md btn-accent">
                     Install with Curl
                 </a>
 
                 <a href="https://github.com/ryu-ryuk/porterm"
-                    class="inline-block mt-4 px-4 py-2 rounded-md transition-all relative z-10"
-                    style="background-color: rgba(30, 30, 46, 0.3); color: var(--ctp-mocha-green);">
+                    class="inline-block mt-4 px-4 py-2 rounded-md transition-all relative z-10 btn-secondary">
                     View on GitHub
                 </a>
             </div>
@@ -432,7 +197,7 @@
                     style="background-image: url('https://raw.githubusercontent.com/ryu-ryuk/time-rs-cli/main/docs/preview.gif')">
                 </div>
                 <div class="parallax-content">
-                    <h3 class="text-xl font-semibold" style="color: var(--ctp-mocha-mauve);">
+                    <h3 class="text-xl font-semibold text-accent">
                         <span>⏳</span> Time-RS CLI
                     </h3>
                 </div>
@@ -448,30 +213,25 @@
                 <div class="project-context mt-4 border-t pt-4 relative z-10"
                     style="border-color: rgba(203, 166, 247, 0.3);">
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">Rust</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">ratatui</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">Catppuccin</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">CLI</span>
-                        <span class="px-2 py-1 rounded-md text-xs"
-                            style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 15%, transparent); color: var(--ctp-mocha-mauve);">TUI</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Rust</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">ratatui</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Catppuccin</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">CLI</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">TUI</span>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-sm font-semibold mb-1" style="color: var(--ctp-mocha-mauve);">Role:</h4>
+                        <h4 class="text-sm font-semibold mb-1 text-accent">Role:</h4>
                         <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-sm font-semibold mb-1" style="color: var(--ctp-mocha-mauve);">Status:</h4>
+                        <h4 class="text-sm font-semibold mb-1 text-accent">Status:</h4>
                         <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Maintained | Available on AUR</p>
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-semibold mb-1" style="color: var(--ctp-mocha-mauve);">Key Features:</h4>
+                        <h4 class="text-sm font-semibold mb-1 text-accent">Key Features:</h4>
                         <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                             <li>Pomodoro & manual modes</li>
                             <li>Keybindings for restart/help/time adjust</li>
@@ -483,8 +243,7 @@
                 </div>
 
                 <a href="https://aur.archlinux.org/packages/timers"
-                    class="inline-block mt-2 ml-2 px-4 py-2 rounded-md border transition-all relative z-10 shadow-md"
-                    style="background-color: color-mix(in srgb, var(--ctp-mocha-mauve) 20%, transparent); color: var(--ctp-mocha-mauve); border-color: color-mix(in srgb, var(--ctp-mocha-mauve) 40%, transparent);">
+                    class="inline-block mt-2 ml-2 px-4 py-2 rounded-md border transition-all relative z-10 shadow-md btn-accent">
                     View on AUR
                 </a>
 
@@ -496,7 +255,7 @@
             </div>
         </div>
 
-        <h2 class="text-2xl font-semibold text-[var(--ctp-mocha-blue)] mb-4 mt-10">
+        <h2 class="text-2xl font-bold text-accent drop-shadow-[0_0_4px_var(--ctp-mocha-mauve)] mb-6 mt-10">
             <span class="text-[var(--ctp-mocha-green)]">$</span> ls ~/projects
         </h2>
 
@@ -505,72 +264,43 @@
             ~$------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </pre>
 
-        <style>
-            @keyframes typing {
-                from {
-                    width: 0
-                }
-
-                to {
-                    width: 100%
-                }
-            }
-
-            @keyframes blink {
-
-                0%,
-                100% {
-                    border-color: transparent;
-                }
-
-                50% {
-                    border-color: var(--ctp-mocha-subtext0);
-                }
-            }
-
-            .animate-typing {
-                width: 0;
-                animation: typing 2.5s steps(60, end) forwards, blink 0.75s step-end infinite;
-            }
-        </style>
-
         <div class="project-card glass-card opacity-0" data-gsap="project">
             <div class="parallax-container">
                 <div class="parallax-bg" style="background-image: url('/src/assets/projects/beruRS.gif')"></div>
                 <div class="parallax-content">
-                    <h3 class="text-xl font-semibold text-green-300">
+                    <h3 class="text-xl font-semibold text-accent">
                         <span>🛡️</span> beruRS — Network Security Tool
                     </h3>
                 </div>
             </div>
             <div class="p-5 relative overflow-hidden">
 
-                <p class="text-gray-400 mb-4 relative z-10">
+                <p class="text-[var(--ctp-mocha-subtext0)] mb-4 relative z-10">
                     A fast and modular network security tool written in Rust, designed for packet inspection and system
                     diagnostics.
                 </p>
 
                 <!-- Project Context Section -->
-                <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                <div class="project-context mt-4 border-t border-accent pt-4 relative z-10">
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Security</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">CLI Tool</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Rust</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Security</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">CLI Tool</span>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
-                        <p class="text-gray-400 text-sm">Developer</p>
+                        <h4 class="text-accent text-sm font-semibold mb-1">Role:</h4>
+                        <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
-                        <p class="text-gray-400 text-sm">In Progress</p>
+                        <h4 class="text-accent text-sm font-semibold mb-1">Status:</h4>
+                        <p class="text-[var(--ctp-mocha-subtext0)] text-sm">In Progress</p>
                     </div>
 
                     <div>
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
-                        <ul class="text-gray-400 text-sm list-disc pl-5">
+                        <h4 class="text-accent text-sm font-semibold mb-1">Key Features:</h4>
+                        <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                             <li>Live packet inspection and filtering</li>
                             <li>Beautiful TUI with rich visuals</li>
                             <li>Attack simulation and testing</li>
@@ -579,7 +309,7 @@
                 </div>
 
                 <a href="https://github.com/ryu-ryuk/beruRS"
-                    class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                    class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all relative z-10">
                     View on GitHub
                 </a>
             </div>
@@ -590,39 +320,39 @@
                 <div class="parallax-bg" style="background-image: url('/src/assets/projects/output.gif')">
                 </div>
                 <div class="parallax-content">
-                    <h3 class="text-xl font-semibold text-green-300">
+                    <h3 class="text-xl font-semibold text-accent">
                         <span>🎛️</span> Hyprland Arch Linux Dotfiles
                     </h3>
                 </div>
             </div>
             <div class="p-5 relative overflow-hidden">
 
-                <p class="text-gray-400 mb-4 relative z-10">
+                <p class="text-[var(--ctp-mocha-subtext0)] mb-4 relative z-10">
                     Custom dotfiles for a highly optimized and aesthetic Hyprland setup on Arch Linux.
                 </p>
 
                 <!-- Project Context Section -->
-                <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                <div class="project-context mt-4 border-t border-accent pt-4 relative z-10">
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Arch Linux</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Hyprland</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Bash</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Scripting</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Arch Linux</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Hyprland</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Bash</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Scripting</span>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
-                        <p class="text-gray-400 text-sm">Developer</p>
+                        <h4 class="text-accent text-sm font-semibold mb-1">Role:</h4>
+                        <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
-                        <p class="text-gray-400 text-sm">Ongoing | Until I switch from Hyprland</p>
+                        <h4 class="text-accent text-sm font-semibold mb-1">Status:</h4>
+                        <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Ongoing | Until I switch from Hyprland</p>
                     </div>
 
                     <div>
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
-                        <ul class="text-gray-400 text-sm list-disc pl-5">
+                        <h4 class="text-accent text-sm font-semibold mb-1">Key Features:</h4>
+                        <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                             <li>Custom Waybar configuration</li>
                             <li>Dynamic workspace management</li>
                             <li>Optimized for productivity</li>
@@ -631,7 +361,7 @@
                 </div>
 
                 <a href="https://github.com/ryu-ryuk/dots.git"
-                    class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                    class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all relative z-10">
                     View on GitHub
                 </a>
             </div>
@@ -641,14 +371,14 @@
                 <div class="parallax-bg" style="background-image: url('/src/assets/projects/kanna-kanna-kamui.gif')">
                 </div>
                 <div class="parallax-content">
-                    <h3 class="text-xl font-semibold text-green-300">
+                    <h3 class="text-xl font-semibold text-accent">
                         <span>💻👨‍💻</span> Meowalyzer — VS Code Extension
                     </h3>
                 </div>
             </div>
             <div class="p-5 relative overflow-hidden">
 
-                <p class="text-gray-400 mb-4 relative z-10">
+                <p class="text-[var(--ctp-mocha-subtext0)] mb-4 relative z-10">
                     A VS Code extension developed for debugging large-scale university/backend projects using Groq
                     AI. It
                     captures real-time context (code, logs, project structure) and delivers smart, actionable
@@ -656,28 +386,28 @@
                 </p>
 
                 <!-- Project Context Section -->
-                <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                <div class="project-context mt-4 border-t border-accent pt-4 relative z-10">
                     <div class="flex flex-wrap gap-2 mb-3">
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">AI</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">VS Code</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Debugging</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Groq LLM</span>
-                        <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Ollama</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">AI</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">VS Code</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Debugging</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Groq LLM</span>
+                        <span class="px-2 py-1 rounded-md text-xs tag-accent">Ollama</span>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
-                        <p class="text-gray-400 text-sm">Lead Developer & System Architect</p>
+                        <h4 class="text-accent text-sm font-semibold mb-1">Role:</h4>
+                        <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Lead Developer & System Architect</p>
                     </div>
 
                     <div class="mb-3">
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
-                        <p class="text-gray-400 text-sm">Ongoing | Beta Release Planned (June 2025)</p>
+                        <h4 class="text-accent text-sm font-semibold mb-1">Status:</h4>
+                        <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Ongoing | Beta Release Planned (June 2025)</p>
                     </div>
 
                     <div>
-                        <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
-                        <ul class="text-gray-400 text-sm list-disc pl-5">
+                        <h4 class="text-accent text-sm font-semibold mb-1">Key Features:</h4>
+                        <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                             <li>Context-aware debugging via Groq AI</li>
                             <li>Auto-captures editor, terminal, and config context</li>
                             <li>Live suggestion panel inside VS Code</li>
@@ -688,7 +418,7 @@
                 </div>
 
                 <a href="https://github.com/livedebugger"
-                    class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                    class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all relative z-10">
                     View on GitHub
                 </a>
             </div>
@@ -700,42 +430,42 @@
                     <div class="parallax-bg" style="background-image: url('/src/assets/projects/k-world.gif')">
                     </div>
                     <div class="parallax-content">
-                        <h3 class="text-xl font-semibold text-green-300">
+                        <h3 class="text-xl font-semibold text-accent">
                             <span>🍁</span> PDFtoMindmap
                         </h3>
                     </div>
                 </div>
                 <div class="p-5">
-                    <p class="text-gray-400 mb-4">
+                    <p class="text-[var(--ctp-mocha-subtext0)] mb-4">
                         a dynamic service which extracts text,image,tables,latex formulas from PDFs and uses NLP/HUGGING
                         FACE
                         models to create cohesive mindmaps.
                     </p>
 
                     <!-- Project Context Section -->
-                    <div class="project-context mt-4 border-t border-green-400/30 pt-4">
+                    <div class="project-context mt-4 border-t border-accent pt-4">
                         <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Python</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">ML/LLM</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Hugging
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Python</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">ML/LLM</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Hugging
                                 Face</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Docker</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Gorbid</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Docker</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Gorbid</span>
                         </div>
 
                         <div class="mb-3">
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
-                            <p class="text-gray-400 text-sm">Developer</p>
+                            <h4 class="text-accent text-sm font-semibold mb-1">Role:</h4>
+                            <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                         </div>
 
                         <div class="mb-3">
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
-                            <p class="text-gray-400 text-sm">Ongoing | Need assistance</p>
+                            <h4 class="text-accent text-sm font-semibold mb-1">Status:</h4>
+                            <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Ongoing | Need assistance</p>
                         </div>
 
                         <div>
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
-                            <ul class="text-gray-400 text-sm list-disc pl-5">
+                            <h4 class="text-accent text-sm font-semibold mb-1">Key Features:</h4>
+                            <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                                 <li>Extracts text/images/latex from PDFs (academic etc.) > parses them</li>
                                 <li>Uses the parsed data to analyze and build context using LLMs</li>
                                 <li>Uses the updated context and data to build a cohesive and smooth mindmap
@@ -745,7 +475,7 @@
                     </div>
 
                     <a href="https://github.com/ryu-ryuk/pdf2mindmap.git"
-                        class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all">
+                        class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all">
                         View on GitHub
                     </a>
                 </div>
@@ -757,7 +487,7 @@
                     <div class="parallax-bg" style="background-image: url('/src/assets/projects/lenrs.gif')">
                     </div>
                     <div class="parallax-content">
-                        <h3 class="text-xl font-semibold text-green-300">
+                        <h3 class="text-xl font-semibold text-accent">
                             <span>🔎</span> lenrs – A TUI OCR Snippet Tool for Wayland
 
                         </h3>
@@ -766,34 +496,34 @@
 
                 <div class="p-5 relative overflow-hidden">
 
-                    <p class="text-gray-400 mb-4 relative z-10">
+                    <p class="text-[var(--ctp-mocha-subtext0)] mb-4 relative z-10">
                         lenrs lets you select any screen area, extract text using Tesseract OCR, and auto-copy it to
                         your
                         clipboard. </p>
 
                     <!-- Project Context Section -->
-                    <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                    <div class="project-context mt-4 border-t border-accent pt-4 relative z-10">
                         <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Tesseract</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">grim +
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Rust</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Tesseract</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">grim +
                                 slurp</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Linux</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Linux</span>
                         </div>
 
                         <div class="mb-3">
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
-                            <p class="text-gray-400 text-sm">Developer</p>
+                            <h4 class="text-accent text-sm font-semibold mb-1">Role:</h4>
+                            <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                         </div>
 
                         <div class="mb-3">
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
-                            <p class="text-gray-400 text-sm">Finished</p>
+                            <h4 class="text-accent text-sm font-semibold mb-1">Status:</h4>
+                            <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Finished</p>
                         </div>
 
                         <div>
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
-                            <ul class="text-gray-400 text-sm list-disc pl-5">
+                            <h4 class="text-accent text-sm font-semibold mb-1">Key Features:</h4>
+                            <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                                 <li>Dynamic window selection</li>
                                 <li>Lightweight and fast</li>
                             </ul>
@@ -801,7 +531,7 @@
                     </div>
 
                     <a href="https://github.com/ryu-ryuk/lenrs.git"
-                        class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                        class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all relative z-10">
                         View on GitHub
                     </a>
                 </div>
@@ -812,7 +542,7 @@
                     <div class="parallax-bg" style="background-image: url('/src/assets/projects/kaomoji-picker.gif')">
                     </div>
                     <div class="parallax-content">
-                        <h3 class="text-xl font-semibold text-green-300">
+                        <h3 class="text-xl font-semibold text-accent">
                             <span>(☝◞‸◟)☞</span> Kaomoji-Picker
 
                         </h3>
@@ -820,31 +550,31 @@
                 </div>
                 <div class="p-5 relative overflow-hidden">
 
-                    <p class="text-gray-400 mb-4 relative z-10">
+                    <p class="text-[var(--ctp-mocha-subtext0)] mb-4 relative z-10">
                         A lightining-fast kaomoji selector for Linux using Rofi, with clipboard integration.
                     </p>
 
                     <!-- Project Context Section -->
-                    <div class="project-context mt-4 border-t border-green-400/30 pt-4 relative z-10">
+                    <div class="project-context mt-4 border-t border-accent pt-4 relative z-10">
                         <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rust</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Rofi</span>
-                            <span class="px-2 py-1 bg-green-900/30 text-green-300 text-xs rounded-md">Linux</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Rust</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Rofi</span>
+                            <span class="px-2 py-1 rounded-md text-xs tag-accent">Linux</span>
                         </div>
 
                         <div class="mb-3">
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Role:</h4>
-                            <p class="text-gray-400 text-sm">Developer</p>
+                            <h4 class="text-accent text-sm font-semibold mb-1">Role:</h4>
+                            <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Developer</p>
                         </div>
 
                         <div class="mb-3">
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Status:</h4>
-                            <p class="text-gray-400 text-sm">Finished</p>
+                            <h4 class="text-accent text-sm font-semibold mb-1">Status:</h4>
+                            <p class="text-[var(--ctp-mocha-subtext0)] text-sm">Finished</p>
                         </div>
 
                         <div>
-                            <h4 class="text-green-300 text-sm font-semibold mb-1">Key Features:</h4>
-                            <ul class="text-gray-400 text-sm list-disc pl-5">
+                            <h4 class="text-accent text-sm font-semibold mb-1">Key Features:</h4>
+                            <ul class="text-[var(--ctp-mocha-subtext0)] text-sm list-disc pl-5">
                                 <li>LOTSSSS OF KAOMOJISS</li>
                                 <li>Modular (easy to add even more)</li>
                             </ul>
@@ -852,38 +582,13 @@
                     </div>
 
                     <a href="https://github.com/ryu-ryuk/kaomoji-picker.git"
-                        class="inline-block mt-4 px-4 py-2 bg-green-900/30 text-green-300 rounded-md hover:bg-green-900/50 transition-all relative z-10">
+                        class="inline-block mt-4 px-4 py-2 rounded-md btn-secondary transition-all relative z-10">
                         View on GitHub
                     </a>
                 </div>
             </div>
         </div>
     </main>
-
-    <!-- SPOTIFY WIDGET
-    <div id="spotify-widget" class="fixed bottom-16 left-4 opacity-0 z-60 spotify-container">
-        <div class="spotify-inner">
-            <div class="scanline-spotify"></div>
-            <div class="flex items-center gap-3 relative z-10">
-                <div class="album-art-container">
-                    <img id="album-art" class="w-14 h-14 rounded-md hidden" alt="Album Art" />
-                    <div class="album-overlay"></div>
-                    <div class="album-glow"></div>
-                </div>
-                <div class="spotify-info">
-                    <div id="spotify-status" class="text-xs glitch-text">
-                        <span class="glitch-span" data-text="NOW PLAYING">NOW PLAYING</span>
-                    </div>
-                    <div id="spotify-song" class="font-medium text-green-300 truncate max-w-[180px]"></div>
-                    <div id="spotify-artist" class="text-sm text-gray-400 truncate max-w-[180px]"></div>
-                    <div class="progress-container">
-                        <div class="progress-bar"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 
     <!-- TERMINAL TAB & OVERLAY -->
     <div id="terminal-tab"
@@ -1305,48 +1010,6 @@
                 }
             });
 
-            // Terminal console enhancements
-            const terminalOutput = document.querySelector("#terminal-output");
-            if (terminalOutput) {
-                terminalOutput.querySelectorAll(".console-text").forEach((textEl) => {
-                    const text = textEl.getAttribute("data-text");
-                    textEl.innerHTML = "";
-                    gsap.to(textEl, {
-                        opacity: 1,
-                        duration: 0,
-                        onStart: () => {
-                            let i = 0;
-                            function type() {
-                                if (i < text.length) {
-                                    textEl.innerHTML += text.charAt(i);
-                                    i++;
-                                    setTimeout(type, 50);
-                                }
-                            }
-                            type();
-                        },
-                    });
-                });
-            }
-
-            // Footer Marquee Animation
-            const dynamicFooter = document.getElementById('dynamic-footer');
-            const footerText = document.getElementById('footer-text');
-            const footerTextClone = document.getElementById('footer-text-clone');
-
-            if (dynamicFooter && footerText && footerTextClone) {
-                footerTextClone.innerHTML = footerText.innerHTML;
-                requestAnimationFrame(() => {
-                    const textWidth = footerText.offsetWidth;
-                    if (textWidth > 0) {
-                        gsap.set(dynamicFooter, { x: 0 });
-                        const tween = gsap.to(dynamicFooter, { x: -textWidth, duration: 15, ease: "linear", repeat: -1 });
-                        const footerElement = document.querySelector('footer');
-                        footerElement.addEventListener('mouseenter', () => tween.pause());
-                        footerElement.addEventListener('mouseleave', () => tween.play());
-                    }
-                });
-            }
         });
     </script>
 </body>

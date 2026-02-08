@@ -1240,3 +1240,126 @@ const TerminalJourney = {
   }
 };
 
+// =====================
+// Cursor Trail — Eva afterimage
+// =====================
+const CursorTrail = {
+  points: [],
+  maxPoints: 20,
+  prevX: 0,
+  prevY: 0,
+
+  init() {
+    if ('ontouchstart' in window) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'cursor-trail';
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    let moveCount = 0;
+    document.addEventListener('mousemove', (e) => {
+      moveCount++;
+      // Only record every 2nd move event for smoother spacing
+      if (moveCount % 2 !== 0) return;
+
+      const dx = e.clientX - this.prevX;
+      const dy = e.clientY - this.prevY;
+      const speed = Math.sqrt(dx * dx + dy * dy);
+
+      // Only spawn if moving fast enough
+      if (speed > 3) {
+        this.points.push({
+          x: e.clientX,
+          y: e.clientY,
+          life: 1,
+          angle: Math.atan2(dy, dx),
+          speed: Math.min(speed, 40),
+        });
+        if (this.points.length > this.maxPoints) this.points.shift();
+      }
+
+      this.prevX = e.clientX;
+      this.prevY = e.clientY;
+    });
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = this.points.length - 1; i >= 0; i--) {
+        const p = this.points[i];
+        p.life -= 0.03;
+
+        if (p.life <= 0) {
+          this.points.splice(i, 1);
+          continue;
+        }
+
+        const alpha = p.life * 0.5;
+        const size = 3 + (p.speed * 0.15) * p.life;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+
+        // Angular shard shape (diamond/rhombus)
+        ctx.beginPath();
+        ctx.moveTo(size * 1.5, 0);
+        ctx.lineTo(0, size * 0.5);
+        ctx.lineTo(-size * 0.8, 0);
+        ctx.lineTo(0, -size * 0.5);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(51, 255, 51, ${alpha * 0.7})`;
+        ctx.fill();
+
+        // Bright leading edge
+        ctx.beginPath();
+        ctx.moveTo(size * 1.5, 0);
+        ctx.lineTo(0, size * 0.5);
+        ctx.lineTo(0, -size * 0.5);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(150, 255, 150, ${alpha * 0.4})`;
+        ctx.fill();
+
+        // Glow
+        ctx.shadowColor = '#33FF33';
+        ctx.shadowBlur = 8 * p.life;
+        ctx.beginPath();
+        ctx.arc(0, 0, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(51, 255, 51, ${alpha * 0.3})`;
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      // Draw connecting line between recent points
+      if (this.points.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(this.points[0].x, this.points[0].y);
+        for (let i = 1; i < this.points.length; i++) {
+          ctx.lineTo(this.points[i].x, this.points[i].y);
+        }
+        ctx.strokeStyle = `rgba(51, 255, 51, 0.08)`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(animate);
+    };
+    animate();
+  }
+};
+
+// Initialize cursor trail
+document.addEventListener('DOMContentLoaded', () => {
+  CursorTrail.init();
+});
+
