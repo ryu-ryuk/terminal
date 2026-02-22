@@ -222,7 +222,8 @@
 
     .console-text {
       opacity: 0;
-      white-space: pre;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .success-message {
@@ -253,7 +254,7 @@
         ☰
       </button>
       <ul id="menu"
-        class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+        class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
         <li class="px-4 py-2 md:px-0">
           <a href="/" class="hover:text-green-300">Home</a>
         </li>
@@ -277,7 +278,7 @@
   <main class="w-full pt-24 pb-32 px-4">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
-        <h1 class="text-5xl md:text-7xl font-bold text-green-400 glitch-title" data-text="CONTACT_ME">
+        <h1 class="text-3xl sm:text-5xl md:text-7xl font-bold text-green-400 glitch-title" data-text="CONTACT_ME">
           CONTACT_ME
         </h1>
         <p class="console-text text-xl mt-4" data-text="Initiate communication sequence...">
@@ -413,6 +414,8 @@
       <div class="mt-10 flex justify-center">
         <img src="/github.gif" alt="GitHub contribution animation" class="w-32 rounded opacity-60 hover:opacity-90 transition-opacity">
       </div>
+      <!-- Mobile spacer -->
+      <div class="h-20 md:hidden"></div>
     </div>
   </main>
 
@@ -551,47 +554,26 @@
     const BACKEND_URL = "https://spotify-portfolio-6nvo.onrender.com";
 
     document.addEventListener("DOMContentLoaded", function () {
-      // Mobile menu toggle
-      const menuToggle = document.getElementById("menu-toggle");
-      const menu = document.getElementById("menu");
-      menuToggle?.addEventListener("click", function () {
-        menu.classList.toggle("hidden");
-        menu.classList.toggle("flex");
-      });
-
-      // GSAP Animations
       gsap.registerPlugin(ScrollTrigger);
 
-      // Typing effect for console text elements
       document.querySelectorAll(".console-text").forEach((textEl) => {
         const text = textEl.getAttribute("data-text");
-        textEl.innerHTML = text; // Set initial text
-        setTimeout(() => {
-          textEl.style.opacity = "1";
-        }, 100);
+        textEl.textContent = text;
+        setTimeout(() => { textEl.style.opacity = "1"; }, 100);
         gsap.to(textEl, {
-          opacity: 1,
-          duration: 0.5,
-          scrollTrigger: {
-            trigger: textEl,
-            start: "top 90%",
-          },
+          opacity: 1, duration: 0.5,
+          scrollTrigger: { trigger: textEl, start: "top 90%" },
           onStart: () => {
-            textEl.innerHTML = "";
+            textEl.textContent = "";
             let i = 0;
             function type() {
-              if (i < text.length) {
-                textEl.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 30);
-              }
+              if (i < text.length) { textEl.textContent += text.charAt(i++); setTimeout(type, 30); }
             }
             type();
           },
         });
       });
 
-      // Form submission
       const contactForm = document.getElementById("contactForm");
       const successMessage = document.getElementById("successMessage");
       const closeSuccessMessage = document.getElementById(
@@ -601,7 +583,6 @@
       contactForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        // Animate form submission
         const formElements = contactForm.elements;
         const submitButton = contactForm.querySelector(
           "button[type='submit']",
@@ -626,7 +607,6 @@
           });
 
           if (response.ok) {
-            // Show success message
             successMessage.style.display = "block";
             gsap.fromTo(
               successMessage,
@@ -634,10 +614,7 @@
               { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" },
             );
 
-            // Reset form
             contactForm.reset();
-
-            // Reset form styles
             for (let i = 0; i < formElements.length; i++) {
               gsap.to(formElements[i], {
                 backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -646,7 +623,6 @@
               });
             }
           } else {
-            // Shake button on error
             gsap.to(submitButton, {
               x: "+=10",
               duration: 0.1,
@@ -679,7 +655,6 @@
         });
       });
 
-      // Availability bar animation
       gsap.to(".availability-bar", {
         width: "75%",
         duration: 1.5,

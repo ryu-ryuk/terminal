@@ -25,7 +25,7 @@
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu"
-                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
                 <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="/contact.html" class="hover:text-green-300">Contact</a>
                 </li>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="neofetch-row">
                         <span class="neofetch-label">editor</span>
-                        <span class="neofetch-value">~ Neovim</span>
+                        <span class="neofetch-value">~ Neovim / VSCodium</span>
                     </div>
                     <div class="neofetch-row">
                         <span class="neofetch-label">shell</span>
@@ -443,7 +443,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // ASCII Art Animation
             const asciiArt = document.querySelector('#ascii-art');
             if (asciiArt) {
                 const lines = asciiArt.querySelectorAll('.ascii-line');
@@ -492,15 +491,6 @@
                 });
             }
 
-            // Mobile menu toggle
-            const menuToggle = document.getElementById("menu-toggle");
-            const menu = document.getElementById("menu");
-            menuToggle?.addEventListener("click", function () {
-                menu.classList.toggle("hidden");
-                menu.classList.toggle("flex");
-            });
-
-            // GSAP Bento card staggered reveal
             gsap.registerPlugin(ScrollTrigger);
 
             gsap.utils.toArray('.bento-card').forEach((card, i) => {
@@ -514,7 +504,6 @@
                 );
             });
 
-            // Experience card reveal inside bento cards
             const cards = gsap.utils.toArray('.experience-card');
             cards.forEach((card, i) => {
                 gsap.fromTo(card,
@@ -527,7 +516,6 @@
                 );
             });
 
-            // Tech tag hover
             document.querySelectorAll('.tech-tag').forEach(tag => {
                 tag.addEventListener('mouseenter', () => {
                     gsap.to(tag, {
@@ -547,7 +535,6 @@
                 });
             });
 
-            // Project highlight glow
             const highlight = document.querySelector('.project-highlight');
             if (highlight) {
                 gsap.to(highlight, {

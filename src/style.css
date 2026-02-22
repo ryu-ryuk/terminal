@@ -519,6 +519,9 @@ nav a.text-green-400 {
     height: 140%;
     z-index: 0;
     transition: transform 0.2s ease-out;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Style Tenor embed to mimic local GIF */
@@ -1089,5 +1092,81 @@ nav a.text-green-400 {
   }
   .bento-span-2, .bento-span-full {
     grid-column: 1;
+  }
+}
+
+/* ── Mobile fixes ── */
+@media (max-width: 767px) {
+  /* Spotify widget: compact on mobile, stays visible */
+  #spotify-widget {
+    left: 0.5rem;
+    min-width: 200px;
+  }
+
+  .spotify-info .max-w-\[180px\] {
+    max-width: 140px;
+  }
+
+  /* Terminal tab: compact on mobile */
+  #terminal-tab {
+    right: 0.25rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  /* Hamburger: minimum 44×44px touch target */
+  #menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  /* Prevent horizontal overflow on all pages */
+  body, main {
+    overflow-x: hidden;
+  }
+
+  /* Enough bottom clearance for footer + spotify widget + terminal tab */
+  body {
+    padding-bottom: 10rem !important;
+  }
+
+  /* Reduce parallax image container height on mobile */
+  .parallax-container {
+    height: 200px !important;
+  }
+
+  /* Prevent console-text from overflowing on narrow screens */
+  .console-text {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Project cards: full width, no side overflow */
+  .project-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Contact containers: full width */
+  .contact-container {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  /* Nav needs higher z-index than everything else */
+  nav {
+    z-index: 100;
+  }
+
+  /* Mobile menu: ensure column layout so items stack vertically */
+  #menu {
+    flex-direction: column !important;
   }
 }

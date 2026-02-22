@@ -22,7 +22,7 @@
             <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
             <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">☰</button>
             <ul id="menu"
-                class="hidden md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+                class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
                 <li class="px-4 py-2 md:px-0"><a href="/" class="hover:text-green-300">Home</a></li>
                 <li class="px-4 py-2 md:px-0"><a href="/contact.html" class="hover:text-green-300">Contact</a>
                 </li>
@@ -37,13 +37,13 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="w-full">
+    <main class="w-full pt-25 px-2 md:pt-0 md:px-0">
         <section class="hero-section">
             <div class="hero-bg"></div>
 
             <div class="w-full flex justify-center items-center h-[60vh]">
                 <img src="https://raw.githubusercontent.com/ryu-ryuk/yoru-pastebin/main/docs/assets/yoru.gif"
-                    loading="lazy" alt="yoru pastebin preview" class="hero-gif max-w-[50%] md:max-w-[80%] h-auto"
+                    loading="lazy" alt="yoru pastebin preview" class="hero-gif max-w-[85%] sm:max-w-[60%] md:max-w-[80%] h-auto"
                     data-gsap="hero-gif">
             </div>
 
@@ -592,6 +592,8 @@
         <div class="mt-10 flex justify-center">
             <img src="/github.gif" alt="GitHub contribution animation" class="w-32 rounded opacity-60 hover:opacity-90 transition-opacity">
         </div>
+        <!-- Mobile spacer -->
+        <div class="h-20 md:hidden"></div>
     </main>
 
     <!-- TERMINAL TAB & OVERLAY -->
@@ -675,96 +677,23 @@
 
     <!-- PROJECT-SPECIFIC JS -->
     <script>
-        // Wait for DOM to be ready
         document.addEventListener("DOMContentLoaded", function () {
-            // Initialize GSAP
             gsap.registerPlugin(ScrollTrigger);
 
-            // Mobile menu toggle
-            const menuToggle = document.getElementById("menu-toggle");
-            const menu = document.getElementById("menu");
-            if (menuToggle) {
-                menuToggle.addEventListener("click", function () {
-                    menu.classList.toggle("hidden");
-                    menu.classList.toggle("flex");
-                });
-            }
-
-            // Initialize hero animations
-            function initHeroAnimations() {
-                // Create timeline for hero section
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: ".hero-section",
-                        start: "top center",
-                        toggleActions: "play none none reset"
-                    }
-                });
-
-                // Add animations to timeline
-                tl.fromTo(".hero-gif",
-                    { opacity: 0, scale: 0.8 },
-                    { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }
-                );
-
-                // Animate grid letters
-                const letters = document.querySelectorAll('.large.grid.centered.square-grid span');
-                letters.forEach((letter, index) => {
-                    tl.fromTo(letter,
-                        { opacity: 0, y: -50 },
-                        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" },
-                        "-=0.3"
-                    );
-                });
-
-                // Animate console text
-                tl.fromTo(".console-text",
-                    { opacity: 0, y: 20 },
-                    { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-                    "-=0.2"
-                );
-
-                // Setup parallax scroll effect
-                gsap.to(".hero-bg", {
-                    yPercent: -20,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".hero-section",
-                        start: "top top",
-                        end: "bottom top",
-                        scrub: 1
-                    }
-                });
-            }
-
-            // Call init function
-            initHeroAnimations();
-
-            // Create main hero timeline
-            const heroTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".hero-section",
-                    start: "top center",
-                    toggleActions: "play none none reset"
-                }
-            });
-
-            // Initial setup - hide elements
             gsap.set([".hero-gif", ".large.grid.centered.square-grid span", ".console-text"], { opacity: 0 });
             gsap.set(".hero-gif", { scale: 0.8 });
             gsap.set(".large.grid.centered.square-grid span", { y: -50 });
             gsap.set(".console-text", { y: 20 });
 
-            // Add animations to timeline in sequence
-            heroTimeline
-                // Hero GIF fade in with scale
+            gsap.timeline({
+                scrollTrigger: { trigger: ".hero-section", start: "top center", toggleActions: "play none none reset" }
+            })
                 .to(".hero-gif", {
                     opacity: 1,
                     scale: 1,
                     duration: 1.2,
                     ease: "power3.out"
                 })
-                // Staggered grid letters animation
                 .to(".large.grid.centered.square-grid span", {
                     opacity: 1,
                     y: 0,
@@ -774,8 +703,7 @@
                         ease: "power2.out"
                     },
                     ease: "back.out(1.7)"
-                }, "-=0.8") // Overlap with previous animation
-                // Console text fade in
+                }, "-=0.8")
                 .to(".console-text", {
                     opacity: 1,
                     y: 0,
@@ -783,7 +711,6 @@
                     ease: "power2.out"
                 }, "-=0.4");
 
-            // Separate parallax effect for background
             gsap.to(".hero-bg", {
                 yPercent: -20,
                 ease: "none",
@@ -793,108 +720,6 @@
                     end: "bottom top",
                     scrub: 1
                 }
-            });
-
-            // Custom cursor effect
-            const cursor = document.createElement('div');
-            cursor.classList.add('custom-cursor');
-            document.body.appendChild(cursor);
-
-            const cursorDot = document.createElement('div');
-            cursorDot.classList.add('cursor-dot');
-            document.body.appendChild(cursorDot);
-
-            document.addEventListener('mousemove', (e) => {
-                gsap.to(cursor, {
-                    x: e.clientX,
-                    y: e.clientY,
-                    duration: 0.5,
-                    ease: 'power2.out'
-                });
-
-                gsap.to(cursorDot, {
-                    x: e.clientX,
-                    y: e.clientY,
-                    duration: 0.1
-                });
-            });
-
-            // Expand cursor on hoverable elements
-            document.querySelectorAll('a, button, .project-card').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('cursor-expanded');
-                });
-
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('cursor-expanded');
-                });
-
-            });
-            // Text reveal animation
-            const textElements = document.querySelectorAll('.animate-text');
-            textElements.forEach(text => {
-                // Split text into characters
-                const characters = [...text.textContent];
-                text.textContent = '';
-
-                // Create spans for each character
-                characters.forEach(char => {
-                    const span = document.createElement('span');
-                    span.textContent = char;
-                    span.style.opacity = '0';
-                    span.style.display = 'inline-block';
-                    text.appendChild(span);
-                });
-
-                // Animate each character
-                gsap.to(text.querySelectorAll('span'), {
-                    opacity: 1,
-                    stagger: 0.05,
-                    duration: 0.5,
-                    ease: 'power2.out',
-                    y: 0,
-                    scrollTrigger: {
-                        trigger: text,
-                        start: 'top 80%'
-                    }
-                });
-            });
-
-            // Page transition effect
-            const pageTransition = () => {
-                const overlay = document.createElement('div');
-                overlay.classList.add('page-transition-overlay');
-                document.body.appendChild(overlay);
-
-                return gsap.timeline()
-                    .to(overlay, {
-                        duration: 0.5,
-                        scaleY: 1,
-                        transformOrigin: 'bottom',
-                        ease: 'power4.inOut'
-                    })
-                    .to(overlay, {
-                        duration: 0.5,
-                        scaleY: 0,
-                        transformOrigin: 'top',
-                        ease: 'power4.inOut',
-                        delay: 0.1
-                    });
-            };
-
-            // Apply to navigation links
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const href = link.getAttribute('href');
-                    if (href !== '#' && !href.startsWith('http')) {
-                        e.preventDefault();
-
-                        const tl = pageTransition();
-                        tl.eventCallback('onComplete', () => {
-                            window.location.href = href;
-                        });
-                    }
-                });
             });
 
             document.querySelectorAll('.parallax-container').forEach(container => {
@@ -922,9 +747,7 @@
                     });
                 });
             });
-            // Add hover effects for grid letters
-            const gridLetters = document.querySelectorAll('.large.grid.centered.square-grid span');
-            gridLetters.forEach(letter => {
+            document.querySelectorAll('.large.grid.centered.square-grid span').forEach(letter => {
                 letter.addEventListener('mouseenter', () => {
                     gsap.to(letter, {
                         scale: 1.2,
@@ -944,10 +767,8 @@
                 });
             });
 
-            // Project Cards Animations
             gsap.utils.toArray(".project-card[data-gsap='project']").forEach((card, index) => {
-                gsap.fromTo(
-                    card,
+                gsap.fromTo(card,
                     { opacity: 0, y: 100, scale: 0.95 },
                     {
                         opacity: 1,
@@ -964,32 +785,22 @@
                     }
                 );
 
-                // Console typing effect for card text
                 card.querySelectorAll(".console-text").forEach((textEl) => {
                     const text = textEl.getAttribute("data-text");
-                    textEl.innerHTML = "";
+                    textEl.textContent = "";
                     gsap.to(textEl, {
-                        opacity: 1,
-                        duration: 0,
-                        scrollTrigger: {
-                            trigger: card,
-                            start: "top 80%",
-                        },
+                        opacity: 1, duration: 0,
+                        scrollTrigger: { trigger: card, start: "top 80%" },
                         onStart: () => {
                             let i = 0;
                             function type() {
-                                if (i < text.length) {
-                                    textEl.innerHTML += text.charAt(i);
-                                    i++;
-                                    setTimeout(type, 30);
-                                }
+                                if (i < text.length) { textEl.textContent += text.charAt(i++); setTimeout(type, 30); }
                             }
                             type();
                         },
                     });
                 });
 
-                // Tilt effect on hover
                 const preview = card.querySelector(".preview-container");
                 if (preview) {
                     preview.addEventListener("mousemove", (e) => {
