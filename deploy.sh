@@ -2,7 +2,7 @@
 set -euo pipefail
 
 echo "Building the project..."
-npm run build
+bun run build
 
 echo "Deploying to Firebase Hosting..."
 firebase deploy --only hosting
