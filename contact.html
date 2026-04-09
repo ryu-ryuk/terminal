@@ -250,11 +250,13 @@
   <nav class="p-2 fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50">
     <div class="max-w px-4 mx-auto flex justify-between items-center">
       <a href="/" class="text-green-400 text-lg font-bold">ryu@archy</a>
-      <button id="menu-toggle" class="text-green-400 md:hidden text-2xl focus:outline-none">
-        ☰
+      <button id="menu-toggle" class="md:hidden focus:outline-none hamburger" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
       </button>
       <ul id="menu"
-        class="hidden flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/70 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto shadow-md md:shadow-none text-center justify-center items-center">
+        class="mobile-menu flex-col md:flex md:flex-row md:space-x-6 text-green-400 md:bg-transparent bg-black/90 md:backdrop-blur-none backdrop-blur-md absolute md:static w-full left-0 md:w-auto top-14 md:top-auto md:shadow-none text-center justify-center items-center">
         <li class="px-4 py-2 md:px-0">
           <a href="/" class="hover:text-green-300">Home</a>
         </li>

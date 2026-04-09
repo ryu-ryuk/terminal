@@ -141,8 +141,19 @@ class Terminal {
   }
 
   resetTab() { this.tabCandidates = []; this.tabIndex = 0; }
-  show() { this.overlay.classList.remove("hidden"); requestAnimationFrame(() => this.input.focus()); }
-  hide() { this.overlay.classList.add("hidden"); }
+  show() {
+    this.overlay.classList.remove("hidden");
+    requestAnimationFrame(() => {
+      this.overlay.classList.add("terminal-visible");
+      this.window.classList.add("terminal-window-visible");
+      this.input.focus();
+    });
+  }
+  hide() {
+    this.overlay.classList.remove("terminal-visible");
+    this.window.classList.remove("terminal-window-visible");
+    setTimeout(() => this.overlay.classList.add("hidden"), 300);
+  }
   toggleMaximize() {
     this.window.classList.toggle("max-w-full");
     this.window.classList.toggle("h-[90vh]");
@@ -157,7 +168,7 @@ class Terminal {
     this.historyIndex = -1;
     this.savedInput = "";
     const [cmd, ...args] = inputValue.split(" ");
-    this.writeOutput(`$ ${inputValue}`, "text-terminalGreen");
+    this.writeOutput(`$ ${inputValue}`, "text-green-400");
     if (this.commands[cmd]) {
       const result = this.commands[cmd].call(this, args);
       if (result) this.writeOutput(result);
@@ -189,7 +200,7 @@ class Terminal {
     const div = document.createElement("div");
     div.textContent = "Type ";
     const span = document.createElement("span");
-    span.className = "text-terminalGreen font-bold";
+    span.className = "text-green-400 font-bold";
     span.textContent = "help";
     div.appendChild(span);
     div.appendChild(document.createTextNode(" for available commands"));
@@ -589,8 +600,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("menu");
   menuToggle?.addEventListener("click", () => {
-    menu?.classList.toggle("hidden");
-    if (menu && !menu.classList.contains("hidden")) menu.classList.add("flex");
+    menuToggle.classList.toggle("open");
+    menu?.classList.toggle("open");
+    document.body.classList.toggle("menu-open");
   });
 
   animate(svg.createDrawable(".headline-path"), {
