@@ -207,63 +207,85 @@
                 </div>
             </div>
 
-            <!-- ── Card 5: Tech Stack ── -->
-            <div class="bento-card">
-                <h3 class="text-lg text-[var(--terminal-green)] mb-3 font-mono">$ cat ~/skills.txt</h3>
+            <!-- ── Card 5: Skill Scan ── -->
+            <div class="bento-card skill-scan-card" id="skill-scan-card">
+                <h3 class="text-lg text-[var(--terminal-green)] mb-0.5 font-mono">$ nmap --script skill-audit ryu@archy</h3>
+                <p class="text-xs font-mono mb-4 skill-scan-subtitle">Host is up. Starting scan...</p>
 
-                <div class="space-y-3">
-                    <div>
-                        <p class="tech-group-label">Programming</p>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Go</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Python</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">TypeScript</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Bash/Zsh</span>
+                <div class="skill-scan-output" id="skill-scan-output">
+
+                    <div class="skill-scan-group">
+                        <div class="skill-scan-label">// LANGUAGES</div>
+                        <div class="skill-scan-row" data-status="daily">
+                            <span class="ssc">[✓]</span><span class="ssn">Python</span>
+                            <span class="ssd"></span><span class="ssb daily">DAILY DRIVER</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="daily">
+                            <span class="ssc">[✓]</span><span class="ssn">Bash / Zsh</span>
+                            <span class="ssd"></span><span class="ssb daily">DAILY DRIVER</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="production">
+                            <span class="ssc">[✓]</span><span class="ssn">Go</span>
+                            <span class="ssd"></span><span class="ssb production">PRODUCTION</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="production">
+                            <span class="ssc">[✓]</span><span class="ssn">TypeScript</span>
+                            <span class="ssd"></span><span class="ssb production">PRODUCTION</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="learning">
+                            <span class="ssc">[~]</span><span class="ssn">Rust</span>
+                            <span class="ssd"></span><span class="ssb learning">LEARNING</span>
                         </div>
                     </div>
 
-                    <div>
-                        <p class="tech-group-label">Frameworks</p>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">FastAPI</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Django</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Flask</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Express</span>
+                    <div class="skill-scan-group">
+                        <div class="skill-scan-label">// FRAMEWORKS & TOOLS</div>
+                        <div class="skill-scan-row" data-status="production">
+                            <span class="ssc">[✓]</span><span class="ssn">FastAPI</span>
+                            <span class="ssd"></span><span class="ssb production">PRODUCTION</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="production">
+                            <span class="ssc">[✓]</span><span class="ssn">Docker</span>
+                            <span class="ssd"></span><span class="ssb production">PRODUCTION</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="daily">
+                            <span class="ssc">[✓]</span><span class="ssn">Neovim</span>
+                            <span class="ssd"></span><span class="ssb daily">DAILY DRIVER</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="production">
+                            <span class="ssc">[✓]</span><span class="ssn">Git</span>
+                            <span class="ssd"></span><span class="ssb production">PRODUCTION</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="proficient">
+                            <span class="ssc">[✓]</span><span class="ssn">Django / Flask</span>
+                            <span class="ssd"></span><span class="ssb proficient">PROFICIENT</span>
                         </div>
                     </div>
 
-                    <div>
-                        <p class="tech-group-label">Ops & Cloud</p>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Docker</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">GCP</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Firebase</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">CI/CD</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Ansible</span>
+                    <div class="skill-scan-group">
+                        <div class="skill-scan-label">// OPS & SYSADMIN</div>
+                        <div class="skill-scan-row" data-status="daily">
+                            <span class="ssc">[✓]</span><span class="ssn">Arch Linux</span>
+                            <span class="ssd"></span><span class="ssb daily">DAILY DRIVER</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="production">
+                            <span class="ssc">[✓]</span><span class="ssn">Traefik / Nginx</span>
+                            <span class="ssd"></span><span class="ssb production">PRODUCTION</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="proficient">
+                            <span class="ssc">[✓]</span><span class="ssn">GCP / Firebase</span>
+                            <span class="ssd"></span><span class="ssb proficient">PROFICIENT</span>
+                        </div>
+                        <div class="skill-scan-row" data-status="proficient">
+                            <span class="ssc">[✓]</span><span class="ssn">TCP/IP · DNS · CTFs</span>
+                            <span class="ssd"></span><span class="ssb proficient">PROFICIENT</span>
                         </div>
                     </div>
 
-                    <div>
-                        <p class="tech-group-label">Networking & Security</p>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">TCP/IP</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">DNS</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Firewalls</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">CTFs</span>
-                        </div>
+                    <div class="skill-scan-footer" id="skill-scan-footer">
+                        <span class="text-green-700">[✓] Scan complete — </span><span class="text-[var(--terminal-green)]">14 packages found</span>
                     </div>
 
-                    <div>
-                        <p class="tech-group-label">System Administration</p>
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Arch Linux</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Docker</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Traefik</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Fail2Ban</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Nginx</span>
-                            <span class="tech-tag bg-black/40 border border-green-700/50 px-1.5 py-0.5 text-xs text-green-300 rounded">Dotfiles</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
