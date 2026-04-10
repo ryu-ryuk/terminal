@@ -675,15 +675,16 @@ class Terminal {
     },
 
     neofetch: function() {
+      // Arch Linux "A" logo — clean diamond shape
       const logo = [
-        "        /\\        ",
-        "       /  \\       ",
-        "      /    \\      ",
-        "     / /\\  /\\     ",
-        "    / /  \\/  \\    ",
-        "   / / /\\ \\  /    ",
-        "  /_/ /  \\_\\/     ",
-        " /_________/      ",
+        "          ▲          ",
+        "         ▲ ▲         ",
+        "        ▲   ▲        ",
+        "       ▲ ▲ ▲ ▲       ",
+        "      ▲       ▲      ",
+        "     ▲  ▲▲▲▲▲  ▲     ",
+        "    ▲             ▲   ",
+        "   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲   ",
       ];
       const color = this.themes[this.currentTheme];
       const stats = [
@@ -695,9 +696,9 @@ class Terminal {
         ["WM",       "Hyprland"],
         ["Terminal", "kitty"],
         ["Editor",   "Neovim"],
-        ["GPU",      "NVIDIA RTX 3060Ti"],
-        ["CPU",      "AMD Ryzen 9 6900HX"],
-        ["Memory",   "16 GB DDR5"],
+        ["GPU",      "NVIDIA GeForce RTX 3050"],
+        ["CPU",      "Intel Core i5-11300H"],
+        ["Memory",   "16 GB DDR4"],
         ["Uptime",   "∞"],
         null,
         ["Theme",    this.currentTheme + "  (" + color + ")"],
