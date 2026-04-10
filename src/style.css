@@ -1449,6 +1449,72 @@ nav a.text-green-400 {
   color: var(--ctp-mocha-green);
 }
 
+/* ═══ Skill Scan Card ═══ */
+
+.skill-scan-card {
+  overflow: hidden;
+}
+
+.skill-scan-subtitle {
+  color: rgba(51, 255, 51, 0.3);
+  font-size: 0.7rem;
+}
+
+.skill-scan-output {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skill-scan-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.skill-scan-label {
+  color: rgba(51, 255, 51, 0.35);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+}
+
+/* Each skill row */
+.skill-scan-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  opacity: 0;
+  transform: translateX(-12px);
+  /* JS sets opacity:1 / translateX:0 via GSAP on scroll */
+}
+
+.ssc {
+  color: rgba(51, 255, 51, 0.35);
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+.skill-scan-row[data-status="learning"] .ssc {
+  color: rgba(249, 226, 175, 0.5);
+}
+
+.ssn {
+  color: rgba(200, 240, 200, 0.85);
+  flex-shrink: 0;
+  min-width: 8.5rem;
+}
+
+
+.skill-scan-footer {
+  font-size: 0.68rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(51, 255, 51, 0.08);
+  opacity: 0;
+}
+
 /* ═══ Bento Grid Layout ═══ */
 .bento-grid {
   display: grid;
@@ -1494,13 +1560,27 @@ nav a.text-green-400 {
     inset 0 0 20px rgba(51, 255, 51, 0.02);
 }
 
-/* Typing cursor after section titles */
-.bento-card h3.font-mono::after {
+/* Lightweight bento card command label */
+.bento-cmd {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(51, 255, 51, 0.4);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+
+.bento-cmd::before {
+  content: '~/';
+  opacity: 0.5;
+}
+
+.bento-cmd::after {
   content: '▋';
   animation: terminal-blink 1s step-end infinite;
-  color: var(--terminal-green);
-  margin-left: 4px;
-  font-size: 0.85em;
+  color: rgba(51, 255, 51, 0.3);
+  margin-left: 2px;
+  font-size: 0.9em;
 }
 
 @keyframes terminal-blink {
