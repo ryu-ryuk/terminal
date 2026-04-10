@@ -111,7 +111,7 @@
 
     .glitch-title {
       position: relative;
-      display: inline-block;
+      display: block;
     }
 
     .glitch-title::before,
@@ -239,6 +239,62 @@
       z-index: 1000;
       display: none;
     }
+
+    /* Panel section titles */
+    .panel-title {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #33ff33;
+      text-shadow:
+        0 0 6px rgba(51, 255, 51, 0.8),
+        0 0 18px rgba(51, 255, 51, 0.35);
+      padding-bottom: 0.65rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(51, 255, 51, 0.15);
+      display: block;
+    }
+    .pt-slash {
+      color: rgba(51, 255, 51, 0.35);
+      font-weight: 400;
+      text-shadow: none;
+    }
+
+    /* SSH handshake panel */
+    .ssh-panel {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      color: rgba(51, 255, 51, 0.6);
+      line-height: 1.7;
+    }
+    .ssh-line {
+      display: block;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .ssh-line.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .ssh-ok   { color: #a6e3a1; }
+    .ssh-dim  { color: rgba(51,255,51,0.35); }
+    .ssh-key  { color: #89b4fa; }
+    .ssh-val  { color: rgba(51,255,51,0.85); }
+    .ssh-cursor {
+      display: inline-block;
+      width: 7px; height: 1em;
+      background: #33ff33;
+      vertical-align: text-bottom;
+      animation: ssh-blink 0.9s step-end infinite;
+      margin-left: 2px;
+    }
+    @keyframes ssh-blink {
+      0%,100% { opacity: 1; } 50% { opacity: 0; }
+    }
   </style>
 </head>
 
@@ -291,9 +347,7 @@
       <div class="contact-grid">
         <!-- Contact Form -->
         <div class="contact-container p-6 md:p-8">
-          <h2 class="text-2xl font-bold text-green-300 mb-6">
-            // SEND_MESSAGE
-          </h2>
+          <h2 class="panel-title"><span class="pt-slash">// </span>SEND_MESSAGE</h2>
           <form id="contactForm" class="space-y-6" action="/api/submit-contact" method="POST">
             <div>
               <label for="name" class="block text-green-400 mb-2 text-sm">NAME:</label>
@@ -323,9 +377,7 @@
         <!-- Contact Info -->
         <div class="space-y-6">
           <div class="contact-container p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-green-300 mb-6">
-              // DIRECT_CHANNELS
-            </h2>
+            <h2 class="panel-title"><span class="pt-slash">// </span>DIRECT_CHANNELS</h2>
             <div class="space-y-4">
               <div class="console-text" data-text="EMAIL:meow@alokranjan[.]me">
                 <span class="text-green-300">EMAIL:</span>
@@ -345,9 +397,7 @@
           </div>
 
           <div class="contact-container p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-green-300 mb-6">
-              // NETWORK_NODES
-            </h2>
+            <h2 class="panel-title"><span class="pt-slash">// </span>NETWORK_NODES</h2>
             <div class="flex justify-center space-x-4">
               <a href="https://github.com/ryu-ryuk" class="social-icon" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -392,21 +442,18 @@
           </div>
 
           <div class="contact-container p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-green-300 mb-6">
-              // SYSTEM_STATUS
-            </h2>
+            <h2 class="panel-title"><span class="pt-slash">// </span>SYSTEM_STATUS</h2>
             <div class="space-y-4">
               <div class="flex items-center justify-between">
                 <span class="text-green-300">AVAILABILITY:</span>
                 <span class="text-green-400">ONLINE</span>
               </div>
               <div class="w-full bg-black/50 h-2 rounded-full overflow-hidden">
-                <div class="availability-bar h-full bg-green-400" style="width: 75%"></div>
+                <div class="availability-bar h-full bg-green-400" style="width: 0%"></div>
               </div>
               <div class="console-text text-sm mt-2"
                 data-text="Currently available for freelance projects and collaborations : )">
-                Currently available for freelance projects and collaborations
-                : )
+                Currently available for freelance projects and collaborations : )
               </div>
             </div>
           </div>
@@ -454,24 +501,25 @@
   <div id="terminal-overlay"
     class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center hidden transition-all duration-300 ease-in-out">
     <div id="terminal-window"
-      class="relative w-full max-w-lg terminal-window scale-95 opacity-100 transition-all duration-300 ease-in-out">
-      <div class="terminal-header">
+      class="relative w-full max-w-2xl terminal-window scale-95 opacity-100 transition-all duration-300 ease-in-out">
+      <div class="terminal-header" id="terminal-header">
         <button id="close-terminal" class="terminal-button bg-red-500 hover:bg-red-400"></button>
         <button id="minimize-terminal" class="terminal-button bg-yellow-400 hover:bg-yellow-300"></button>
         <button id="maximize-terminal" class="terminal-button bg-green-400 hover:bg-green-300"></button>
-        <span class="ml-4 text-[var(--terminal-green)]">ryu@archy:~</span>
-      </div>
-      <div id="terminal-output" class="terminal-output">
-        <div>
-          Type
-          <span class="text-[var(--terminal-green)] font-bold">help</span> for
-          available commands
+        <span id="terminal-title" class="ml-4 text-xs text-[var(--terminal-green)] opacity-60">ryu@archy:~</span>
+        <div class="ml-auto flex gap-3 pr-2 items-center">
+          <span class="term-pill" data-theme="green" style="color:#33ff33;cursor:pointer;font-size:1.1rem;line-height:1" title="green">●</span>
+          <span class="term-pill" data-theme="amber" style="color:#FFB000;cursor:pointer;font-size:1.1rem;line-height:1" title="amber">●</span>
+          <span class="term-pill" data-theme="cyan"  style="color:#00E5FF;cursor:pointer;font-size:1.1rem;line-height:1" title="cyan">●</span>
+          <span class="term-pill" data-theme="pink"  style="color:#F5C2E7;cursor:pointer;font-size:1.1rem;line-height:1" title="pink">●</span>
         </div>
       </div>
+      <div id="terminal-output" class="terminal-output"></div>
+      <div id="terminal-autocomplete" class="terminal-autocomplete hidden"></div>
       <form id="terminal-form" class="terminal-form">
-        <span class="pl-4 text-[var(--terminal-green)]">$</span>
-        <input id="terminal-input" type="text" autocomplete="off" class="terminal-input"
-          placeholder="type your command..." />
+        <span id="terminal-prompt" class="pl-4 text-[var(--terminal-green)] font-mono text-sm select-none">~$</span>
+        <input id="terminal-input" type="text" autocomplete="off" spellcheck="false" class="terminal-input"
+          placeholder="type a command..." />
       </form>
     </div>
   </div>
@@ -489,12 +537,7 @@
         <span class="ticker-divider">•</span>
         <a href="/contact.html" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
         <span class="ticker-divider">•</span>
-        <span class="ticker-item">サイバーパンク
-          <span class="ticker-translation">Cyberpunk</span></span>
-        <span class="ticker-divider">•</span>
         <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
-        <span class="ticker-divider">•</span>
-        <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
         <span class="ticker-divider">•</span>
 
         <!-- Clone of the above for continuous scrolling -->
@@ -506,12 +549,7 @@
         <span class="ticker-divider">•</span>
         <a href="/contact.html" class="ticker-item">お問い合わせ <span class="ticker-translation">Contact</span></a>
         <span class="ticker-divider">•</span>
-        <span class="ticker-item">サイバーパンク
-          <span class="ticker-translation">Cyberpunk</span></span>
-        <span class="ticker-divider">•</span>
         <a href="https://github.com/ryu-ryuk" class="ticker-item">GitHub</a>
-        <span class="ticker-divider">•</span>
-        <span class="ticker-item">アーキー <span class="ticker-translation">Archy</span></span>
         <span class="ticker-divider">•</span>
         <a href="/projects.html" class="ticker-item">スキル <span class="ticker-translation">Skills</span></a>
         <span class="ticker-divider">•</span>
