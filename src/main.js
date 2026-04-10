@@ -761,15 +761,15 @@ class Terminal {
 
       const sections = [
         { label: "LANGUAGES", items: [
-          ["Rust",       85], ["Python",     88], ["Go",         72],
-          ["JavaScript", 80], ["C/C++",      55], ["Bash",       78],
+          ["Python",     92], ["Bash / Zsh",  88], ["Go",         78],
+          ["TypeScript", 75], ["Rust",        45],
         ]},
         { label: "TOOLS & INFRA", items: [
-          ["Linux",      98], ["Neovim",     99], ["Git",        92],
-          ["Docker",     75], ["FastAPI",    82], ["PostgreSQL", 70],
+          ["Neovim",     99], ["Linux",       98], ["Git",        92],
+          ["Docker",     82], ["FastAPI",     85], ["Traefik",    72],
         ]},
         { label: "CURRENTLY LEARNING", items: [
-          ["Nix",        40], ["Zig",        30], ["Kernel Dev", 20],
+          ["Nix",        35],
         ]},
       ];
 
@@ -1207,8 +1207,6 @@ class Terminal {
     },
 
     banner: function(args) {
-      // Each letter is defined as 5 rows, each row exactly 7 chars wide
-      const W = 7;
       const glyphs = {
         A:["  ███  ","  █ █  ","  ███  ","  █ █  ","  █ █  "],
         B:["  ███  ","  █ █  ","  ███  ","  █ █  ","  ███  "],
